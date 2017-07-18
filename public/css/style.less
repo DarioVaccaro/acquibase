@@ -4,7 +4,6 @@
 	margin: auto;
 	width: 1200px;
 	position: relative;
-	height: 408px;
 }
 .white-card-style {
 	background: #FFFFFF;
@@ -35,6 +34,8 @@ nav {
 	background: #1E1E1E;
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.26);
 	color: #FFFFFF;
+	position: relative;
+	z-index: 2;
 	#nav-container {
 		width: 1200px;
 		margin: 0 auto;
@@ -69,6 +70,7 @@ nav {
 header {
 	background: linear-gradient(-90deg, #FCFCFC 50%, #1D1D1D 50%);
 	.container {
+		height: 408px;
 		#newsletter-signup {
 			width: 350px;
 			height: 100%;
@@ -131,4 +133,66 @@ main {
 			.dark-card-style;
 		}
 	}
+}
+main#company {
+	background: linear-gradient(-90deg, #FCFCFC 50%, #1D1D1D 50%);
+	.container {
+		height: 721px;
+		#company-info {
+			width: 795px;
+			height: 100%;
+			display: inline-block;
+			background: #1D1D1D;
+			vertical-align: top;
+		}
+		#company-prediction {
+			width: 385px;
+			height: 100%;
+			display: inline-block;
+			background: #FCFCFC;
+			padding: 0 0 0 18px;
+			h1 {
+				font-weight: 800;
+				font-size: 20px;
+				letter-spacing: .8px;
+				margin: 15px 0 0 0;
+			}
+			#prediction-container {
+				margin: 12px 0 0 0;
+				#predictions {
+					width: 385px;
+					height: 108px;
+					.white-card-style;
+				}
+				#historical-data {
+					margin: 19px 0 0 0;
+					width: 385px;
+					height: 208px;
+					.white-card-style;
+				}
+				#upcoming-prediction {
+					margin: 19px 0 0 0;
+					width: 385px;
+					height: 73px;
+					.white-card-style;
+				}
+			}
+		}	
+	}
+}
+#full-acquisition-list {
+	padding: 25px 0 25px 0;
+	.container {
+		h1 {
+			color: #FFF;
+			font-weight: 800;
+			font-size: 25px;
+			letter-spacing: .8px;
+			margin: 0 0 0 0;
+		}
+	}
+}
+footer {
+	height: 155px;
+	background: #000;
 }

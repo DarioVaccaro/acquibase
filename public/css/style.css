@@ -2,7 +2,6 @@
   margin: auto;
   width: 1200px;
   position: relative;
-  height: 408px;
 }
 .white-card-style {
   background: #FFFFFF;
@@ -31,6 +30,8 @@ nav {
   background: #1E1E1E;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
   color: #FFFFFF;
+  position: relative;
+  z-index: 2;
 }
 nav #nav-container {
   width: 1200px;
@@ -64,6 +65,9 @@ nav a:hover {
 }
 header {
   background: linear-gradient(-90deg, #FCFCFC 50%, #1D1D1D 50%);
+}
+header .container {
+  height: 408px;
 }
 header .container #newsletter-signup {
   width: 350px;
@@ -128,4 +132,73 @@ main .container #filter-bar {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
   border-radius: 3px;
   margin: 19px 0 0 0;
+}
+main#company {
+  background: linear-gradient(-90deg, #FCFCFC 50%, #1D1D1D 50%);
+}
+main#company .container {
+  height: 721px;
+}
+main#company .container #company-info {
+  width: 795px;
+  height: 100%;
+  display: inline-block;
+  background: #1D1D1D;
+  vertical-align: top;
+}
+main#company .container #company-prediction {
+  width: 385px;
+  height: 100%;
+  display: inline-block;
+  background: #FCFCFC;
+  padding: 0 0 0 18px;
+}
+main#company .container #company-prediction h1 {
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: .8px;
+  margin: 15px 0 0 0;
+}
+main#company .container #company-prediction #prediction-container {
+  margin: 12px 0 0 0;
+}
+main#company .container #company-prediction #prediction-container #predictions {
+  width: 385px;
+  height: 108px;
+  background: #FFFFFF;
+  border: 1px solid rgba(106, 106, 106, 0.5);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
+  border-radius: 3px;
+}
+main#company .container #company-prediction #prediction-container #historical-data {
+  margin: 19px 0 0 0;
+  width: 385px;
+  height: 208px;
+  background: #FFFFFF;
+  border: 1px solid rgba(106, 106, 106, 0.5);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
+  border-radius: 3px;
+}
+main#company .container #company-prediction #prediction-container #upcoming-prediction {
+  margin: 19px 0 0 0;
+  width: 385px;
+  height: 73px;
+  background: #FFFFFF;
+  border: 1px solid rgba(106, 106, 106, 0.5);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
+  border-radius: 3px;
+}
+#full-acquisition-list {
+  padding: 25px 0 25px 0;
+}
+#full-acquisition-list .container h1 {
+  color: #FFF;
+  font-weight: 800;
+  font-size: 25px;
+  letter-spacing: .8px;
+  margin: 0 0 0 0;
+}
+footer {
+  height: 155px;
+  background: #000;
 }

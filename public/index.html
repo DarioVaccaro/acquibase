@@ -8,7 +8,7 @@
 		<link href="css/style.css" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,600,700,800,900" rel="stylesheet">
 	</head>
-	<body>
+	<body ng-app="acquibaseApp" ng-controller="acquibaseController">
 		<nav>
 			<section id="nav-container">
 				<div id="nav-brand">
@@ -16,10 +16,10 @@
 				</div>
 				<div id="nav-navigation">
 					<ul>
-						<li><a href="">Company Profiles</a></li>
-						<li><a href="">Compare Data</a></li>
-						<li><a href="">Search</a></li>
-						<li><a href="">Contact</a></li>
+						<li><a href="/Microsoft">Company Profiles</a></li>
+						<li><a href="/compare">Compare Data</a></li>
+						<li><a href="/search">Search</a></li>
+						<li><a href="/contact">Contact</a></li>
 					</ul>
 				</div>
 			</section>
@@ -56,16 +56,17 @@
 					
 				</div>
 				<div id="card-container">
-					
+					<div ng-repeat="company in companys">
+						{{company.company.name}}
+					</div>
 				</div>
 			</section>
 		</main>
 		<footer>
 		</footer>
-		<script defer src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
-		<script defer src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
-		<script defer src="https://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
-		<script defer src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.16/angular-filter.min.js"></script>
+		<script defer src="libs/angular/angular.js"></script>
 		<script defer src="js/app.js"></script>
+		<script defer src="js/controllers/acquibaseController.js"></script>
+		<script defer src="js/services/acquibaseFactory.js"></script>
 	</body>
 </html>
