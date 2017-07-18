@@ -35,7 +35,9 @@
 						<h6>Click on an entry to view more data about the company</h6>
 						<div id="data-container">
 							<div id="recent-data">
-								
+								<div ng-repeat="company in companys">
+									<update-card></update-card>
+								</div>
 							</div>
 							<div id="recent-graph">
 								<div id="graph-data">
@@ -67,6 +69,7 @@
 		<script defer src="libs/angular/angular.js"></script>
 		<script defer src="js/app.js"></script>
 		<script defer src="js/directives/graphcard.js"></script>
+		<script defer src="js/directives/homeupdaterow.js"></script>
 		<script defer src="js/controllers/acquibaseController.js"></script>
 		<script defer src="js/services/acquibaseFactory.js"></script>
 	</body>
