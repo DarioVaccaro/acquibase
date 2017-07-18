@@ -1,8 +1,8 @@
 <section>
 	<div>
 		<h1>{{company.company.name}} acquired</h1>
-		<h2>{{company.company.acquisition[0].name}}</h2>
+		<h2>{{company.company.acquisition[$index].industry}}</h2>
 	</div>
-	<h1>{{company.company.acquisition[0].acquisitionPrice}}</h1>
-	<h2>{{company.company.acquisition[0].date}}</h2>
+	<h1>{{company.company.acquisition.acquisitionPrice}}</h1>
+	<h2>{{company.company.acquisition.date}}</h2>
 </section>
