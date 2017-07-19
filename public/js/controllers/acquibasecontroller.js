@@ -6,4 +6,12 @@ acquibaseApp.controller('acquibaseController' , ['$scope' , '$http' , 'acquibase
             })
             $scope.companys = data;
         });
+        //If URL after / is the same as a company name
+        console.log(company.company.name);
+        if($location.path() === company.company.name) {
+        	//set scope to only access the doucment with the
+        	//url path as it's name WRONG CODE
+        	$scope.thisCompany = this._id;
+        	console.log(this);
+        }
 }]);

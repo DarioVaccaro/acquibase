@@ -1,4 +1,5 @@
 const path = require('path');
+//Change company to acquibase
 const Company = require('./models/company');
 
 module.exports = function(app) {

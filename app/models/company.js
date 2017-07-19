@@ -1,5 +1,15 @@
 const mongoose = require('mongoose');
 mongoose.set('debug', true);
+let acquisitionSchema = new mongoose.Schema({
+	id: Number,
+	acquisition: {
+		name: String,
+		date: Date,
+		acquisitionPrice: Number,
+		infoLink: String,
+		industry: [String]
+	}
+});
 let companySchema = new mongoose.Schema({
 	id: Number,
 	company: {
@@ -14,13 +24,7 @@ let companySchema = new mongoose.Schema({
 				price: Number
 			}]
 		},
-		acquisition: [{
-			name: String,
-			date: Date,
-			acquisitionPrice: Number,
-			infoLink: String,
-			industry: [String]
-		}]
+		acquisition: [acquisitionSchema]
 	}
 });
 module.exports = mongoose.model('Company' , companySchema);
