@@ -7,7 +7,8 @@ html
 		title 
 		link(href='css/style.css' , rel='stylesheet')
 		link(href='https://fonts.googleapis.com/css?family=Lato:300,400,600,700,800,900' , rel='stylesheet')
-	body
+		base(href="/")
+	body(ng-app='acquibaseApp' , ng-controller='dataRestrictController')
 		nav
 			section#nav-container
 				div#nav-brand
@@ -38,3 +39,9 @@ html
 			div.container
 				h1 Full Acquisition List
 		footer
+		script(defer src='libs/angular/angular.js')
+		script(defer src='js/app.js')
+		script(defer src='js/directives/graphcard.js')
+		script(defer src='js/directives/homeupdaterow.js')
+		script(defer src='js/controllers/acquibaseController.js')
+		script(defer src='js/services/acquibaseFactory.js')

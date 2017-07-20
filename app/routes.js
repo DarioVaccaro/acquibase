@@ -33,6 +33,7 @@ module.exports = function(app) {
 			.then(function(company) {
 				if (company) {
 					res.render('company.jade');
+					return;
 					// return res.send({sucess: true, data: company});
 				} else {
 					// res.type('txt').send('Not Found');

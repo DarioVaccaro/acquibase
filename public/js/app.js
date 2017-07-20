@@ -1,5 +1,5 @@
 var acquibaseApp = angular.module('acquibaseApp' , []);
 var companyURL = '/api/companys';
-// acquibaseApp.config(function($locationProvider) {
-// 	$locationProvider.html5Mode(true);
-// });
+acquibaseApp.config(function($locationProvider) {
+	$locationProvider.html5Mode(true);
+});
