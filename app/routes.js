@@ -34,7 +34,6 @@ module.exports = function(app) {
 				if (company) {
 					res.render('company.jade');
 					return;
-					// return res.send({sucess: true, data: company});
 				} else {
 					// res.type('txt').send('Not Found');
 					res.render('404.jade');
