@@ -2,9 +2,10 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , 'acquibas
     acquibaseFactory.get()
         .success(function(data) {
             angular.forEach(data, function(value, key) {
-
+            	$scope.acquisition = data[key].company.acquisition;
             })
             $scope.companys = data;
+            console.log($scope.acquisition);
         });
 }]);
 acquibaseApp.controller('dataRestrictController' , ['$scope' , '$http' , '$location' , 'acquibaseFactory', function($scope , $http, $location , acquibaseFactory) {

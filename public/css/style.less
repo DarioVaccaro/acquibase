@@ -18,6 +18,12 @@
 	border-radius: 3px;
 	margin: 19px 0 0 0;
 }
+.dark-graph-style {
+	background: #1B1B1B;
+	border: 1px solid #383838;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.18);
+	border-radius: 3px;
+}
 
 body {
 	margin: 0;
@@ -56,7 +62,7 @@ nav {
 					color: white;
 					a {
 						text-decoration: none;
-						tranition: .3s ease-in;
+						transition: .3s ease-in;
 					}
 				}
 			}
@@ -105,9 +111,10 @@ header {
 				#data-container {
 					margin: 12px 0 0 0;
 					#recent-data {
-
+						float: left;
 					}
 					#recent-graph {
+						float: right;
 						#graph-data {
 							width: 400px;
 							height: 208px;
@@ -132,18 +139,116 @@ main {
 			height: 51px;
 			.dark-card-style;
 		}
+		#card-container {
+			margin: 19px 0 0 0;
+			div {
+				display: inline-block;
+				graph-card {
+					width: 285.75px;
+					height: 226px;
+					.dark-card-style;
+					display: inline-block;
+					margin: 0 19px 0 0;
+					section {
+						color: #FFF;
+						width: 100%;
+						height: 100%;
+						#home-company-info {
+							text-align: center;
+						}
+					}
+				}
+			}
+		}
 	}
 }
 main#company {
 	background: linear-gradient(-90deg, #FCFCFC 50%, #1D1D1D 50%);
 	.container {
-		height: 721px;
+		height: 731px;
 		#company-info {
-			width: 795px;
+			width: 776px;
 			height: 100%;
 			display: inline-block;
 			background: #1D1D1D;
 			vertical-align: top;
+			padding: 0 19px 0 0;
+			#company-numbers {
+				#company-facts {
+					float: left;
+					margin: 0 0 20px 0;
+					#company-name {
+						color: #FFF;
+						font-size: 48px;
+						font-weight: 700;
+						font-family: 'Poppins', sans-serif;
+						margin: 5px 0 0 0;
+					}
+					h6 {
+						margin: 0 20px 0 0;
+						display: inline-block;
+						padding: 5px 30px;
+						color: #FFF;
+						border-radius: 2px;
+					}
+					#company-industry {
+						background: #00FFC9;
+					}
+					#company-location {
+						background: #F20278;
+					}
+					#historical-acquisitions {
+						color: #FFF;
+						font-size: 24px;
+						margin: 10px 0 0 0;
+					}
+					#chart-description {
+						font-size: 12px;
+						font-weight: 400;
+						color: #A3A3A3;
+						margin: 5px 0 0 0;
+					}
+				}
+				#company-finance {
+					float: right;
+					text-align: right;
+					color: #FFF;
+					#company-valuation {
+						h1 {
+							font-size: 30px;
+						}
+						span {
+							font-weight: 400;
+							font-size: 24px;
+						}
+					}
+					span {
+						font-weight: 400;
+						font-size: 20px;
+					}
+				}
+			}
+		}
+		#company-acquisition-graph {
+			width: 100%;
+			height: 290px;
+			.dark-graph-style;
+			clear: both;
+		}
+		#lower-data-container {
+			margin: 19px 0 0 0;
+			#company-stock-graph {
+				width: 63%;
+				height: 211px;
+				float: left;
+				.dark-graph-style;
+			}
+			#company-recent-acqusitions {
+				width: 34%;
+				height: 211px;
+				float: right;
+				.dark-graph-style;
+			}
 		}
 		#company-prediction {
 			width: 385px;

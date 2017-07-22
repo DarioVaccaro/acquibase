@@ -17,6 +17,7 @@ let companySchema = new mongoose.Schema({
 		location: String,
 		foundedOn: Date,
 		industry: String,
+		incorporated: Boolean,
 		stock: {
 			marketCap: Number,
 			historicalPrice: [{

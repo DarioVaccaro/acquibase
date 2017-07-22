@@ -6,7 +6,7 @@ html
 		meta(name='viewport' , content='initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width')
 		title 
 		link(href='css/style.css' , rel='stylesheet')
-		link(href='https://fonts.googleapis.com/css?family=Lato:300,400,600,700,800,900' , rel='stylesheet')
+		link(href='https://fonts.googleapis.com/css?family=Lato:300,400,600,700,800,900|family=Poppins:700' , rel='stylesheet')
 		base(href="/")
 	body(ng-app='acquibaseApp' , ng-controller='dataRestrictController')
 		nav
@@ -16,18 +16,36 @@ html
 						a(href='/') Acquibase
 				div#nav-navigation
 					ul
-						li 
-							a(href='/Microsoft') Company Profiles
-						li 
-							a(href='/compare') Compare Data
-						li 
-							a(href='/search') Search
-						li 
-							a(href='/contact') Contact
+						li: a(href='/Microsoft') Company Profiles
+						li: a(href='/compare') Compare Data
+						li: a(href='/search') Search
+						li: a(href='/contact') Contact
 		main#company
 			section.container
 				div#company-info
-					h1 {{thisCompany.name}}
+					div#company-numbers
+						div#company-facts
+							h1#company-name {{thisCompany.name}} {{thisCompany.incorporated}}
+							h6#company-industry {{thisCompany.industry}}
+							h6#company-location {{thisCompany.location}}
+							h2#historical-acquisitions Historical Acquisitions
+							h5#chart-description Click on each data point to see more information
+						div#company-finance
+							span#company-valuation
+								h1 {{thisCompany.stock.marketCap}}
+								span Valuation
+							hr
+							span {{}} spent in {{}} on {{}} + {{}}
+					div#company-acquisition-graph
+					div#lower-data-container
+						div#company-stock-graph
+							h1 Stock Data
+							h6 Full publically traded history
+							h4 Dots represent acquisitions and distance to graph represent value
+						div#company-recent-acqusitions
+							h1 Recent Acquisitions
+							div(ng-repeat='company in thisCompany.acquisition')#acquisition-list
+								update-card
 				div#company-prediction
 					h1 Data Analysis
 					div#prediction-container
@@ -38,6 +56,8 @@ html
 		section#full-acquisition-list
 			div.container
 				h1 Full Acquisition List
+				div(ng-repeat='company in thisCompany.acquisition')#acquisition-list
+					update-card
 		footer
 		script(defer src='libs/angular/angular.js')
 		script(defer src='js/app.js')

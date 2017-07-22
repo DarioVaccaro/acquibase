@@ -16,6 +16,12 @@
   border-radius: 3px;
   margin: 19px 0 0 0;
 }
+.dark-graph-style {
+  background: #1B1B1B;
+  border: 1px solid #383838;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+}
 body {
   margin: 0;
   padding: 0;
@@ -57,7 +63,7 @@ nav #nav-container #nav-navigation ul li {
 }
 nav #nav-container #nav-navigation ul li a {
   text-decoration: none;
-  tranition: 0.3s ease-in;
+  transition: 0.3s ease-in;
 }
 nav a:hover {
   color: #CBCBCB;
@@ -107,6 +113,12 @@ header .container #data-snapshot #snapshot-container h6 {
 header .container #data-snapshot #snapshot-container #data-container {
   margin: 12px 0 0 0;
 }
+header .container #data-snapshot #snapshot-container #data-container #recent-data {
+  float: left;
+}
+header .container #data-snapshot #snapshot-container #data-container #recent-graph {
+  float: right;
+}
 header .container #data-snapshot #snapshot-container #data-container #recent-graph #graph-data {
   width: 400px;
   height: 208px;
@@ -133,18 +145,125 @@ main .container #filter-bar {
   border-radius: 3px;
   margin: 19px 0 0 0;
 }
+main .container #card-container {
+  margin: 19px 0 0 0;
+}
+main .container #card-container div {
+  display: inline-block;
+}
+main .container #card-container div graph-card {
+  width: 285.75px;
+  height: 226px;
+  background: #1B1B1B;
+  border: 1px solid #383838;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+  margin: 19px 0 0 0;
+  display: inline-block;
+  margin: 0 19px 0 0;
+}
+main .container #card-container div graph-card section {
+  color: #FFF;
+  width: 100%;
+  height: 100%;
+}
+main .container #card-container div graph-card section #home-company-info {
+  text-align: center;
+}
 main#company {
   background: linear-gradient(-90deg, #FCFCFC 50%, #1D1D1D 50%);
 }
 main#company .container {
-  height: 721px;
+  height: 731px;
 }
 main#company .container #company-info {
-  width: 795px;
+  width: 776px;
   height: 100%;
   display: inline-block;
   background: #1D1D1D;
   vertical-align: top;
+  padding: 0 19px 0 0;
+}
+main#company .container #company-info #company-numbers #company-facts {
+  float: left;
+  margin: 0 0 20px 0;
+}
+main#company .container #company-info #company-numbers #company-facts #company-name {
+  color: #FFF;
+  font-size: 48px;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  margin: 5px 0 0 0;
+}
+main#company .container #company-info #company-numbers #company-facts h6 {
+  margin: 0 20px 0 0;
+  display: inline-block;
+  padding: 5px 30px;
+  color: #FFF;
+  border-radius: 2px;
+}
+main#company .container #company-info #company-numbers #company-facts #company-industry {
+  background: #00FFC9;
+}
+main#company .container #company-info #company-numbers #company-facts #company-location {
+  background: #F20278;
+}
+main#company .container #company-info #company-numbers #company-facts #historical-acquisitions {
+  color: #FFF;
+  font-size: 24px;
+  margin: 10px 0 0 0;
+}
+main#company .container #company-info #company-numbers #company-facts #chart-description {
+  font-size: 12px;
+  font-weight: 400;
+  color: #A3A3A3;
+  margin: 5px 0 0 0;
+}
+main#company .container #company-info #company-numbers #company-finance {
+  float: right;
+  text-align: right;
+  color: #FFF;
+}
+main#company .container #company-info #company-numbers #company-finance #company-valuation h1 {
+  font-size: 30px;
+}
+main#company .container #company-info #company-numbers #company-finance #company-valuation span {
+  font-weight: 400;
+  font-size: 24px;
+}
+main#company .container #company-info #company-numbers #company-finance span {
+  font-weight: 400;
+  font-size: 20px;
+}
+main#company .container #company-acquisition-graph {
+  width: 100%;
+  height: 290px;
+  background: #1B1B1B;
+  border: 1px solid #383838;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+  clear: both;
+}
+main#company .container #lower-data-container {
+  margin: 19px 0 0 0;
+}
+main#company .container #lower-data-container #company-stock-graph {
+  width: 63%;
+  height: 211px;
+  float: left;
+  background: #1B1B1B;
+  border: 1px solid #383838;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+}
+main#company .container #lower-data-container #company-recent-acqusitions {
+  width: 34%;
+  height: 211px;
+  float: right;
+  background: #1B1B1B;
+  border: 1px solid #383838;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
 }
 main#company .container #company-prediction {
   width: 385px;
