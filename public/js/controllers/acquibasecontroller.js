@@ -11,7 +11,6 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , 'acquibas
                     $scope.acquisitionData[$scope.acquisitionData.length] = value;
                 });
             })
-            //orderBy $scope.acquisitionData
             console.log(data[0].company.acquisition[0].date);
         });
 }]);
@@ -30,5 +29,4 @@ acquibaseApp.controller('dataRestrictController' , ['$scope' , '$http' , '$locat
                 $scope.undisclosed.push(value.acquisitionPrice);
             });
         });
-        //scope.undisclsed function
 }]);
