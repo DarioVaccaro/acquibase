@@ -67,7 +67,9 @@ html
 						div#company-recent-acqusitions
 							h1 Recent Acquisitions
 							div(ng-repeat='company in thisCompany.acquisition')#acquisition-list
-								update-card
+								h2 {{thisCompany.acquisition[$index].name}}
+								h6 {{thisCompany.acquisition[$index].date}}
+								h3 {{thisCompany.acquisition[$index].acquisitionPrice}}
 				div#company-prediction
 					h1 Data Analysis
 					div#prediction-container
@@ -79,7 +81,12 @@ html
 			div.container
 				h1 Full Acquisition List
 				div(ng-repeat='company in thisCompany.acquisition')#acquisition-list
-					update-card
+					h2 {{thisCompany.acquisition[$index].name}}
+					h5 {{thisCompany.acquisition[$index].date}}
+					h4 
+						a(href='{{thisCompany.acquisition[$index].infoLink}}') More Info
+					h1 {{thisCompany.acquisition[$index].acquisitionPrice}}
+					h3 {{thisCompany.acquisition[$index].industry[0]}}
 		footer
 		script(defer src='libs/angular/angular.js')
 		script(defer src='js/app.js')
