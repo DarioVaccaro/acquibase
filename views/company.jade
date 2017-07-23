@@ -40,10 +40,14 @@ html
 							h5#chart-description Click on each data point to see more information
 						div#company-finance
 							span#company-valuation
-								h1 {{thisCompany.stock.marketCap}}
+								h1 {{thisCompany.stock.marketCap | wordifyValuation}}
 								span Valuation
 							hr
-							span {{}} spent in {{}} on {{}} + {{}}
+							span {{acquiPriceHistory | wordifyValuation}} spent in {{}} Years
+								br
+								| on {{thisCompany.acquisition.length}} Acquisitions + 
+								br
+								| {{undisclosed.length}} Undisclosed Deals
 					div#company-acquisition-graph
 					div#lower-data-container
 						div#company-stock-graph
@@ -69,6 +73,7 @@ html
 		footer
 		script(defer src='libs/angular/angular.js')
 		script(defer src='js/app.js')
+		script(defer src='js/filters.js')
 		script(defer src='js/directives/graphcard.js')
 		script(defer src='js/directives/homeupdaterow.js')
 		script(defer src='js/controllers/acquibaseController.js')

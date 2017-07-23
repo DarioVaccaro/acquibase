@@ -59,7 +59,7 @@
 						<h6>Click on an entry to view more data about the company</h6>
 						<div id="data-container">
 							<div id="recent-data">
-								<div ng-repeat="company in acquisitionData track by $index">
+								<div ng-repeat="company in acquisitionData | orderBy: orderByDate | limitTo: 5 track by $index">
 									<update-card></update-card>
 								</div>
 							</div>

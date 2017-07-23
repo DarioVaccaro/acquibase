@@ -1,4 +1,22 @@
 angular.module( 'acquibaseApp')
-.filter('urlDataFilter',function() {
-
+.filter('wordifyValuation',function() {
+	return function(number) {
+		number = Math.abs(number);
+		number > 999999999999 ? number = "$" + (number / Math.pow(10 , 12)).toFixed(1) + " Trillion" :
+		number > 999999999 ? number = "$" + (number / Math.pow(10 , 9)).toFixed(1) + " Billion" : 
+		number > 999999 ? number = "$" + (number / Math.pow(10 , 6)).toFixed(1) + " Million" :
+		number > 999 ? number = "$" + (number / Math.pow(10 , 3)).toFixed(1) + " Thousand" :
+		number = "$" + (number / Math.pow(10 , 1));
+		return number;
+	}
+})
+.filter('addUpPrices',function() {
+	return function(number) {
+		var undisclosed = [];
+		angular.forEach(number , function(value, key) {
+			number > -1 ? number += number :
+			undisclosed = number[key];
+		});
+		return number;
+	}
 });
