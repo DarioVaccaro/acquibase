@@ -302,6 +302,8 @@ main#company .container #company-info #company-numbers #company-finance {
 }
 main#company .container #company-info #company-numbers #company-finance #company-valuation h1 {
   font-size: 30px;
+  display: inline-block;
+  margin: 17px 0 0 0;
 }
 main#company .container #company-info #company-numbers #company-finance #company-valuation span {
   font-weight: 400;

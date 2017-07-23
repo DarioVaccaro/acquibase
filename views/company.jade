@@ -51,7 +51,7 @@ html
 						div#company-finance
 							span#company-valuation
 								h1 {{thisCompany.stock.marketCap | wordifyValuation}}
-								span Valuation
+								span  Valuation
 							hr
 							span {{acquiPriceHistory | wordifyValuation}} spent in {{}} Years
 								br
@@ -69,7 +69,7 @@ html
 							div(ng-repeat='company in thisCompany.acquisition')#acquisition-list
 								h2 {{thisCompany.acquisition[$index].name}}
 								h6 {{thisCompany.acquisition[$index].date}}
-								h3 {{thisCompany.acquisition[$index].acquisitionPrice}}
+								h3 {{thisCompany.acquisition[$index].acquisitionPrice | wordifyValuation}}
 				div#company-prediction
 					h1 Data Analysis
 					div#prediction-container
@@ -85,7 +85,7 @@ html
 					h5 {{thisCompany.acquisition[$index].date}}
 					h4 
 						a(href='{{thisCompany.acquisition[$index].infoLink}}') More Info
-					h1 {{thisCompany.acquisition[$index].acquisitionPrice}}
+					h1 {{thisCompany.acquisition[$index].acquisitionPrice | wordifyValuation}}
 					h3 {{thisCompany.acquisition[$index].industry[0]}}
 		footer
 		script(defer src='libs/angular/angular.js')
