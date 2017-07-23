@@ -47,8 +47,12 @@ nav {
 		margin: 0 auto;
 		#nav-brand {
 			display: inline-block;
-			span {
-				font-weight: 800;
+			a {
+				svg {
+					display: inline-block;
+					vertical-align: middle;
+					padding: 0 0 3px 0;
+				}
 			}
 		}
 		#nav-navigation {
@@ -112,6 +116,38 @@ header {
 					margin: 12px 0 0 0;
 					#recent-data {
 						float: left;
+						div {
+							update-card {
+								display: inline-block;
+								width: 398px;
+								height: 50px;
+								.white-card-style;
+								section {
+									div {
+										display: inline-block;
+										h1 {
+											font-size: 12px;
+											font-weight: 400;
+											span {
+												font-size: 14px;
+												font-weight: 800;
+											}
+										}
+										h2 {
+											font-size: 10px;
+										}
+									}
+									h3 {
+										display: inline-block;
+										font-size: 12px;
+									}
+									h4 {
+										display: inline-block;
+										font-size: 14px;
+									}
+								}
+							}
+						}
 					}
 					#recent-graph {
 						float: right;
@@ -153,8 +189,51 @@ main {
 						color: #FFF;
 						width: 100%;
 						height: 100%;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: center;
+						#home-company-top {
+							width: 100%;
+							height: 33%;
+							h3 {
+								font-size: 10px;
+								font-weight: 800;
+								float: right;
+							}
+						}
 						#home-company-info {
 							text-align: center;
+							height: 33%;
+							h1 {
+								font-size: 28px;
+								font-weight: 800;
+								margin: 0 0 0 0;
+								line-height: 30px;
+							}
+							h6 {
+								font-size: 12px;
+								font-weight: 300;
+								margin: 5px 0 0 0;
+								span {
+									font-size: 14px;
+									font-weight: 800;
+								}
+							}
+						}
+						#home-company-bottom {
+							width: 100%;
+							height: 33%;
+							h4 {
+								font-size: 10px;
+								font-weight: 300;
+								float: left;
+							}
+							h3 {
+								font-size: 12px;
+								font-weight: 300;
+								float: right;
+							}
 						}
 					}
 				}
