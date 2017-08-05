@@ -55,7 +55,7 @@ html
 							hr
 							span {{acquiPriceHistory | wordifyValuation}} spent in {{}} Years
 								br
-								| on {{thisCompany.acquisition.length}} Acquisitions + 
+								| on {{thisCompany.acquisition.length - undisclosed.length}} Acquisitions + 
 								br
 								| {{undisclosed.length}} Undisclosed Deals
 					div#company-acquisition-graph
@@ -68,7 +68,7 @@ html
 							h1 Recent Acquisitions
 							div(ng-repeat='company in thisCompany.acquisition')#acquisition-list
 								h2 {{thisCompany.acquisition[$index].name}}
-								h6 {{thisCompany.acquisition[$index].date}}
+								h6 {{thisCompany.acquisition[$index].date | date:'MMMM dd, yyyy'}}
 								h3 {{thisCompany.acquisition[$index].acquisitionPrice | wordifyValuation}}
 				div#company-prediction
 					h1 Data Analysis
@@ -82,7 +82,7 @@ html
 				h1 Full Acquisition List
 				div(ng-repeat='company in thisCompany.acquisition')#acquisition-list
 					h2 {{thisCompany.acquisition[$index].name}}
-					h5 {{thisCompany.acquisition[$index].date}}
+					h5 {{thisCompany.acquisition[$index].date | date:'MMMM dd, yyyy'}}
 					h4 
 						a(href='{{thisCompany.acquisition[$index].infoLink}}') More Info
 					h1 {{thisCompany.acquisition[$index].acquisitionPrice | wordifyValuation}}

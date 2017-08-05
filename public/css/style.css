@@ -123,13 +123,28 @@ header .container #data-snapshot #snapshot-container #data-container #recent-dat
   width: 398px;
   height: 50px;
   margin: 0 0 14.6px 0;
+  position: relative;
   background: #FFFFFF;
   border: 1px solid rgba(106, 106, 106, 0.5);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
   border-radius: 3px;
 }
+header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card h1,
+header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card h2,
+header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card h3,
+header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card h4 {
+  margin: 0;
+}
+header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card section {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card section div {
   display: inline-block;
+  margin: 0 0 0 15px;
+  width: 125px;
 }
 header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card section div h1 {
   font-size: 12px;
@@ -141,6 +156,8 @@ header .container #data-snapshot #snapshot-container #data-container #recent-dat
 }
 header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card section div h2 {
   font-size: 10px;
+  font-weight: 800;
+  margin: 2px 0 0 0;
 }
 header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card section h3 {
   display: inline-block;
@@ -149,6 +166,7 @@ header .container #data-snapshot #snapshot-container #data-container #recent-dat
 header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card section h4 {
   display: inline-block;
   font-size: 14px;
+  margin: 0 15px 0 0;
 }
 header .container #data-snapshot #snapshot-container #data-container #recent-graph {
   float: right;
@@ -195,6 +213,7 @@ main .container #card-container div graph-card {
   margin: 19px 0 0 0;
   display: inline-block;
   margin: 0 19px 0 0;
+  padding: 0 15px 0 15px;
 }
 main .container #card-container div graph-card section {
   color: #FFF;
@@ -227,7 +246,7 @@ main .container #card-container div graph-card section #home-company-info h1 {
 main .container #card-container div graph-card section #home-company-info h6 {
   font-size: 12px;
   font-weight: 300;
-  margin: 5px 0 0 0;
+  margin: 10px 0 0 0;
 }
 main .container #card-container div graph-card section #home-company-info h6 span {
   font-size: 14px;
@@ -236,16 +255,17 @@ main .container #card-container div graph-card section #home-company-info h6 spa
 main .container #card-container div graph-card section #home-company-bottom {
   width: 100%;
   height: 33%;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
 }
 main .container #card-container div graph-card section #home-company-bottom h4 {
   font-size: 10px;
   font-weight: 300;
-  float: left;
 }
 main .container #card-container div graph-card section #home-company-bottom h3 {
   font-size: 12px;
   font-weight: 300;
-  float: right;
 }
 main#company {
   background: linear-gradient(-90deg, #FCFCFC 50%, #1D1D1D 50%);

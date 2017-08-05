@@ -6,12 +6,22 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , 'acquibas
             angular.forEach(data, function(value, key) {
                 $scope.acquisition = $scope.companys[key].company.acquisition;
                 $scope.acquisition.parentCompany = $scope.companys[key].company.name;
+
                 angular.forEach($scope.acquisition, function(value, key) {
                     value.parentCompany = $scope.acquisition.parentCompany;
                     $scope.acquisitionData[$scope.acquisitionData.length] = value;
                 });
+                //Calculate Newest Date
+                $scope.acquisition.newestDate = new Date();
+                for(var i = 0; i < $scope.acquisition.length; i++) {
+                    console.log($scope.acquisition[i].date);
+                    if($scope.acquisition[i].date > $scope.acquisition.newestDate) {
+                        $scope.acquisition.newestDate = $scope.acquisition[i].date
+                    }
+                }
+
+                return $scope.acquisition;
             })
-            console.log(data[0].company.acquisition[0].date);
         });
 }]);
 acquibaseApp.controller('dataRestrictController' , ['$scope' , '$http' , '$location' , 'acquibaseFactory', function($scope , $http, $location , acquibaseFactory) {

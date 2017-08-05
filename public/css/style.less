@@ -122,10 +122,21 @@ header {
 								width: 398px;
 								height: 50px;
 								margin: 0 0 14.6px 0;
+								position: relative;
 								.white-card-style;
+								h1 , h2 , h3 , h4 {
+									margin: 0;
+								}
 								section {
+									height: 100%;
+									display: flex;
+									align-items: center;
+									justify-content: space-between;
+									align-items: center;
 									div {
 										display: inline-block;
+										margin: 0 0 0 15px;
+										width: 125px;
 										h1 {
 											font-size: 12px;
 											font-weight: 400;
@@ -136,6 +147,8 @@ header {
 										}
 										h2 {
 											font-size: 10px;
+											font-weight: 800;
+											margin: 2px 0 0 0;
 										}
 									}
 									h3 {
@@ -145,6 +158,7 @@ header {
 									h4 {
 										display: inline-block;
 										font-size: 14px;
+										margin: 0 15px 0 0;
 									}
 								}
 							}
@@ -186,6 +200,7 @@ main {
 					.dark-card-style;
 					display: inline-block;
 					margin: 0 19px 0 0;
+					padding: 0 15px 0 15px;
 					section {
 						color: #FFF;
 						width: 100%;
@@ -215,7 +230,7 @@ main {
 							h6 {
 								font-size: 12px;
 								font-weight: 300;
-								margin: 5px 0 0 0;
+								margin: 10px 0 0 0;
 								span {
 									font-size: 14px;
 									font-weight: 800;
@@ -225,15 +240,16 @@ main {
 						#home-company-bottom {
 							width: 100%;
 							height: 33%;
+							display: flex;
+							align-items: end;
+							justify-content: space-between;
 							h4 {
 								font-size: 10px;
 								font-weight: 300;
-								float: left;
 							}
 							h3 {
 								font-size: 12px;
 								font-weight: 300;
-								float: right;
 							}
 						}
 					}

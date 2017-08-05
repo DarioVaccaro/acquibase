@@ -5,10 +5,10 @@
 	</div>
 	<div id="home-company-info">
 		<h1>{{company.company.name}}</h1>
-		<h6><span>{{company.company.industry}} Company </span>founded in {{company.company.foundedOn}}</h6>
+		<h6><span>{{company.company.industry}} Company </span>founded in {{company.company.foundedOn | date:'yyyy'}}</h6>
 	</div>
 	<div id="home-company-bottom">
-		<h4>Updated</h4>
-		<h3>in</h3>
+		<h4>Updated {{company.company.acquisition.newestDate | date:'MMMM dd'}}</h4>
+		<h3><span>{{company.company.acquisition.length}} Acquisitions</span> in <span>Years</span></h3>
 	</div>
 </section>
