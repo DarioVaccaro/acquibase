@@ -330,7 +330,8 @@ main#company .container #company-info #company-numbers #company-finance #company
   font-weight: 400;
   font-size: 24px;
 }
-main#company .container #company-info #company-numbers #company-finance span {
+main#company .container #company-info #company-numbers #company-finance #company-look {
+  white-space: pre-line;
   font-weight: 400;
   font-size: 20px;
 }
@@ -343,26 +344,78 @@ main#company .container #company-acquisition-graph {
   border-radius: 3px;
   clear: both;
 }
+main#company .container #company-acquisition-graph #acquisition-history-chart {
+  border-radius: 3px;
+}
+main#company .container #company-acquisition-graph #acquisition-history-chart text[text-anchor=end] {
+  text-transform: uppercase;
+}
+main#company .container #company-acquisition-graph #acquisition-history-chart text[text-anchor=end]:nth-child(2n) {
+  font-weight: 700;
+  color: #FFF;
+}
 main#company .container #lower-data-container {
   margin: 19px 0 0 0;
 }
 main#company .container #lower-data-container #company-stock-graph {
-  width: 63%;
+  width: 53%;
   height: 211px;
   float: left;
+  color: #FFF;
   background: #1B1B1B;
   border: 1px solid #383838;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
   border-radius: 3px;
 }
+main#company .container #lower-data-container #company-stock-graph h1 {
+  font-size: 20px;
+  margin: 10px 0 0 10px;
+}
+main#company .container #lower-data-container #company-stock-graph h6 {
+  font-size: 10px;
+  font-weight: 400;
+  margin: 5px 0 0 10px;
+  opacity: .6;
+}
+main#company .container #lower-data-container #company-stock-graph h4 {
+  float: right;
+  font-size: 11px;
+}
 main#company .container #lower-data-container #company-recent-acqusitions {
-  width: 34%;
+  width: 44%;
   height: 211px;
   float: right;
+  color: #FFF;
   background: #1B1B1B;
   border: 1px solid #383838;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
   border-radius: 3px;
+}
+main#company .container #lower-data-container #company-recent-acqusitions h1 {
+  font-size: 20px;
+  margin: 10px 0 0 10px;
+}
+main#company .container #lower-data-container #company-recent-acqusitions #acquisition-list {
+  height: 50px;
+}
+main#company .container #lower-data-container #company-recent-acqusitions #acquisition-list #acquisition-list-info {
+  float: left;
+}
+main#company .container #lower-data-container #company-recent-acqusitions #acquisition-list #acquisition-list-info h2 {
+  font-size: 16px;
+  margin: 10px 0 0 10px;
+}
+main#company .container #lower-data-container #company-recent-acqusitions #acquisition-list #acquisition-list-info h6 {
+  font-weight: 400;
+  margin: 5px 0 0 10px;
+}
+main#company .container #lower-data-container #company-recent-acqusitions #acquisition-list #acquisition-list-price {
+  float: right;
+}
+main#company .container #lower-data-container #company-recent-acqusitions #acquisition-list #acquisition-list-price h3 {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 15px 10px 0 0;
 }
 main#company .container #company-prediction {
   width: 385px;
@@ -408,13 +461,63 @@ main#company .container #company-prediction #prediction-container #upcoming-pred
 }
 #full-acquisition-list {
   padding: 25px 0 25px 0;
+  color: #FFF;
+}
+#full-acquisition-list .container {
+  position: relative;
+  text-align: center;
 }
 #full-acquisition-list .container h1 {
-  color: #FFF;
   font-weight: 800;
   font-size: 25px;
   letter-spacing: .8px;
+  margin: 0 0 30px 0;
+  text-align: left;
+}
+#full-acquisition-list .container #acquisition-full {
+  text-align: left;
+}
+#full-acquisition-list .container #acquisition-full div {
+  display: inline-block;
+}
+#full-acquisition-list .container #acquisition-full #acquisition-full-info {
+  width: 25%;
+}
+#full-acquisition-list .container #acquisition-full #acquisition-full-info h2 {
+  margin: 0 0 5px 0;
+}
+#full-acquisition-list .container #acquisition-full #acquisition-full-info h5 {
+  font-weight: 400;
   margin: 0 0 0 0;
+}
+#full-acquisition-list .container #acquisition-full #acquisition-full-link {
+  width: 10%;
+}
+#full-acquisition-list .container #acquisition-full #acquisition-full-link h4 {
+  font-size: 12px;
+  font-weight: 300;
+}
+#full-acquisition-list .container #acquisition-full #acquisition-full-link h4 a {
+  text-decoration: underline;
+}
+#full-acquisition-list .container #acquisition-full #acquisition-full-price {
+  width: 40%;
+}
+#full-acquisition-list .container #acquisition-full #acquisition-full-price h1 {
+  font-size: 30px;
+}
+#full-acquisition-list .container #acquisition-full #acquisition-full-industry {
+  width: 25%;
+}
+#full-acquisition-list .container #acquisition-full #acquisition-full-industry h3 {
+  font-size: 16px;
+  text-align: right;
+}
+#full-acquisition-list .container span {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: underline;
 }
 footer {
   height: 155px;

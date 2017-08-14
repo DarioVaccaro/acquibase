@@ -53,23 +53,24 @@ html
 								h1 {{thisCompany.stock.marketCap | wordifyValuation}}
 								span  Valuation
 							hr
-							span {{acquiPriceHistory | wordifyValuation}} spent in {{}} Years
-								br
+							span#company-look {{acquiPriceHistory | wordifyValuation}} spent in {{thisCompany.acquisition.dateRange}} Years
 								| on {{thisCompany.acquisition.length - undisclosed.length}} Acquisitions + 
-								br
 								| {{undisclosed.length}} Undisclosed Deals
 					div#company-acquisition-graph
+						div(style='width: 100%; height: 290px;')#acquisition-history-chart
 					div#lower-data-container
 						div#company-stock-graph
 							h1 Stock Data
 							h6 Full publically traded history
-							h4 Dots represent acquisitions and distance to graph represent value
+							//- h4 Dots represent acquisitions and distance to graph represent value
 						div#company-recent-acqusitions
 							h1 Recent Acquisitions
 							div(ng-repeat='company in thisCompany.acquisition')#acquisition-list
-								h2 {{thisCompany.acquisition[$index].name}}
-								h6 {{thisCompany.acquisition[$index].date | date:'MMMM dd, yyyy'}}
-								h3 {{thisCompany.acquisition[$index].acquisitionPrice | wordifyValuation}}
+								div#acquisition-list-info
+									h2 {{thisCompany.acquisition[$index].name}}
+									h6 {{thisCompany.acquisition[$index].date | date:'MMMM dd, yyyy'}}
+								div#acquisition-list-price
+									h3 {{thisCompany.acquisition[$index].acquisitionPrice | wordifyValuation}}
 				div#company-prediction
 					h1 Data Analysis
 					div#prediction-container
@@ -80,15 +81,21 @@ html
 		section#full-acquisition-list
 			div.container
 				h1 Full Acquisition List
-				div(ng-repeat='company in thisCompany.acquisition')#acquisition-list
-					h2 {{thisCompany.acquisition[$index].name}}
-					h5 {{thisCompany.acquisition[$index].date | date:'MMMM dd, yyyy'}}
-					h4 
-						a(href='{{thisCompany.acquisition[$index].infoLink}}') More Info
-					h1 {{thisCompany.acquisition[$index].acquisitionPrice | wordifyValuation}}
-					h3 {{thisCompany.acquisition[$index].industry[0]}}
+				div(ng-repeat='company in thisCompany.acquisition')#acquisition-full
+					div#acquisition-full-info
+						h2 {{thisCompany.acquisition[$index].name}}
+						h5 Acquired on {{thisCompany.acquisition[$index].date | date:'MMMM dd, yyyy'}}
+					div#acquisition-full-link
+						h4 
+							a(href='{{thisCompany.acquisition[$index].infoLink}}') More Info
+					div#acquisition-full-price
+						h1 {{thisCompany.acquisition[$index].acquisitionPrice | wordifyValuation}}
+					div#acquisition-full-industry
+						h3 {{thisCompany.acquisition[$index].industry[0]}}
+				span View More
 		footer
 		script(defer src='libs/angular/angular.js')
+		script(defer src='https://www.gstatic.com/charts/loader.js')
 		script(defer src='js/app.js')
 		script(defer src='js/filters.js')
 		script(defer src='js/directives/graphcard.js')

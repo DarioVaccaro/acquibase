@@ -320,7 +320,8 @@ main#company {
 							font-size: 24px;
 						}
 					}
-					span {
+					#company-look {
+						white-space: pre-line;
 						font-weight: 400;
 						font-size: 20px;
 					}
@@ -332,20 +333,72 @@ main#company {
 			height: 290px;
 			.dark-graph-style;
 			clear: both;
+			#acquisition-history-chart {
+				border-radius: 3px;
+				text[text-anchor=end] {
+					text-transform: uppercase;
+				}
+				text[text-anchor=end]:nth-child(2n) {
+					font-weight: 700;
+					color: #FFF;
+				}
+			}
 		}
 		#lower-data-container {
 			margin: 19px 0 0 0;
 			#company-stock-graph {
-				width: 63%;
+				width: 53%;
 				height: 211px;
 				float: left;
+				color: #FFF;
 				.dark-graph-style;
+				h1 {
+					font-size: 20px;
+					margin: 10px 0 0 10px;
+				}
+				h6 {
+					font-size: 10px;
+					font-weight: 400;
+					margin: 5px 0 0 10px;
+					opacity: .6;
+				}
+				h4 {
+					float: right;
+					font-size: 11px;
+				}
 			}
 			#company-recent-acqusitions {
-				width: 34%;
+				width: 44%;
 				height: 211px;
 				float: right;
+				color: #FFF;
 				.dark-graph-style;
+				h1 {
+					font-size: 20px;
+					margin: 10px 0 0 10px;
+				}
+				#acquisition-list {
+					height: 50px;
+					#acquisition-list-info {
+						float: left;
+						h2 {
+							font-size: 16px;
+							margin: 10px 0 0 10px;
+						}
+						h6 {
+							font-weight: 400;
+							margin: 5px 0 0 10px;
+						}
+					}
+					#acquisition-list-price {
+						float: right;
+						h3 {
+							font-size: 15px;
+							font-weight: 500;
+							margin: 15px 10px 0 0;
+						}
+					}
+				}
 			}
 		}
 		#company-prediction {
@@ -385,13 +438,61 @@ main#company {
 }
 #full-acquisition-list {
 	padding: 25px 0 25px 0;
+	color: #FFF;
 	.container {
+		position: relative;
+		text-align: center;
 		h1 {
-			color: #FFF;
 			font-weight: 800;
 			font-size: 25px;
 			letter-spacing: .8px;
-			margin: 0 0 0 0;
+			margin: 0 0 30px 0;
+			text-align: left;
+		}
+		#acquisition-full {
+			text-align: left;
+			div {
+				display: inline-block;
+			}
+			#acquisition-full-info {
+				width: 25%;
+				h2 {
+					margin: 0 0 5px 0;
+				}
+				h5 {
+					font-weight: 400;
+					margin: 0 0 0 0;
+				}
+			}
+			#acquisition-full-link {
+				width: 10%;
+				h4 {
+					font-size: 12px;
+					font-weight: 300;
+					a {
+						text-decoration: underline;
+					}
+				}
+			}
+			#acquisition-full-price {
+				width: 40%;
+				h1 {
+					font-size: 30px;
+				}
+			}
+			#acquisition-full-industry {
+				width: 25%;
+				h3 {
+					font-size: 16px;
+					text-align: right;
+				}
+			}
+		}
+		span {
+			display: inline-block;
+			font-size: 14px;
+			font-weight: 400;
+			text-decoration: underline;
 		}
 	}
 }
