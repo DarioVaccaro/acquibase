@@ -51,7 +51,7 @@ acquibaseApp.controller('dataRestrictController' , ['$scope' , '$http' , '$locat
                 $scope.thisCompany.acquisition.dateRange = (todaysDate.getFullYear() - endDate.getFullYear());
 
                 var dateInMonths = new Date($scope.thisCompany.acquisition[key].date).getMonth()
-                var acquiChartRow = ['', new Date($scope.thisCompany.acquisition[key].date), Number(dateInMonths), $scope.thisCompany.acquisition[key].acquisitionPrice, $scope.thisCompany.acquisition[key].acquisitionPrice];
+                var acquiChartRow = ['', new Date($scope.thisCompany.acquisition[key].date), Number(dateInMonths) + 1, $scope.thisCompany.acquisition[key].acquisitionPrice, $scope.thisCompany.acquisition[key].acquisitionPrice];
 
                 acquiChartList.splice(key, 0, acquiChartRow);
             });
@@ -109,4 +109,14 @@ acquibaseApp.controller('dataRestrictController' , ['$scope' , '$http' , '$locat
 
             chart.draw(data, options);
         }
+}]);
+acquibaseApp.controller('stockGraphController' ,['$scope' , '$http', function($http, $scope) {
+    var url;
+    $http.jsonp(url).success(function(data) {
+        $scope.stocPrices = {
+            items: data.query.results.quote
+        }
+    }).error(function(data) {
+        console.log('Error' + data);
+    });
 }]);
