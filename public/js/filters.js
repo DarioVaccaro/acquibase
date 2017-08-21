@@ -10,4 +10,8 @@ angular.module( 'acquibaseApp')
 		number = "Undisclosed";
 		return number;
 	}
+}).filter('reverse' , function() {
+	return function(items) {
+		return items.slice().reverse();
+	}
 });

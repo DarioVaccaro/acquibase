@@ -1,114 +1,189 @@
-var todaysDate = new Date();
+const todaysDate = new Date();
 acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , 'acquibaseFactory', function($scope , $http , acquibaseFactory) {
     acquibaseFactory.get()
         .success(function(data) {
+            //Sets $scope to the array of documents in the database
             $scope.companys = data;
+            //Initalizes an array for all acquisitions
             $scope.acquisitionData = [];
+            //Iterates through the entire database
             angular.forEach(data, function(value, key) {
+                //Sets $scope to array of acquisitions for each company
                 $scope.acquisition = $scope.companys[key].company.acquisition;
+                //Sets a parent company for a callback to each parent document
                 $scope.acquisition.parentCompany = $scope.companys[key].company.name;
-
+                //Iterates through each acquisitions and adds all acquisitions to the acquisitionData array
                 angular.forEach($scope.acquisition, function(value, key) {
                     value.parentCompany = $scope.acquisition.parentCompany;
                     $scope.acquisitionData[$scope.acquisitionData.length] = value;
+                    $scope.acquisitionData.sort(function(a , b) {
+                        return new Date(a.date) - new Date(b.date);
+                    });
+                    $scope.acquisitionData.reverse();
                 });
-                //Calculate Newest Date
-                $scope.acquisition.newestDate = $scope.acquisition[0].date;
-                $scope.acquisition.oldestDate = Date();
-                for(var i = 0; i < $scope.acquisition.length; i++) {
-                    if($scope.acquisition[i].date > $scope.acquisition.newestDate) {
-                        $scope.acquisition.newestDate = $scope.acquisition[i].date;
-                    }
-                    if ($scope.acquisition[i].date < $scope.acquisition.oldestDate) {
-                        $scope.acquisition.oldestDate = $scope.acquisition[i].date;
-                    }
-                }
-                var endDate = new Date($scope.acquisition.oldestDate);
-                $scope.acquisition.dateRange = (todaysDate.getFullYear() - endDate.getFullYear());
-                return $scope.acquisition;
             })
         });
+        //Calculates when the last time a company was updated
+        $scope.dateBounds = function(date) {
+            var newestDate = date[0].date;
+            for(var i = 0; i < date.length; i++) {
+                if(date[i].date > newestDate) {
+                    newestDate = date[i].date;
+                } if(date[i].date === newestDate) {
+                    newestDate = date[i].date;
+                }
+            }
+            return newestDate
+        }
+        //Calculates total range of years each company has acquired from
+        $scope.dateRange = function(date) {
+            var oldestDate = Date();
+            for(var i = 0; i < date.length; i++) {
+                if (date[i].date < oldestDate) {
+                    oldestDate = date[i].date;
+                }
+            }
+            return todaysDate.getFullYear() - new Date(oldestDate).getFullYear();
+        }
 }]);
-var acquiChartList = [];
+var endDate, dataArray = [], yearList = {};
 acquibaseApp.controller('dataRestrictController' , ['$scope' , '$http' , '$location' , 'acquibaseFactory', function($scope , $http, $location , acquibaseFactory) {
     acquibaseFactory.get()
         .success(function(data) {
+            //Set the $scope to the company found in the URL
             angular.forEach(data, function(value , key) {
                 if(value.company.name === $location.path().replace('/' , '')) {
-                     $scope.thisCompany = value.company;
+                    $scope.thisCompany = value.company;
                 }
             })
+            //Array of undisclosed companies
             $scope.undisclosed = [];
+            //Array of Industries thisCompany has acquired from
+            $scope.acquiredIndustries = [];
+            //Sets total acquisition value
             $scope.acquiPriceHistory = 0;
+            //Sets average time between acquisitions
+            $scope.averageTime = 0;
+            //Sets Object with year of most acquisitions
+            $scope.mostAcquiredYear = {'number': 0};
+            //Sets Object with months and their corresponding acquisition amounts
+            $scope.mostAcquiredMonth = {'list': {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0}, 'number': 0};
+            //Sets oldest acquisition date
             $scope.thisCompany.acquisition.oldestDate = Date();
+            //Iterates through all of thisCompanies acquisitions
             angular.forEach($scope.thisCompany.acquisition , function(value , key) {
+                //Calculates total acquisition value and amount of undisclosed deals
                 value.acquisitionPrice > -1 ? $scope.acquiPriceHistory += value.acquisitionPrice :
                 $scope.undisclosed.push(value.acquisitionPrice);
+                //Sets oldest acquisition date
                 if($scope.thisCompany.acquisition[key].date < $scope.thisCompany.acquisition.oldestDate) {
                     $scope.thisCompany.acquisition.oldestDate = $scope.thisCompany.acquisition[key].date;
                 }
-                var endDate = new Date($scope.thisCompany.acquisition.oldestDate);
+                //Sets rangs of acquisition dates
+                endDate = new Date($scope.thisCompany.acquisition.oldestDate);
                 $scope.thisCompany.acquisition.dateRange = (todaysDate.getFullYear() - endDate.getFullYear());
-
-                var dateInMonths = new Date($scope.thisCompany.acquisition[key].date).getMonth()
-                var acquiChartRow = ['', new Date($scope.thisCompany.acquisition[key].date), Number(dateInMonths) + 1, $scope.thisCompany.acquisition[key].acquisitionPrice, $scope.thisCompany.acquisition[key].acquisitionPrice];
-
-                acquiChartList.splice(key, 0, acquiChartRow);
-            });
-            acquiChartList.splice(0, 0, ['ID', 'Years', 'Months', 'Is Disclosed', 'Valuation']);
-        });
-
-        google.charts.load('current' , {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawHistoryChart);
-
-        function drawHistoryChart() {
-
-            var data = google.visualization.arrayToDataTable(acquiChartList);
-            //Color: Disclosed/Undisclosed
-            //Opacity: Price of Acquisition
-            //Size: Number of Acquisitions This Month
-            var options = {
-                backgroundColor: '#1B1B1B',
-                chartArea: {
-                    backgroundColor: '#1B1B1B',
-                    left: 40,
-                    width: 760,
-                    height: 240
-                },
-                colorAxis: {
-                    legend: {
-                        position: 'none'
-                    },
-                    colors: ['#F20278' , '#00FFC9'],
-                    minValue: -1,
-                    maxValue: 1
-                },
-                sizeAxis: {
-                    maxSize: 15
-                },
-                bubble: {
-                    stroke: '#1B1B1B'
-                },
-                hAxis: {
-                    baselineColor: '#1B1B1B',
-                    gridlines: {
-                        color: '#1B1B1B',
-                    },
-                    format: 'yyyy',
-                    // format: 'long'
-                },
-                vAxis: {
-                    direction: -1,
-                    ticks: [{v: 1, f: 'Jan'}, {v: 2, f: 'Feb'}, {v: 3, f: 'Mar'}, {v: 4, f: 'Apr'}, {v: 5, f: 'May'}, {v: 6, f: 'Jun'}, {v: 7, f: 'Jul'}, {v: 8, f: 'Aug'}, {v: 9, f: 'Sep'}, {v: 10, f: 'Oct'}, {v: 11, f: 'Nov'}, {v: 12, f: 'Dec'}],
-                    gridlines: {
-                        color: '#1B1B1B',
-                    },
+                //Fills array with industry names
+                for(i = 0; i <$scope.thisCompany.acquisition[key].industry.length; i++ ) {
+                    $scope.acquiredIndustries.push($scope.thisCompany.acquisition[key].industry[i]);
                 }
-            };
-            var chart = new google.visualization.BubbleChart(document.getElementById('acquisition-history-chart'));
-
-            chart.draw(data, options);
+                //Sets time between acquisitions to a number and adds all milliseconds together
+                $scope.averageTime += Number(new Date($scope.thisCompany.acquisition[key].date).getTime());
+                //Fills graph array with coordinates
+                dataArray.push({
+                    'x_axis': new Date($scope.thisCompany.acquisition[key].date),
+                    'y_axis': new Date($scope.thisCompany.acquisition[key].date).getMonth(),
+                    'radius': '20',
+                    'color': 'red'
+                });
+                //Calculates most acquired year
+                for(i = new Date($scope.thisCompany.acquisition.oldestDate).getFullYear(); i <= todaysDate.getFullYear(); i++) {
+                    if(new Date($scope.thisCompany.acquisition[key].date).getFullYear() === i) {
+                        if(yearList[i] >= 1) {
+                            yearList[i] = yearList[i] + 1;
+                        } else {
+                            yearList[i] = 1;
+                        }
+                    }
+                    if(yearList[i] > $scope.mostAcquiredYear['number']) {
+                        $scope.mostAcquiredYear['date'] = i;
+                        $scope.mostAcquiredYear['number'] = yearList[i];
+                    }
+                }
+                //Calculates most acquired month
+                for(j = 0; j < 12; j++) {
+                    if(new Date($scope.thisCompany.acquisition[key].date).getMonth() === j) {
+                        $scope.mostAcquiredMonth.list[new Date($scope.thisCompany.acquisition[key].date).getMonth()] = $scope.mostAcquiredMonth.list[new Date($scope.thisCompany.acquisition[key].date).getMonth()] + 1;
+                    }
+                    if($scope.mostAcquiredMonth.list[j] > $scope.mostAcquiredMonth['number']) {
+                        $scope.mostAcquiredMonth['month'] = new Date(todaysDate.getFullYear() , j);
+                        $scope.mostAcquiredMonth['number'] = $scope.mostAcquiredMonth.list[j];
+                    }
+                }
+            });
+            //Filters duplicates from industry list
+            var filteredIndustries = [$scope.acquiredIndustries[0]];
+            for(i = 0; i < $scope.acquiredIndustries.length; i++) {
+               for(j = 0; j < filteredIndustries.length; j++) {
+                    if(filteredIndustries.indexOf($scope.acquiredIndustries[i]) === -1) {
+                        filteredIndustries.push($scope.acquiredIndustries[i]);
+                    }
+               }
+            }
+            $scope.acquiredIndustries = filteredIndustries;
+            //Sets average time between acquisitions
+            $scope.averageTime = ((todaysDate.getFullYear() - new Date($scope.averageTime / $scope.thisCompany.acquisition.length).getFullYear()) * 12)
+                + (todaysDate.getMonth() - new Date($scope.averageTime / $scope.thisCompany.acquisition.length).getMonth());
+            //Creaes D3 graph
+            var foundedOn = new Date($scope.thisCompany.foundedOn);
+            const parseTime = d3.timeParse("%b");
+            const selectGraph = d3.select('#acquisition-history-chart').append('svg')
+                .attr('width' , '100%')
+                .attr('height' , '100%');
+            const xScale = d3.scaleTime()
+                .domain([foundedOn , todaysDate])
+                .range([0 , 700]);
+            const yScale = d3.scaleTime()
+                .domain([new Date(2012, 11, 31) , new Date(2012, 0, 1)])
+                .range([240 , 0]);
+            const xAxis = d3.axisBottom()
+                .scale(xScale);
+            const yAxis = d3.axisLeft()
+                .scale(yScale)
+                .tickFormat(d3.timeFormat("%b"));
+            const circles = selectGraph.selectAll('circle')
+                .data(dataArray)
+                    .enter()
+                    .append('circles');
+            const circleAttributes = circles
+                .attr('cx' , function(d) { return xScale(d.x_axis); })
+                .attr('cy' , function(d) { return d.y_axis; })
+                .attr('r' , function(d) { return d.radius; })
+                .style('fill' , function(d) { return d.color; });
+            selectGraph.append('g')
+                .attr('transform', 'translate(50, 260)')
+                .attr('class' , 'xAxis')
+                .call(xAxis);
+            selectGraph.append('g')
+                .attr('transform', 'translate(20, 35)')
+                .attr('class' , 'yAxis')
+                .call(yAxis);
+    });
+    $scope.quantity = 5;
+    $scope.updateQuantity = function() {
+        $scope.quantity += 10;
+    }
+    $scope.stockCalc = function(date , acquisitions) {
+        var dateInYears = new Date(date).getFullYear(), dateInMonths = new Date(date).getMonth() , yearList = [], foundName;
+        for(i = 0; i < acquisitions.length; i++) {
+            if (new Date(acquisitions[i].date).getFullYear() <= dateInYears) {
+                yearList.push(acquisitions[i]) 
+            }
         }
+        yearList.sort(function(a , b) {
+            return new Date(b.date) - new Date(a.date);
+        });
+        return yearList[0].name;
+    }
 }]);
 acquibaseApp.controller('stockGraphController' ,['$scope' , '$http', function($http, $scope) {
     var url;

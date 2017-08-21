@@ -5,7 +5,8 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
 		<title>Acquibase</title>
-		<link href="css/style.css" rel="stylesheet">
+		<link rel="shortcut icon" href="img/favicon.png">
+		<link href="css/style.css" rel="preload stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,600,700,800,900" rel="stylesheet">
 		<base href="/">
 	</head>
@@ -39,14 +40,17 @@
 					</a>
 				</div><div id="nav-navigation">
 					<ul>
-						<li>
+<!-- 						<li>
 							<a href="/Microsoft">Company Profiles</a>
-						</li>
+						</li> -->
 						<li>
 							<a href="/compare">Compare Data</a>
 						</li>
 						<li>
 							<a href="/search">Search</a>
+						</li>
+						<li>
+							<a href="/blog">Blog</a>
 						</li>
 						<li>
 							<a href="/contact">Contact</a>
@@ -66,7 +70,7 @@
 						<h6>Click on an entry to view more data about the company</h6>
 						<div id="data-container">
 							<div id="recent-data">
-								<div ng-repeat="company in acquisitionData | orderBy: orderByDate | limitTo: 5 track by $index">
+								<div ng-repeat="company in acquisitionData | limitTo: 5 track by $index">
 									<update-card></update-card>
 								</div>
 							</div>

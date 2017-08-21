@@ -192,14 +192,16 @@ main {
 		}
 		#card-container {
 			margin: 19px 0 19px 0;
+			display: flex;
+			justify-content: space-between;
 			div {
 				display: inline-block;
 				graph-card {
-					width: 285.75px;
+					width: 252.5px;
 					height: 226px;
 					.dark-card-style;
 					display: inline-block;
-					margin: 0 19px 0 0;
+					margin: 0 0 0 0;
 					padding: 0 15px 0 15px;
 					section {
 						color: #FFF;
@@ -209,6 +211,14 @@ main {
 						flex-direction: column;
 						align-items: center;
 						justify-content: center;
+						position: relative;
+						#home-company-link {
+							position: absolute;
+							width: 100%;
+							height: 100%;
+							z-index: 9999;
+							padding: 0 15px 0 15px;
+						}
 						#home-company-top {
 							width: 100%;
 							height: 33%;
@@ -335,12 +345,28 @@ main#company {
 			clear: both;
 			#acquisition-history-chart {
 				border-radius: 3px;
-				text[text-anchor=end] {
-					text-transform: uppercase;
+				.xAxis , .yAxis{
+					path, line {
+						stroke: #1B1B1B;
+					}
+					text {
+						fill: white;
+					}
 				}
-				text[text-anchor=end]:nth-child(2n) {
-					font-weight: 700;
-					color: #FFF;
+				.yAxis text{
+					text-transform: uppercase;
+					font-weight: 300;
+					text-anchor: start;
+				}
+				.yAxis g:nth-child(odd) text{
+					font-size: 8px;
+					stroke: #B9B9B9
+				}
+				.yAxis g:nth-child(even) text{
+					font-size: 11px;
+				}
+				.xAxis g:nth-child(even) text {
+					stroke: #B9B9B9;
 				}
 			}
 		}
@@ -416,21 +442,75 @@ main#company {
 			#prediction-container {
 				margin: 12px 0 0 0;
 				#predictions {
-					width: 385px;
-					height: 108px;
+					width: 359px;
+					height: 67px;
 					.white-card-style;
+					padding: 13px 13px 13px 13px;
+					h2 {
+						font-size: 17px;
+						font-weight: 800;
+						margin: 0 0 5px 0;
+					}
+					span {
+						font-size: 14px;
+						font-weight: 500;
+					}
+					#prediction-company-number , #prediction-month-average {
+						font-weight: 800;
+					}
 				}
 				#historical-data {
 					margin: 19px 0 0 0;
-					width: 385px;
-					height: 208px;
+					width: 359px;
 					.white-card-style;
+					padding: 13px 13px 13px 13px;
+					h2 {
+						font-size: 17px;
+						font-weight: 800;
+						margin: 0 0 0 0;
+					}
+					h4 {
+						font-size: 14px;
+						font-weight: 800;
+						margin: 5px 0 0 0;
+					}
+					h6 {
+						margin: 5px 0 0 0;
+					}
 				}
-				#upcoming-prediction {
+				#deal-container {
 					margin: 19px 0 0 0;
-					width: 385px;
-					height: 73px;
+					width: 359px;
+					height: 43px;
 					.white-card-style;
+					padding: 13px 13px 13px 13px;
+					position: relative;
+					#deal-link {
+						position: absolute;
+						width: 100%;
+						height: 100%;
+						z-index: 9999;
+						margin: -13px 0 0 0;
+					}
+					h2 {
+						font-size: 17px;
+						font-weight: 800;
+						margin: 0 0 5px 0;
+					}
+					h6 {
+						margin: 5px 0 0 0;
+					}
+				}
+				#subscription-options {
+					margin: 19px 0 0 0;
+					width: 359px;
+					.white-card-style;
+					padding: 13px 13px 13px 13px;
+					h2 {
+						font-size: 17px;
+						font-weight: 800;
+						margin: 0 0 0 0;
+					}
 				}
 			}
 		}	

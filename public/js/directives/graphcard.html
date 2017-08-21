@@ -1,4 +1,5 @@
 <section>
+	<a id="home-company-link" href="/{{company.company.name}}"></a>
 	<div id="home-company-top">
 		<span></span>
 		<h3>{{company.company.stock.marketCap | wordifyValuation}} Valuation</h3>
@@ -8,7 +9,7 @@
 		<h6><span>{{company.company.industry}} Company </span>founded in {{company.company.foundedOn | date:'yyyy'}}</h6>
 	</div>
 	<div id="home-company-bottom">
-		<h4>Updated {{company.company.acquisition.newestDate | date:'MMMM dd'}}</h4>
-		<h3><span>{{company.company.acquisition.length}} Acquisitions</span> in <span>{{company.company.acquisition.dateRange}} Years</span></h3>
+		<h4>Updated {{dateBounds(company.company.acquisition) | date:'MMMM dd'}}</h4>
+		<h3><span>{{company.company.acquisition.length}} Acquisitions</span> in <span>{{dateRange(company.company.acquisition)}} Years</span></h3>
 	</div>
 </section>

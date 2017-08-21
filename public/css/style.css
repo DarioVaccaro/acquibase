@@ -199,12 +199,14 @@ main .container #filter-bar {
 }
 main .container #card-container {
   margin: 19px 0 19px 0;
+  display: flex;
+  justify-content: space-between;
 }
 main .container #card-container div {
   display: inline-block;
 }
 main .container #card-container div graph-card {
-  width: 285.75px;
+  width: 252.5px;
   height: 226px;
   background: #1B1B1B;
   border: 1px solid #383838;
@@ -212,7 +214,7 @@ main .container #card-container div graph-card {
   border-radius: 3px;
   margin: 19px 0 0 0;
   display: inline-block;
-  margin: 0 19px 0 0;
+  margin: 0 0 0 0;
   padding: 0 15px 0 15px;
 }
 main .container #card-container div graph-card section {
@@ -223,6 +225,14 @@ main .container #card-container div graph-card section {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+main .container #card-container div graph-card section #home-company-link {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  padding: 0 15px 0 15px;
 }
 main .container #card-container div graph-card section #home-company-top {
   width: 100%;
@@ -347,12 +357,30 @@ main#company .container #company-acquisition-graph {
 main#company .container #company-acquisition-graph #acquisition-history-chart {
   border-radius: 3px;
 }
-main#company .container #company-acquisition-graph #acquisition-history-chart text[text-anchor=end] {
-  text-transform: uppercase;
+main#company .container #company-acquisition-graph #acquisition-history-chart .xAxis path,
+main#company .container #company-acquisition-graph #acquisition-history-chart .yAxis path,
+main#company .container #company-acquisition-graph #acquisition-history-chart .xAxis line,
+main#company .container #company-acquisition-graph #acquisition-history-chart .yAxis line {
+  stroke: #1B1B1B;
 }
-main#company .container #company-acquisition-graph #acquisition-history-chart text[text-anchor=end]:nth-child(2n) {
-  font-weight: 700;
-  color: #FFF;
+main#company .container #company-acquisition-graph #acquisition-history-chart .xAxis text,
+main#company .container #company-acquisition-graph #acquisition-history-chart .yAxis text {
+  fill: white;
+}
+main#company .container #company-acquisition-graph #acquisition-history-chart .yAxis text {
+  text-transform: uppercase;
+  font-weight: 300;
+  text-anchor: start;
+}
+main#company .container #company-acquisition-graph #acquisition-history-chart .yAxis g:nth-child(odd) text {
+  font-size: 8px;
+  stroke: #B9B9B9;
+}
+main#company .container #company-acquisition-graph #acquisition-history-chart .yAxis g:nth-child(even) text {
+  font-size: 11px;
+}
+main#company .container #company-acquisition-graph #acquisition-history-chart .xAxis g:nth-child(even) text {
+  stroke: #B9B9B9;
 }
 main#company .container #lower-data-container {
   margin: 19px 0 0 0;
@@ -434,30 +462,88 @@ main#company .container #company-prediction #prediction-container {
   margin: 12px 0 0 0;
 }
 main#company .container #company-prediction #prediction-container #predictions {
-  width: 385px;
-  height: 108px;
+  width: 359px;
+  height: 67px;
   background: #FFFFFF;
   border: 1px solid rgba(106, 106, 106, 0.5);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
   border-radius: 3px;
+  padding: 13px 13px 13px 13px;
+}
+main#company .container #company-prediction #prediction-container #predictions h2 {
+  font-size: 17px;
+  font-weight: 800;
+  margin: 0 0 5px 0;
+}
+main#company .container #company-prediction #prediction-container #predictions span {
+  font-size: 14px;
+  font-weight: 500;
+}
+main#company .container #company-prediction #prediction-container #predictions #prediction-company-number,
+main#company .container #company-prediction #prediction-container #predictions #prediction-month-average {
+  font-weight: 800;
 }
 main#company .container #company-prediction #prediction-container #historical-data {
   margin: 19px 0 0 0;
-  width: 385px;
-  height: 208px;
+  width: 359px;
   background: #FFFFFF;
   border: 1px solid rgba(106, 106, 106, 0.5);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
   border-radius: 3px;
+  padding: 13px 13px 13px 13px;
 }
-main#company .container #company-prediction #prediction-container #upcoming-prediction {
+main#company .container #company-prediction #prediction-container #historical-data h2 {
+  font-size: 17px;
+  font-weight: 800;
+  margin: 0 0 0 0;
+}
+main#company .container #company-prediction #prediction-container #historical-data h4 {
+  font-size: 14px;
+  font-weight: 800;
+  margin: 5px 0 0 0;
+}
+main#company .container #company-prediction #prediction-container #historical-data h6 {
+  margin: 5px 0 0 0;
+}
+main#company .container #company-prediction #prediction-container #deal-container {
   margin: 19px 0 0 0;
-  width: 385px;
-  height: 73px;
+  width: 359px;
+  height: 43px;
   background: #FFFFFF;
   border: 1px solid rgba(106, 106, 106, 0.5);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
   border-radius: 3px;
+  padding: 13px 13px 13px 13px;
+  position: relative;
+}
+main#company .container #company-prediction #prediction-container #deal-container #deal-link {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  margin: -13px 0 0 0;
+}
+main#company .container #company-prediction #prediction-container #deal-container h2 {
+  font-size: 17px;
+  font-weight: 800;
+  margin: 0 0 5px 0;
+}
+main#company .container #company-prediction #prediction-container #deal-container h6 {
+  margin: 5px 0 0 0;
+}
+main#company .container #company-prediction #prediction-container #subscription-options {
+  margin: 19px 0 0 0;
+  width: 359px;
+  background: #FFFFFF;
+  border: 1px solid rgba(106, 106, 106, 0.5);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
+  border-radius: 3px;
+  padding: 13px 13px 13px 13px;
+}
+main#company .container #company-prediction #prediction-container #subscription-options h2 {
+  font-size: 17px;
+  font-weight: 800;
+  margin: 0 0 0 0;
 }
 #full-acquisition-list {
   padding: 25px 0 25px 0;

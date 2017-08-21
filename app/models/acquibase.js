@@ -10,6 +10,11 @@ let companySchema = new mongoose.Schema({
 		incorporated: Boolean,
 		stock: {
 			marketCap: Number,
+			symbol: String,
+			allTimeHigh: {
+				quote: Number,
+				date: Date
+			},
 			historicalPrice: [{
 				date: Date,
 				price: Number
