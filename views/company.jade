@@ -9,7 +9,8 @@ html
 		link(href='css/style.css' , rel='stylesheet')
 		link(href='https://fonts.googleapis.com/css?family=Lato:300,400,500,600,700,800,900|family=Poppins:700' , rel='stylesheet')
 		base(href='/')
-	body(ng-app='acquibaseApp' , ng-controller='dataRestrictController')
+	body(ng-app='acquibaseApp' , ng-controller='dataRestrictController' , ng-class="{'disable-scroll': disableScroll}")
+		searchBar
 		nav
 			section#nav-container
 				div#nav-brand
@@ -31,16 +32,11 @@ html
 												path(d='M0,10 L12,10 L12,11.5 C12,12.3284271 11.3204455,13 10.5044548,13 L1.49554521,13 C0.669578397,13 0,12.3342028 0,11.5 L0,10 Z' , fill='#5F5F5F')
 				div#nav-navigation
 					ul
-						//- li 
-						//- 	a(href='/Microsoft') Company Profiles 
 						li 
 							a(href='/compare') Compare Data
+						li(id='nav-search' , ng-click='searchCheck()')  Search
 						li 
-							a(href='/search') Search
-						li 
-							a(href='/blog') Blog
-						li 
-							a(href='/contact') Contact
+							a(href='/about') About
 		main#company
 			section.container
 				div#company-info
@@ -120,11 +116,15 @@ html
 						h3 {{thisCompany.acquisition[$index].industry[0]}}
 				span(ng-if='!(quantity >= thisCompany.acquisition.length)' , ng-click='updateQuantity()') View More
 		footer
+			section#footer-container
+				span Copyright © 2017 Ruby Creative Holdings. All rights reserved.
+				ul
+					li
+						a(href='/contact') Contact
 		script(defer src='libs/angular/angular.js')
 		script(defer src='https://d3js.org/d3.v4.min.js')
 		script(defer src='js/app.js')
 		script(defer src='js/filters.js')
-		script(defer src='js/directives/graphcard.js')
-		script(defer src='js/directives/homeupdaterow.js')
+		script(defer src='js/directives/searchbar.js')
 		script(defer src='js/controllers/acquibaseController.js')
 		script(defer src='js/services/acquibaseFactory.js')

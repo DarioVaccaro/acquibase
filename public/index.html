@@ -10,7 +10,8 @@
 		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,600,700,800,900" rel="stylesheet">
 		<base href="/">
 	</head>
-	<body ng-app="acquibaseApp" ng-controller="dataAccessController">
+	<body ng-app="acquibaseApp" ng-controller="dataAccessController" ng-class="{'disable-scroll': disableScroll}">
+		<searchBar></searchBar>
 		<nav>
 			<section id="nav-container">
 				<div id="nav-brand">
@@ -40,20 +41,14 @@
 					</a>
 				</div><div id="nav-navigation">
 					<ul>
-<!-- 						<li>
-							<a href="/Microsoft">Company Profiles</a>
-						</li> -->
 						<li>
 							<a href="/compare">Compare Data</a>
 						</li>
-						<li>
-							<a href="/search">Search</a>
+						<li id="nav-search" ng-click="searchCheck()">
+							Search
 						</li>
 						<li>
-							<a href="/blog">Blog</a>
-						</li>
-						<li>
-							<a href="/contact">Contact</a>
+							<a href="/about">About</a>
 						</li>
 					</ul>
 				</div>
@@ -71,7 +66,16 @@
 						<div id="data-container">
 							<div id="recent-data">
 								<div ng-repeat="company in acquisitionData | limitTo: 5 track by $index">
-									<update-card></update-card>
+									<div id="update-card">
+										<section>
+											<div>
+												<h1><span>{{acquisitionData[$index].parentCompany}}</span> acquired</h1>
+												<h2>{{acquisitionData[$index].name}}</h2>
+											</div>
+											<h3>{{acquisitionData[$index].acquisitionPrice | wordifyValuation}}</h3>
+											<h4>{{acquisitionData[$index].date | date:'MMMM dd, yyyy'}}</h4>
+										</section>
+									</div>
 								</div>
 							</div>
 							<div id="recent-graph">
@@ -94,18 +98,39 @@
 				</div>
 				<div id="card-container">
 					<div ng-repeat="company in companys">
-						<graph-card></graph-card>
+						<div id="graph-card">
+							<section>
+								<a id="home-company-link" href="/{{company.company.name}}"></a>
+								<div id="home-company-top">
+									<span></span>
+									<h3>{{company.company.stock.marketCap | wordifyValuation}} Valuation</h3>
+								</div>
+								<div id="home-company-info">
+									<h1>{{company.company.name}}</h1>
+									<h6><span>{{company.company.industry}} Company </span>founded in {{company.company.foundedOn | date:'yyyy'}}</h6>
+								</div>
+								<div id="home-company-bottom">
+									<h4>Updated {{dateBounds(company.company.acquisition) | date:'MMMM dd'}}</h4>
+									<h3><span>{{company.company.acquisition.length}} Acquisitions</span> in <span>{{dateRange(company.company.acquisition)}} Years</span></h3>
+								</div>
+							</section>
+						</div>
 					</div>
 				</div>
 			</section>
 		</main>
 		<footer>
+			<section id="footer-container">
+				<span>Copyright © 2017 Ruby Creative Holdings. All rights reserved.</span>
+				<ul>
+					<li><a href="/contact">Contact</a></li>
+				</ul>
+			</section>
 		</footer>
 		<script defer src="libs/angular/angular.js"></script>
 		<script defer src="js/app.js"></script>
 		<script defer src="js/filters.js"></script>
-		<script defer src="js/directives/graphcard.js"></script>
-		<script defer src="js/directives/homeupdaterow.js"></script>
+		<script defer src="js/directives/searchbar.js"></script>
 		<script defer src="js/controllers/acquibaseController.js"></script>
 		<script defer src="js/services/acquibaseFactory.js"></script>
 	</body>

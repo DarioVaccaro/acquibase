@@ -23,6 +23,41 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , 'acquibas
                 });
             })
         });
+        //Create and update array every time a letter is entered into a search bar
+        var _name;
+        $scope.getSearchArray;
+        $scope.companySearch = {
+            name: function(newName) {
+                if(arguments.length) {
+                    (_name = newName);
+                    var searchArray = [];
+                    angular.forEach($scope.companys , function(value, key) {
+                        for(i = 0; i < _name.length; i++) {
+                            if(_name[i].toLowerCase() === value.company.name[i].toLowerCase()) {
+                                searchArray.push(value.company);
+                                angular.extend($scope.getSearchArray = searchArray);
+                                break;
+                            }
+                        }
+                    });
+                }
+                return _name;
+            }
+        }
+        //Select a name and load it into the new print array
+
+        //Click on name adds it
+        //Hit enter on name adds it
+
+        //Controls visibility of lightbox and search bar
+        $scope.disableScroll = false;
+        $scope.searchToggle = false;
+        $scope.searchCheck = function() {
+            $scope.searchToggle === false ? $scope.searchToggle = true : $scope.searchToggle = false;
+            if($scope.searchToggle === true) {
+                $scope.disableScroll = true;
+            }
+        }
         //Calculates when the last time a company was updated
         $scope.dateBounds = function(date) {
             var newestDate = date[0].date;
@@ -168,6 +203,14 @@ acquibaseApp.controller('dataRestrictController' , ['$scope' , '$http' , '$locat
                 .attr('class' , 'yAxis')
                 .call(yAxis);
     });
+    $scope.disableScroll = false;
+        $scope.searchToggle = false;
+        $scope.searchCheck = function() {
+            $scope.searchToggle === false ? $scope.searchToggle = true : $scope.searchToggle = false;
+            if($scope.searchToggle === true) {
+                $scope.disableScroll = true;
+            }
+        }
     $scope.quantity = 5;
     $scope.updateQuantity = function() {
         $scope.quantity += 10;

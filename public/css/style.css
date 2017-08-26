@@ -22,6 +22,9 @@
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
   border-radius: 3px;
 }
+.disable-scroll {
+  overflow: hidden;
+}
 body {
   margin: 0;
   padding: 0;
@@ -31,6 +34,20 @@ body {
 a {
   color: white;
   text-decoration: none;
+}
+#search-bar input {
+  width: 100%;
+  height: 60px;
+  position: relative;
+  z-index: 99999;
+}
+#search-bar #lightbox {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-color: #000;
+  z-index: 9999;
+  opacity: .7;
 }
 nav {
   background: #1E1E1E;
@@ -118,7 +135,7 @@ header .container #data-snapshot #snapshot-container #data-container {
 header .container #data-snapshot #snapshot-container #data-container #recent-data {
   float: left;
 }
-header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card {
+header .container #data-snapshot #snapshot-container #data-container #recent-data div #update-card {
   display: inline-block;
   width: 398px;
   height: 50px;
@@ -129,41 +146,41 @@ header .container #data-snapshot #snapshot-container #data-container #recent-dat
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
   border-radius: 3px;
 }
-header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card h1,
-header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card h2,
-header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card h3,
-header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card h4 {
+header .container #data-snapshot #snapshot-container #data-container #recent-data div #update-card h1,
+header .container #data-snapshot #snapshot-container #data-container #recent-data div #update-card h2,
+header .container #data-snapshot #snapshot-container #data-container #recent-data div #update-card h3,
+header .container #data-snapshot #snapshot-container #data-container #recent-data div #update-card h4 {
   margin: 0;
 }
-header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card section {
+header .container #data-snapshot #snapshot-container #data-container #recent-data div #update-card section {
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card section div {
+header .container #data-snapshot #snapshot-container #data-container #recent-data div #update-card section div {
   display: inline-block;
   margin: 0 0 0 15px;
   width: 125px;
 }
-header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card section div h1 {
+header .container #data-snapshot #snapshot-container #data-container #recent-data div #update-card section div h1 {
   font-size: 12px;
   font-weight: 400;
 }
-header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card section div h1 span {
+header .container #data-snapshot #snapshot-container #data-container #recent-data div #update-card section div h1 span {
   font-size: 14px;
   font-weight: 800;
 }
-header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card section div h2 {
+header .container #data-snapshot #snapshot-container #data-container #recent-data div #update-card section div h2 {
   font-size: 10px;
   font-weight: 800;
   margin: 2px 0 0 0;
 }
-header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card section h3 {
+header .container #data-snapshot #snapshot-container #data-container #recent-data div #update-card section h3 {
   display: inline-block;
   font-size: 12px;
 }
-header .container #data-snapshot #snapshot-container #data-container #recent-data div update-card section h4 {
+header .container #data-snapshot #snapshot-container #data-container #recent-data div #update-card section h4 {
   display: inline-block;
   font-size: 14px;
   margin: 0 15px 0 0;
@@ -188,6 +205,47 @@ header .container #data-snapshot #snapshot-container #data-container #recent-gra
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
   border-radius: 3px;
 }
+#contact-header {
+  background: #FCFCFC;
+}
+#contact-header .container {
+  height: 550px;
+}
+#contact-header .container #contact-head h1 {
+  margin: 0 0 0 0;
+  padding: 10px 0 10px 0;
+  font-size: 40px;
+  font-weight: 900;
+}
+#contact-header .container #contact-head .contact-section h2 {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 5px 0 5px 0;
+}
+#contact-header .container #contact-head .contact-section p {
+  font-size: 16px;
+  color: #242424;
+  width: 450px;
+}
+#contact-header .container #contact-head .contact-section span {
+  font-size: 14px;
+  font-weight: 700;
+}
+#compare-header {
+  background: #FCFCFC;
+}
+#compare-header .container {
+  height: 150px;
+}
+#compare-header .container h1 {
+  margin: 0 0 0 0;
+  padding: 10px 0 10px 0;
+  font-size: 40px;
+  font-weight: 900;
+}
+#compare-header .container input {
+  width: 100%;
+}
 main .container #filter-bar {
   width: 100%;
   height: 51px;
@@ -199,13 +257,14 @@ main .container #filter-bar {
 }
 main .container #card-container {
   margin: 19px 0 19px 0;
-  display: flex;
+  display: inline-block;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 main .container #card-container div {
   display: inline-block;
 }
-main .container #card-container div graph-card {
+main .container #card-container div #graph-card {
   width: 252.5px;
   height: 226px;
   background: #1B1B1B;
@@ -217,7 +276,7 @@ main .container #card-container div graph-card {
   margin: 0 0 0 0;
   padding: 0 15px 0 15px;
 }
-main .container #card-container div graph-card section {
+main .container #card-container div #graph-card section {
   color: #FFF;
   width: 100%;
   height: 100%;
@@ -227,55 +286,72 @@ main .container #card-container div graph-card section {
   justify-content: center;
   position: relative;
 }
-main .container #card-container div graph-card section #home-company-link {
+main .container #card-container div #graph-card section #home-company-link {
   position: absolute;
   width: 100%;
-  height: 100%;
-  z-index: 9999;
+  z-index: 999;
   padding: 0 15px 0 15px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
-main .container #card-container div graph-card section #home-company-top {
+main .container #card-container div #graph-card section #home-company-top {
   width: 100%;
   height: 33%;
 }
-main .container #card-container div graph-card section #home-company-top h3 {
+main .container #card-container div #graph-card section #home-company-top h3 {
   font-size: 10px;
   font-weight: 800;
   float: right;
 }
-main .container #card-container div graph-card section #home-company-info {
+main .container #card-container div #graph-card section #home-company-info {
   text-align: center;
   height: 33%;
 }
-main .container #card-container div graph-card section #home-company-info h1 {
+main .container #card-container div #graph-card section #home-company-info h1 {
   font-size: 28px;
   font-weight: 800;
   margin: 0 0 0 0;
   line-height: 30px;
 }
-main .container #card-container div graph-card section #home-company-info h6 {
+main .container #card-container div #graph-card section #home-company-info h6 {
   font-size: 12px;
   font-weight: 300;
   margin: 10px 0 0 0;
 }
-main .container #card-container div graph-card section #home-company-info h6 span {
+main .container #card-container div #graph-card section #home-company-info h6 span {
   font-size: 14px;
   font-weight: 800;
 }
-main .container #card-container div graph-card section #home-company-bottom {
+main .container #card-container div #graph-card section #home-company-bottom {
   width: 100%;
   height: 33%;
   display: flex;
   align-items: end;
   justify-content: space-between;
 }
-main .container #card-container div graph-card section #home-company-bottom h4 {
+main .container #card-container div #graph-card section #home-company-bottom h4 {
   font-size: 10px;
   font-weight: 300;
 }
-main .container #card-container div graph-card section #home-company-bottom h3 {
+main .container #card-container div #graph-card section #home-company-bottom h3 {
   font-size: 12px;
   font-weight: 300;
+}
+main .container #card-container .ng-scope {
+  margin: 0 19px 19px 0;
+}
+main .container #card-container .ng-scope:nth-child(4n) {
+  margin-right: 0;
+}
+@supports (display: flex) {
+  main .container #card-container {
+    display: flex;
+  }
+  main .container #card-container .ng-scope {
+    margin: 0 0 19px 0;
+  }
 }
 main#company {
   background: linear-gradient(-90deg, #FCFCFC 50%, #1D1D1D 50%);
@@ -605,7 +681,78 @@ main#company .container #company-prediction #prediction-container #subscription-
   font-weight: 400;
   text-decoration: underline;
 }
+main#compare .container {
+  color: #FFF;
+}
+main#compare .container #compare-container {
+  margin: 19px 0 19px 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+main#compare .container #compare-container .compare-card {
+  width: 355px;
+  height: 1026px;
+  background: #1B1B1B;
+  border: 1px solid #383838;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+  margin: 19px 0 0 0;
+  display: inline-block;
+  margin: 0 0 0 0;
+  padding: 0 15px 0 15px;
+}
+main#contact .container {
+  color: #FFF;
+}
+main#contact .container h1 {
+  margin: 19px 0 0 0;
+}
+main#contact .container h2 {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 5px 0 0 0;
+}
+main#contact .container #card-container .referal-card {
+  width: 252.5px;
+  height: 426px;
+  background: #1B1B1B;
+  border: 1px solid #383838;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+  margin: 19px 0 0 0;
+  display: inline-block;
+  margin: 0 0 0 0;
+  padding: 0 15px 0 15px;
+}
 footer {
-  height: 155px;
+  height: 50px;
   background: #000;
+}
+footer #footer-container {
+  width: 1200px;
+  margin: 0 auto;
+}
+footer #footer-container span {
+  color: #FFF;
+  font-size: 14px;
+  display: inline-block;
+  line-height: 48px;
+}
+footer #footer-container ul {
+  list-style: none;
+  display: inline-block;
+  margin: 0 0 0 0;
+  float: right;
+  line-height: 48px;
+}
+footer #footer-container ul li {
+  display: inline;
+  font-size: 12px;
+  margin: 0 5px 0 5px;
+  color: white;
+}
+footer #footer-container ul li a {
+  text-decoration: none;
+  transition: 0.3s ease-in;
 }

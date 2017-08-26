@@ -22,11 +22,8 @@ module.exports = function(app) {
 	app.get('/compare' , function(req , res) {
 		res.sendFile(path.join(__dirname , '../public' , 'compare.html'));
 	});
-	app.get('/search' , function(req , res) {
-		res.sendFile(path.join(__dirname , '../public' , 'search.html'));
-	});
-	app.get('/blog' , function(req , res) {
-		res.sendFile(path.join(__dirname , '../public' , 'blog.html'));
+	app.get('/about' , function(req , res) {
+		res.sendFile(path.join(__dirname , '../public' , 'about.html'));
 	});
 	app.get('/contact' , function(req , res) {
 		res.sendFile(path.join(__dirname , '../public' , 'contact.html'));
