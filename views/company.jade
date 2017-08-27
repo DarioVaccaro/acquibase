@@ -83,7 +83,7 @@ html
 						div#historical-data
 							h2 Historical Data
 							h4 Acquired Companies in These Industries
-							div(ng-repeat='industry in acquiredIndustries track by $index | limitTo:5')#acquisition-list
+							div(ng-repeat='industry in acquiredIndustries | limitTo:5 track by $index')#acquisition-list
 								h6 {{acquiredIndustries[$index]}}
 							h4 Acquisition Activity
 								h6 {{mostAcquiredMonth.month | date:'MMMM'}} is the most active month with 

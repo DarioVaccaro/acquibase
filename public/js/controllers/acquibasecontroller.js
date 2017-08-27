@@ -23,31 +23,46 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , 'acquibas
                 });
             })
         });
-        //Create and update array every time a letter is entered into a search bar
+        //Controls compare page search functionality
         var _name;
         $scope.getSearchArray;
         $scope.companySearch = {
             name: function(newName) {
                 if(arguments.length) {
-                    (_name = newName);
+                    _name = newName;
                     var searchArray = [];
                     angular.forEach($scope.companys , function(value, key) {
                         for(i = 0; i < _name.length; i++) {
-                            if(_name[i].toLowerCase() === value.company.name[i].toLowerCase()) {
+                            if(_name.toLowerCase().slice(0 , _name.length) === value.company.name.toLowerCase().slice(0 , _name.length)) {
                                 searchArray.push(value.company);
                                 angular.extend($scope.getSearchArray = searchArray);
                                 break;
                             }
                         }
                     });
+                    if(_name.length === 0 && $scope.getSearchArray.length > 0) {
+                        angular.extend($scope.getSearchArray = searchArray);
+                    }
                 }
                 return _name;
             }
         }
         //Select a name and load it into the new print array
-
-        //Click on name adds it
-        //Hit enter on name adds it
+        var checkerValidate = true;
+        $scope.searchArrayReturn = [];
+        $scope.nameCheck = function(index) {
+            if($scope.searchArrayReturn.indexOf($scope.getSearchArray[index]) === -1) {
+                $scope.searchArrayReturn.push($scope.getSearchArray[index]);
+            }
+        }
+        $scope.compareCardCheck = function(checker) {
+            checker < $scope.searchArrayReturn.length ? checkerValidate = false : checkerValidate = true;
+            return checkerValidate;
+        }
+        //Removes button for each card
+        $scope.removeCompany = function(index) {
+            $scope.searchArrayReturn.splice(index, 1);
+        }
 
         //Controls visibility of lightbox and search bar
         $scope.disableScroll = false;

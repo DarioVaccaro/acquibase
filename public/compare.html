@@ -55,19 +55,26 @@
 			</section>
 		</nav>
 		<header id="compare-header">
-			<section class="container">
+			<form ng-submit="nameCheck(0)" class="container">
 				<input ng-model="companySearch.name" ng-model-options="{ getterSetter: true }" type="text" name="compare" placeholder="Hit Enter to Compare Another Company">
 				<div ng-repeat="companyName in getSearchArray track by $index">
-					<div>{{companyName.name}}</div>
+					<div ng-click="nameCheck($index)">
+						<h1>
+							{{thisCompany.name}} {{thisCompany.incorporated}}
+						</h1>
+					</div>
 				</div>
-			</section>
+			</form>
 		</header>
 		<main id="compare">
 			<section class="container">
 				<div id="compare-container">
-					<div class="compare-card"></div>
-					<div class="compare-card"></div>
-					<div class="compare-card"></div>
+					<div ng-repeat="company in searchArrayReturn | limitTo:3 track by $index" class="compare-card">{{company.name}} <span ng-click="removeCompany($index)">x Remove</span></div>
+					<div id="initial-compare">
+						<div ng-if="compareCardCheck(0)" class="compare-card"></div>
+						<div ng-if="compareCardCheck(1)" class="compare-card"></div>
+						<div ng-if="compareCardCheck(2)" class="compare-card"></div>
+					</div>
 				</div>
 			</section>
 		</main>
