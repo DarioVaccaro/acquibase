@@ -235,7 +235,9 @@ header .container #data-snapshot #snapshot-container #data-container #recent-gra
   background: #FCFCFC;
 }
 #compare-header .container {
-  height: 150px;
+  padding: 100px 0 100px 0;
+  height: auto;
+  position: relative;
 }
 #compare-header .container h1 {
   margin: 0 0 0 0;
@@ -243,8 +245,26 @@ header .container #data-snapshot #snapshot-container #data-container #recent-gra
   font-size: 40px;
   font-weight: 900;
 }
+#compare-header .container label {
+  font-weight: 600;
+}
 #compare-header .container input {
+  width: 1174px;
+  height: 50px;
+  padding: 0 0 0 20px;
+  margin: 10px 0 0 0;
+}
+#compare-header .container #compare-dropdown-container {
+  position: absolute;
   width: 100%;
+}
+#compare-header .container #compare-dropdown-container .compare-dropdown {
+  margin: 0 0 0 0;
+  padding: 5px 5px 5px 22px;
+}
+#compare-header .container #compare-dropdown-container .compare-dropdown:first-child {
+  color: white;
+  background: #8a8a8a;
 }
 main .container #filter-bar {
   width: 100%;
@@ -684,16 +704,15 @@ main#company .container #company-prediction #prediction-container #subscription-
 main#compare .container {
   color: #FFF;
 }
-main#compare .container #compare-container,
-main#compare .container #initial-compare {
+main#compare .container #compare-container {
   margin: 19px 0 19px 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
+  width: 100%;
 }
-main#compare .container #compare-container .compare-card,
-main#compare .container #initial-compare .compare-card {
+main#compare .container #compare-container .compare-card {
   width: 355px;
   height: 1026px;
   color: white;
@@ -704,7 +723,46 @@ main#compare .container #initial-compare .compare-card {
   margin: 19px 0 0 0;
   display: inline-block;
   margin: 0 0 0 0;
-  padding: 0 15px 0 15px;
+  padding: 10px 15px 0 15px;
+}
+main#compare .container #compare-container .compare-card .remove-card {
+  font-size: 12px;
+  font-weight: 300;
+}
+main#compare .container #compare-container .compare-card .compare-company-name {
+  margin: 5px 0 10px 0;
+  font-size: 35px;
+  font-weight: 1000;
+  font-family: 'Poppins', sans-serif;
+}
+main#compare .container #compare-container .compare-card .compare-facts h6 {
+  margin: 0 10px 10px 0;
+  display: inline-block;
+  padding: 5px 30px;
+  color: #FFF;
+  border-radius: 2px;
+}
+main#compare .container #compare-container .compare-card .compare-facts .compare-industry {
+  background: #00FFC9;
+}
+main#compare .container #compare-container .compare-card .compare-facts .compare-location {
+  background: #F20278;
+}
+main#compare .container #compare-container .compare-card .compare-separator {
+  padding: 10px 10px 10px 10px;
+  border: 1px solid #383838;
+  border-radius: 4px;
+  text-align: center;
+  margin: 15px 0 15px 0;
+}
+main#compare .container #compare-container .compare-card .compare-separator h6 {
+  margin: 0 0 10px 0;
+}
+main#compare .container #compare-container .compare-card .compare-separator h5,
+main#compare .container #compare-container .compare-card .compare-separator span {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 10px 0;
 }
 main#contact .container {
   color: #FFF;

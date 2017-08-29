@@ -51,7 +51,7 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , 'acquibas
         var checkerValidate = true;
         $scope.searchArrayReturn = [];
         $scope.nameCheck = function(index) {
-            if($scope.searchArrayReturn.indexOf($scope.getSearchArray[index]) === -1) {
+            if($scope.searchArrayReturn.indexOf($scope.getSearchArray[index]) === -1 && $scope.getSearchArray[index].length === undefined) {
                 $scope.searchArrayReturn.push($scope.getSearchArray[index]);
             }
         }
@@ -71,6 +71,8 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , 'acquibas
             $scope.searchToggle === false ? $scope.searchToggle = true : $scope.searchToggle = false;
             if($scope.searchToggle === true) {
                 $scope.disableScroll = true;
+            } else {
+                $scope.disableScroll = false;
             }
         }
         //Calculates when the last time a company was updated
@@ -97,6 +99,7 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , 'acquibas
         }
 }]);
 var endDate, dataArray = [], yearList = {};
+var test;
 acquibaseApp.controller('dataRestrictController' , ['$scope' , '$http' , '$location' , 'acquibaseFactory', function($scope , $http, $location , acquibaseFactory) {
     acquibaseFactory.get()
         .success(function(data) {
@@ -243,13 +246,13 @@ acquibaseApp.controller('dataRestrictController' , ['$scope' , '$http' , '$locat
         return yearList[0].name;
     }
 }]);
-acquibaseApp.controller('stockGraphController' ,['$scope' , '$http', function($http, $scope) {
-    var url;
-    $http.jsonp(url).success(function(data) {
-        $scope.stocPrices = {
-            items: data.query.results.quote
-        }
-    }).error(function(data) {
-        console.log('Error' + data);
-    });
-}]);
+// acquibaseApp.controller('stockGraphController' ,['$scope' , '$http', function($http, $scope) {
+//     var url;
+//     $http.jsonp(url).success(function(data) {
+//         $scope.stocPrices = {
+//             items: data.query.results.quote
+//         }
+//     }).error(function(data) {
+//         console.log('Error' + data);
+//     });
+// }]);

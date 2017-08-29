@@ -1,7 +1,7 @@
 acquibaseApp.directive('searchbar' , function() {
 	return {
 		restrict: 'E',
-		template: '<div ng-show="searchToggle" searchinput id="search-bar"><div ng-click="!searchCheck()" id="lightbox"></div></div>',
+		template: '<div ng-show="searchToggle" searchinput id="search-bar"><div ng-click="!searchCheck()" id="lightbox"><div ng-repeat=""></div></div></div>',
 	}
 });
 acquibaseApp.directive('searchinput' , function() {

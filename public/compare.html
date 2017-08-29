@@ -56,25 +56,51 @@
 		</nav>
 		<header id="compare-header">
 			<form ng-submit="nameCheck(0)" class="container">
-				<input ng-model="companySearch.name" ng-model-options="{ getterSetter: true }" type="text" name="compare" placeholder="Hit Enter to Compare Another Company">
-				<div ng-repeat="companyName in getSearchArray track by $index">
-					<div ng-click="nameCheck($index)">
-						<h1>
-							{{thisCompany.name}} {{thisCompany.incorporated}}
-						</h1>
-					</div>
+				<label>Search for Companies to Compare</label>
+				<input ng-model="companySearch.name" ng-model-options="{ getterSetter: true }" type="text" name="compare" placeholder="Hit Enter to Select First Company in the List">
+				<div id="compare-dropdown-container">
+					<h5 class="compare-dropdown" ng-click="nameCheck($index)" ng-repeat="companyName in getSearchArray track by $index | limitTo: 3">
+						{{companyName.name}}
+					</h5>
 				</div>
 			</form>
 		</header>
 		<main id="compare">
 			<section class="container">
 				<div id="compare-container">
-					<div ng-repeat="company in searchArrayReturn | limitTo:3 track by $index" class="compare-card">{{company.name}} <span ng-click="removeCompany($index)">x Remove</span></div>
-					<div id="initial-compare">
-						<div ng-if="compareCardCheck(0)" class="compare-card"></div>
-						<div ng-if="compareCardCheck(1)" class="compare-card"></div>
-						<div ng-if="compareCardCheck(2)" class="compare-card"></div>
+					<div ng-repeat="company in searchArrayReturn | limitTo:3 track by $index" class="compare-card">
+						<span class="remove-card" ng-click="removeCompany($index)">&#10005; Remove Company</span>
+						<h1 class="compare-company-name">{{company.name}} {{company.incorporated}}</h1>
+						<div class="compare-facts">
+							<h6 class="compare-industry">{{company.industry}}</h6>
+							<h6 class="compare-location">{{company.location}}</h6>
+						</div>
+						<span class="compare-look">
+							{{}} spent in {{thisCompany.acquisition.dateRange}} Years
+							on {{thisCompany.acquisition.length - undisclosed.length}} Acquisitions + 
+							{{undisclosed.length}} Undisclosed Deals
+						</span>
+						<div class="compare-separator">
+							<h6>Average Time Between Acquisitions</h6>
+							<h5>Likely to acquire <span>1 new company</span> in the next <span>{{}}</span> month(s) based on current trends</h5>
+							<span>Last made an acquisition on {{dateBounds(company.acquisition) | date: 'MMMM dd'}}</span>
+						</div>
+						<div class="compare-separator">
+							<h6>Historical M &amp; A Data</h6>
+							<span>In {{mostAcquiredYear.date}} {{company.name}} acquired {{mostAcquiredYear.number}} companies</span>
+						</div>
+						<div class="compare-separator">
+							<h6>Deal Info</h6>
+							<span>{{thisCompany.name}}'s average deal size is {{acquiPriceHistory / (thisCompany.acquisition.length - undisclosed.length)  | wordifyValuation}} among disclosed deals</span>
+						</div>
+						<div class="compare-separator">
+							<h6>Stock Price Data</h6>
+							<span>{{thisCompany.name}}'s stock prices reached a high of {{thisCompany.stock.allTimeHigh.quote}} in {{thisCompany.stock.allTimeHigh.date | date:'yyyy'}} after it acquired {{stockCalc(thisCompany.stock.allTimeHigh.date , thisCompany.acquisition)}}</span>
+						</div>
 					</div>
+					<div ng-if="compareCardCheck(0)" class="compare-card"></div>
+					<div ng-if="compareCardCheck(1)" class="compare-card"></div>
+					<div ng-if="compareCardCheck(2)" class="compare-card"></div>
 				</div>
 			</section>
 		</main>
