@@ -14,4 +14,9 @@ angular.module( 'acquibaseApp')
 	return function(items) {
 		return items.slice().reverse();
 	}
+}).filter('isInc', function() {
+	return function(inc) {
+		inc === true ? inc = 'Inc.' : inc = '';
+		return inc;
+	}
 });

@@ -76,7 +76,7 @@
 				<div id="compare-container">
 					<div ng-repeat="company in searchArrayReturn | limitTo:3 track by $index" class="compare-card">
 						<span class="remove-card" ng-click="removeCompany($index)">&#10005; Remove Company</span>
-						<h1 class="compare-company-name">{{company.name}} {{company.incorporated}}</h1>
+						<h1 class="compare-company-name">{{company.name}} {{company.incorporated | isInc}}</h1>
 						<div class="compare-facts">
 							<h6 class="compare-industry">{{company.industry}}</h6>
 							<h6 class="compare-location">{{company.location}}</h6>

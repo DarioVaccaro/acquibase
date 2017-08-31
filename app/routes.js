@@ -8,7 +8,10 @@ module.exports = function(app , passport) {
 	app.get('/login' , function(req , res) {
 		res.sendFile(path.join(__dirname , '../public' , 'login.html'));
 	});
-	// app.post('/login' , passport stuff);
+	app.post('/login' , passport.authenticate('local-login' , {
+		successRedirect : '/profile',
+        failureRedirect : '/login'
+	}));
 	app.get('/register' , function(req , res) {
 		res.sendFile(path.join(__dirname , '../public' , 'register.html'));
 	});
@@ -16,7 +19,7 @@ module.exports = function(app , passport) {
 		successRedirect : '/profile',
         failureRedirect : '/register'
 	}));
-	app.get('/profile' , function(req , res) {
+	app.get('/profile' , isLoggedIn,  function(req , res) {
 		res.render('profile.jade' , {
 			user: req.user
 		});

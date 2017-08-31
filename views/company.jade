@@ -46,7 +46,7 @@ html
 				div#company-info
 					div#company-numbers
 						div#company-facts
-							h1#company-name {{thisCompany.name}} {{thisCompany.incorporated}}
+							h1#company-name {{thisCompany.name}} {{thisCompany.incorporated | isInc}}
 							h6#company-industry {{thisCompany.industry}}
 							h6#company-location {{thisCompany.location}}
 							h2#historical-acquisitions Historical Acquisitions
