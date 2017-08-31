@@ -1,23 +1,29 @@
 const path = require('path');
-//Change company to acquibase
 const Company = require('./models/acquibase');
 
-module.exports = function(app) {
-
-	app.get('/api/companys', function(req, res) {
-	    // use mongoose to get all nerds in the database
-        Company.find(function(err, companys) {
-            // if there is an error retrieving, send the error. Nothing after res.send(err) will execute
-	        if(err) {
-	            res.send(err);
-	        } else {
-	        	res.json(companys); // return all nerds in JSON format
-	    	}
-	    });
-	});
-
+module.exports = function(app , passport) {
 	app.get('/' , function(req , res) {
-		res.sendFile(path.join(__dirname , './public' , 'index.html'));
+		res.sendFile(path.join(__dirname , '../public' , 'index.html'));
+	});
+	app.get('/login' , function(req , res) {
+		res.sendFile(path.join(__dirname , '../public' , 'login.html'));
+	});
+	// app.post('/login' , passport stuff);
+	app.get('/register' , function(req , res) {
+		res.sendFile(path.join(__dirname , '../public' , 'register.html'));
+	});
+	app.post('/register' , passport.authenticate('local-register' , {
+		successRedirect : '/profile',
+        failureRedirect : '/register'
+	}));
+	app.get('/profile' , function(req , res) {
+		res.render('profile.jade' , {
+			user: req.user
+		});
+	});
+	app.get('/logout' , function(req , res) {
+		req.logout();
+		res.redirect('/');
 	});
 	app.get('/compare' , function(req , res) {
 		res.sendFile(path.join(__dirname , '../public' , 'compare.html'));
@@ -28,14 +34,13 @@ module.exports = function(app) {
 	app.get('/contact' , function(req , res) {
 		res.sendFile(path.join(__dirname , '../public' , 'contact.html'));
 	});
-	app.get('/:name' , function(req, res) {
+	app.get('/:name' , function(req , res) {
 		Company.findOne({'company.name' : req.params.name})
 			.then(function(company) {
 				if (company) {
 					res.render('company.jade');
 					return;
 				} else {
-					// res.type('txt').send('Not Found');
 					res.render('404.jade');
 					return;
 				}
@@ -46,4 +51,21 @@ module.exports = function(app) {
 				}
 			});
 	});
+	app.get('/api/companys', function(req , res) {
+	    // use mongoose to get all documents in the database
+        Company.find(function(err , companys) {
+	        if(err) {
+	            res.send(err);
+	        } else {
+	        	res.json(companys); // return all documents in JSON format
+	    	}
+	    });
+	});
+	function isLoggedIn(req , res , next) {
+		if(req.isAuthenticated()) {
+			return next();
+		} else {
+			res.redirect('/');
+		}
+	}
 };

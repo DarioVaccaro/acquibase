@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-mongoose.set('debug', true);
 let companySchema = new mongoose.Schema({
 	id: Number,
 	company: {

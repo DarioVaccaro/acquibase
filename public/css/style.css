@@ -79,6 +79,8 @@ nav #nav-container #nav-navigation ul li {
   font-size: 14px;
   margin: 0 5px 0 5px;
   color: white;
+  cursor: pointer;
+  transition: 0.3s ease-in;
 }
 nav #nav-container #nav-navigation ul li a {
   text-decoration: none;
@@ -96,12 +98,25 @@ nav #nav-container #nav-accounts ul li {
   font-size: 14px;
   margin: 0 5px 0 5px;
   color: white;
+  cursor: pointer;
 }
 nav #nav-container #nav-accounts ul li a {
   text-decoration: none;
   transition: 0.3s ease-in;
 }
-nav a:hover {
+nav #nav-container #nav-accounts #login {
+  margin: 0 10px 0 0;
+}
+nav #nav-container #nav-accounts #register {
+  padding: 7px 25px 7px 25px;
+  border-radius: 2px;
+  background: #F20278;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+}
+nav a:hover,
+nav li:hover {
   color: #CBCBCB;
   transition: 0.3s ease-in;
 }
