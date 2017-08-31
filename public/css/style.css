@@ -84,6 +84,23 @@ nav #nav-container #nav-navigation ul li a {
   text-decoration: none;
   transition: 0.3s ease-in;
 }
+nav #nav-container #nav-accounts {
+  display: inline-block;
+  float: right;
+}
+nav #nav-container #nav-accounts ul {
+  list-style: none;
+}
+nav #nav-container #nav-accounts ul li {
+  display: inline;
+  font-size: 14px;
+  margin: 0 5px 0 5px;
+  color: white;
+}
+nav #nav-container #nav-accounts ul li a {
+  text-decoration: none;
+  transition: 0.3s ease-in;
+}
 nav a:hover {
   color: #CBCBCB;
   transition: 0.3s ease-in;
@@ -714,7 +731,7 @@ main#compare .container #compare-container {
 }
 main#compare .container #compare-container .compare-card {
   width: 355px;
-  height: 1026px;
+  height: auto;
   color: white;
   background: #1B1B1B;
   border: 1px solid #383838;
@@ -734,6 +751,7 @@ main#compare .container #compare-container .compare-card .compare-company-name {
   font-size: 35px;
   font-weight: 1000;
   font-family: 'Poppins', sans-serif;
+  height: 45px;
 }
 main#compare .container #compare-container .compare-card .compare-facts h6 {
   margin: 0 10px 10px 0;
@@ -763,6 +781,9 @@ main#compare .container #compare-container .compare-card .compare-separator span
   font-size: 14px;
   font-weight: 500;
   margin: 0 0 10px 0;
+}
+main#compare .container #compare-container .compare-card-inital {
+  height: 633px;
 }
 main#contact .container {
   color: #FFF;

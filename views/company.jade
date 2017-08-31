@@ -9,7 +9,7 @@ html
 		link(href='css/style.css' , rel='stylesheet')
 		link(href='https://fonts.googleapis.com/css?family=Lato:300,400,500,600,700,800,900|family=Poppins:700' , rel='stylesheet')
 		base(href='/')
-	body(ng-app='acquibaseApp' , ng-controller='dataRestrictController' , ng-class="{'disable-scroll': disableScroll}")
+	body(ng-app='acquibaseApp' , ng-controller='dataAccessController' , ng-class="{'disable-scroll': disableScroll}")
 		searchBar
 		nav
 			section#nav-container
@@ -37,6 +37,8 @@ html
 						li(id='nav-search' , ng-click='searchCheck()')  Search
 						li 
 							a(href='/about') About
+				div#nav-accounts
+					nav-accounts
 		main#company
 			section.container
 				div#company-info
@@ -52,11 +54,11 @@ html
 								h1 {{thisCompany.stock.marketCap | wordifyValuation}}
 								span  Valuation
 							hr
-							span#company-look {{acquiPriceHistory | wordifyValuation}} spent in {{thisCompany.acquisition.dateRange}} Years
-								| on {{thisCompany.acquisition.length - undisclosed.length}} Acquisitions + 
-								| {{undisclosed.length}} Undisclosed Deals
+							span#company-look {{totalAcquisitionPrice(thisCompany.acquisition) | wordifyValuation}} spent in {{dateRange(thisCompany.acquisition)}} Years
+								| on {{thisCompany.acquisition.length - totalUndisclosed(thisCompany.acquisition).length}} Acquisitions + 
+								| {{totalUndisclosed(thisCompany.acquisition).length}} Undisclosed Deals
 					div#company-acquisition-graph
-						div(style='width: 100%; height: 290px;')#acquisition-history-chart
+						div(style='width: 100%; height: 290px;' , ng-bind='acquiGraph(thisCompany)')#acquisition-history-chart
 					div#lower-data-container
 						div#company-stock-graph
 							h1 Stock Data
@@ -78,19 +80,19 @@ html
 							span Likely to acquire 
 								span#prediction-company-number 1 new company 
 									span in the next 
-										span#prediction-month-average {{averageTime}} month(s) 
+										span#prediction-month-average {{acquiAverageTime(thisCompany.acquisition)}} month(s) 
 											span based on current trends
 						div#historical-data
 							h2 Historical Data
 							h4 Acquired Companies in These Industries
-							div(ng-repeat='industry in acquiredIndustries | limitTo:5 track by $index')#acquisition-list
-								h6 {{acquiredIndustries[$index]}}
+							div(ng-repeat='industry in acquiredIndustries(thisCompany.acquisition) | limitTo:5 track by $index')#acquisition-list
+								h6 {{acquiredIndustries(thisCompany.acquisition)[$index]}}
 							h4 Acquisition Activity
-								h6 {{mostAcquiredMonth.month | date:'MMMM'}} is the most active month with 
-									span {{mostAcquiredMonth.number}} Lifetime Acquisitions
-								h6 In {{mostAcquiredYear.date}} {{thisCompany.name}} acquired {{mostAcquiredYear.number}} companies
+								h6 {{mostAcquired(thisCompany.acquisition).month.date | date:'MMMM'}} is the most active month with 
+									span {{mostAcquired(thisCompany.acquisition).month.number}} Lifetime Acquisitions
+								h6 In {{mostAcquired(thisCompany.acquisition).year.date}} {{thisCompany.name}} acquired {{mostAcquired(thisCompany.acquisition).year.number}} companies
 							h4 Deal Info
-								h6 {{thisCompany.name}}'s average deal size is {{acquiPriceHistory / (thisCompany.acquisition.length - undisclosed.length)  | wordifyValuation}} among disclosed deals
+								h6 {{thisCompany.name}}'s average deal size is {{totalAcquisitionPrice(thisCompany.acquisition) / (thisCompany.acquisition.length - totalUndisclosed(thisCompany.acquisition).length)  | wordifyValuation}} among disclosed deals
 							h4 Stock Data
 								h6 {{thisCompany.name}}'s stock prices reached a high of {{thisCompany.stock.allTimeHigh.quote}} in {{thisCompany.stock.allTimeHigh.date | date:'yyyy'}} after it acquired {{stockCalc(thisCompany.stock.allTimeHigh.date , thisCompany.acquisition)}}
 						div#deal-container
@@ -126,5 +128,6 @@ html
 		script(defer src='js/app.js')
 		script(defer src='js/filters.js')
 		script(defer src='js/directives/searchbar.js')
+		script(defer src='js/directives/navaccounts.js')
 		script(defer src='js/controllers/acquibaseController.js')
 		script(defer src='js/services/acquibaseFactory.js')

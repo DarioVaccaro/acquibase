@@ -89,6 +89,23 @@ nav {
 				}
 			}
 		}
+		#nav-accounts {
+			display: inline-block;
+			float: right;
+			ul{
+				list-style: none;
+				li {
+					display: inline;
+					font-size: 14px;
+					margin: 0 5px 0 5px;
+					color: white;
+					a {
+						text-decoration: none;
+						transition: .3s ease-in;
+					}
+				}
+			}
+		}
 	}
 	a:hover{
 		color: #CBCBCB;
@@ -689,7 +706,7 @@ main#compare {
 			width: 100%;
 			.compare-card {
 				width: 355px;
-				height: 1026px;
+				height: auto;
 				color: white;
 				.dark-card-style;
 				display: inline-block;
@@ -704,6 +721,7 @@ main#compare {
 					font-size: 35px;
 					font-weight: 1000;
 					font-family: 'Poppins', sans-serif;
+					height: 45px;
 				}
 				.compare-facts {
 					h6 {
@@ -738,6 +756,9 @@ main#compare {
 						margin: 0 0 10px 0;
 					}
 				}
+			}
+			.compare-card-inital {
+				height: 633px;
 			}
 		}
 	}
