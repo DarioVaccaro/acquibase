@@ -51,7 +51,98 @@ a {
 		height: 100vh;
 		background-color: #000;
 		z-index: 9999;
-		opacity: .7;
+		opacity: .9;
+	}
+	.container {
+		position: relative;
+		#search-container {
+			z-index: 99999;
+			position: absolute;
+			margin: 19px 0 19px 0;
+			display: inline-block;
+			justify-content: left;
+			flex-wrap: wrap;
+			div {
+				display: inline-block;
+				.search-card {
+					width: 252.5px;
+					height: 226px;
+					.dark-card-style;
+					display: inline-block;
+					margin: 0 0 0 0;
+					padding: 0 15px 0 15px;
+					section {
+						color: #FFF;
+						width: 100%;
+						height: 100%;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: center;
+						position: relative;
+						#search-company-link {
+							position: absolute;
+							width: 100%;
+							z-index: 999;
+							padding: 0 15px 0 15px;
+							top: 0;
+							bottom: 0;
+							left: 0;
+							right: 0;
+						}
+						#search-company-top {
+							width: 100%;
+							height: 33%;
+							h3 {
+								font-size: 10px;
+								font-weight: 800;
+								float: right;
+							}
+						}
+						#search-company-info {
+							text-align: center;
+							height: 33%;
+							h1 {
+								font-size: 28px;
+								font-weight: 800;
+								margin: 0 0 0 0;
+								line-height: 30px;
+							}
+							h6 {
+								font-size: 12px;
+								font-weight: 300;
+								margin: 10px 0 0 0;
+								span {
+									font-size: 14px;
+									font-weight: 800;
+								}
+							}
+						}
+						#search-company-bottom {
+							width: 100%;
+							height: 33%;
+							display: flex;
+							align-items: end;
+							justify-content: space-between;
+							h4 {
+								font-size: 10px;
+								font-weight: 300;
+							}
+							h3 {
+								font-size: 12px;
+								font-weight: 300;
+							}
+						}
+					}
+				}
+			}
+			.ng-scope {
+				margin: 0 19px 19px 0;;
+			}
+			.ng-scope:nth-child(4n) {
+				margin-right: 0;
+			}
+		}
 	}
 }
 nav {
@@ -134,11 +225,86 @@ header {
 			height: 100%;
 			display: inline-block;
 			background: #1D1D1D;
-			div {
-				width: 331px;
-				height: 368px;
+			#lead-container {
+				width: 301px;
+				height: 338px;
 				.dark-card-style;
 				background: #242424;
+				color: #FFF;
+				padding: 15px 15px 15px 15px;
+				#leads {
+					margin: 0 0 10px 0;
+					text-align: center;
+					animation: fade-in-down 0.9s ease-in-out forwards;
+					form {
+						margin: 0 0 0 0;
+						#mc_embed_signup_scroll {
+							display: flex;
+							justify-content: left;
+						}
+						input {
+							width: 150px;
+							height: 28px;
+							border-radius: 2px;
+							border: 0;
+							font-weight: 700;
+							padding: 0 0 0 10px;
+						}
+						input[type="submit"] {
+							width: 106px;
+							height: 28px;
+							background: transparent;
+							border: 1px solid #FFF;
+							border-radius: 2px;
+							color: #FFF;
+							font-weight: 600;
+							text-transform: uppercase;
+							margin: 0 0 0 11px;
+							padding: 0 0 0 0;
+							cursor: pointer;
+						}
+					}
+				}
+				hr {
+					margin: 20px 0 15px 0;
+					border: 1px solid #383838;
+					border-bottom: 0;
+				}
+				h1 {
+					margin: 0 0 15px 0;
+					font-size: 24px;
+					font-weight: 900;
+				}
+				h2 {
+					margin: 0 0 5px 0;
+					font-weight: 400;
+					font-size: 16px;
+					span {
+						font-weight: 900;
+					}
+				}
+				h3 {
+					font-size: 12px;
+					font-weight: 400;
+				}
+				ul {
+					list-style: none;
+					padding: 0 0 14px 0;
+					margin-bottom: 0;
+					opacity: .8;
+					li {
+						margin: 0 0 10px 0;
+						font-size: 13px;
+						font-weight: 600;
+					}
+				}
+				a {
+					padding: 7px 25px 7px 25px;
+					border-radius: 2px;
+					background: #F20278;
+					font-weight: 700;
+					font-size: 12px;
+				}
 			}
 		}
 		#data-snapshot {
@@ -215,15 +381,35 @@ header {
 					#recent-graph {
 						float: right;
 						#graph-data {
-							width: 400px;
-							height: 208px;
+							width: 370px;
+							height: 178px;
+							padding: 15px 15px 15px 15px;
 							.white-card-style;
+							h2 {
+								font-size: 14px;
+								font-weight: 900;
+								margin: 0 0 5px 0;
+							}
 						}
 						#compared-data {
-							width: 400px;
-							height: 88px;
+							width: 370px;
+							height: 57px;
 							margin: 19px 0 0 0;
+							padding: 15px 15px 15px 15px;
 							.white-card-style;
+							h2 {
+								font-size: 14px;
+								font-weight: 900;
+								margin: 0 0 5px 0;
+							}
+							p {
+								font-size: 12px;
+								font-weight: 500;
+								margin: 0 0 0 0;
+								span {
+									font-weight: 900;
+								}
+							}
 						}
 					}
 				}
@@ -725,6 +911,11 @@ main#compare {
 				display: inline-block;
 				margin: 0 0 0 0;
 				padding: 10px 15px 0 15px;
+				hr {
+					margin: 20px 0 15px 0;
+					border: 1px solid #383838;
+					border-bottom: 0;
+				}
 				.remove-card {
 					font-size: 12px;
 					font-weight: 300;
@@ -756,7 +947,6 @@ main#compare {
 				}
 				.compare-separator {
 					padding: 10px 10px 10px 10px;
-					border: 1px solid #383838;
 					border-radius: 4px;
 					text-align: center;
 					margin: 15px 0 15px 0;
@@ -807,7 +997,7 @@ footer {
 		margin: 0 auto;
 		span {
 			color: #FFF;
-			font-size: 14px;
+			font-size: 10px;
 			display: inline-block;
 			line-height: 48px;
 		}

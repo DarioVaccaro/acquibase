@@ -54,7 +54,7 @@ module.exports = function(app , passport) {
 				}
 			});
 	});
-	app.get('/api/companys', function(req , res) {
+	app.get('/api/companies', function(req , res) {
 	    // use mongoose to get all documents in the database
         Company.find(function(err , companys) {
 	        if(err) {

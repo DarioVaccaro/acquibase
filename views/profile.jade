@@ -36,7 +36,7 @@ html
 							a(href='/') Dashboard
 						li 
 							a(href='/compare') Compare Data
-						li(id='nav-search' , ng-click='searchCheck()')  Search
+						li(id='nav-search' , ng-click='searchCheck(); clearSearch()')  Search
 						li 
 							a(href='/about') About
 				div#nav-accounts

@@ -47,7 +47,7 @@
 						<li>
 							<a href="/compare">Compare Data</a>
 						</li>
-						<li id="nav-search" ng-click="searchCheck()">
+						<li id="nav-search" ng-click="searchCheck(); clearSearch()">
 							Search
 						</li>
 						<li>
@@ -63,7 +63,35 @@
 		<header>
 			<section class="container">
 				<div id="newsletter-signup">
-					<div></div>
+					<div id="lead-container">
+						<h1>Subscribe for M&amp;A News and Updates</h1>
+						<div id="leads">
+							<div id="mc_embed_signup">
+								<form action="//rubycreative.us16.list-manage.com/subscribe/post?u=183d4ec266cbb4950c12b0ce7&amp;id=09c6d179f9" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+								    <div id="mc_embed_signup_scroll">
+										<div class="mc-field-group">
+											<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Enter Your Email">
+										</div>
+										<div id="mce-responses" class="clear">
+											<div class="response" id="mce-error-response" style="display:none"></div>
+											<div class="response" id="mce-success-response" style="display:none"></div>
+										</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+									    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_183d4ec266cbb4950c12b0ce7_09c6d179f9" tabindex="-1" value=""></div>
+									    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+								    </div>
+								</form>
+							</div>
+						</div>
+						<hr>
+						<h2>Access <span>Premium Features</span> when you <span>Register</span></h1>
+						<ul>
+							<li>Track Companies on your Profile</li>
+							<li>Download CSV Data</li>
+							<li>Developer API and Tools</li>
+							<li>Updates Forever</li>
+						</ul>
+						<a href="/register">Click here to Register</a>
+					</div>
 				</div>
 				<div id="data-snapshot">
 					<div id="snapshot-container">
@@ -86,10 +114,11 @@
 							</div>
 							<div id="recent-graph">
 								<div id="graph-data">
-									
+									<h2>Acquisitions This Month</h2>
 								</div>
 								<div id="compared-data">
-									
+									<h2>Compared to Last Month</h2>
+									<p><span>{{monthlyAcquisitions(companys).number}}{{monthlyAcquisitions(companys).number | absoluteCompare}}</span> companies have been acquired in the <span>last 30 days. </span><span>{{monthlyAcquisitions(companys).value | wordifyValuation }} {{monthlyAcquisitions(companys).value | absoluteCompare}} dollars</span> have been spent on M&amp;A among <span>disclosed deals.</span></p>
 								</div>
 							</div>
 						</div>

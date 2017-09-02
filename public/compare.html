@@ -47,7 +47,7 @@
 						<li>
 							<a href="/compare">Compare Data</a>
 						</li>
-						<li id="nav-search" ng-click="searchCheck()">
+						<li id="nav-search" ng-click="searchCheck(); clearSearch()">
 							Search
 						</li>
 						<li>
@@ -63,8 +63,8 @@
 		<header id="compare-header">
 			<form ng-submit="nameCheck(0)" class="container">
 				<label>Search for Companies to Compare</label>
-				<input ng-model="companySearch.name" ng-model-options="{ getterSetter: true }" type="text" name="compare" placeholder="Hit Enter to Select First Company in the List">
-				<div id="compare-dropdown-container">
+				<input ng-model="!mainSearchCheck||companySearch.name" ng-model-options="{ getterSetter: true }" type="text" name="compare" placeholder="Hit Enter to Select First Company in the List">
+				<div ng-show="mainSearchCheck" id="compare-dropdown-container">
 					<h5 class="compare-dropdown" ng-click="nameCheck($index)" ng-repeat="companyName in getSearchArray track by $index | limitTo: 3">
 						{{companyName.name}}
 					</h5>
@@ -86,20 +86,24 @@
 							on {{company.acquisition.length - totalUndisclosed(company.acquisition).length}} Acquisitions + 
 							{{totalUndisclosed(company.acquisition).length}} Undisclosed Deals
 						</span>
+						<hr>
 						<div class="compare-separator">
 							<h6>Average Time Between Acquisitions</h6>
 							<h5>Likely to acquire <span>1 new company</span> in the next <span>{{acquiAverageTime(company.acquisition)}}</span> month(s) based on current trends</h5>
 							<span>Last made an acquisition on {{dateBounds(company.acquisition) | date: 'MMMM dd'}}</span>
 						</div>
+						<hr>
 						<div class="compare-separator">
 							<h6>Historical M &amp; A Data</h6>
 							<h5>{{mostAcquired(company.acquisition).month.date | date:'MMMM'}} is the most active month with {{mostAcquired(company.acquisition).month.number}} Lifetime Acquisitions</h5>
 							<span>In {{mostAcquired(company.acquisition).year.date}} {{company.name}} acquired {{mostAcquired(company.acquisition).year.number}} companies</span>
 						</div>
+						<hr>
 						<div class="compare-separator">
 							<h6>Deal Info</h6>
 							<span>{{company.name}}'s average deal size is {{totalAcquisitionPrice(company.acquisition) / (company.acquisition.length - totalUndisclosed(company.acquisition).length)  | wordifyValuation}} among disclosed deals</span>
 						</div>
+						<hr>
 						<div class="compare-separator">
 							<h6>Stock Price Data</h6>
 							<span>{{company.name}}'s stock prices reached a high of {{company.stock.allTimeHigh.quote}} in {{company.stock.allTimeHigh.date | date:'yyyy'}} after it acquired {{stockCalc(company.stock.allTimeHigh.date , company.acquisition)}}</span>

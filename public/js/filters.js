@@ -19,4 +19,12 @@ angular.module( 'acquibaseApp')
 		inc === true ? inc = 'Inc.' : inc = '';
 		return inc;
 	}
+}).filter('absoluteCompare' , function() {
+	return function(value) {
+		if(value >= 0) {
+			return ' more';
+		} else {
+			return ' less';
+		}
+	}
 });

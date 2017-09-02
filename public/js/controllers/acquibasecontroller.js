@@ -1,15 +1,54 @@
-acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$location' , 'acquibaseFactory' , function($scope , $http , $location , acquibaseFactory) {
+const todaysDate = new Date();
+acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$location' , '$window', 'acquibaseFactory' , function($scope , $http , $location, $window , acquibaseFactory) {
     acquibaseFactory.get()
         .success(function(data) {
             //Sets $scope to the array of documents in the database
             $scope.companys = data;
-            if(!(['contact' , 'index' , 'about' , 'compare'].indexOf($location.path().replace('/' , '')) > -1)) {
-                angular.forEach(data, function(value , key) {
-                    if(value.company.name === $location.path().replace('/' , '')) {
-                        $scope.thisCompany = value.company;
-                    }
-                })
-            }
+            angular.forEach(data, function(value , key) {
+                if(value.company.name === $location.path().replace('/' , '')) {
+                    var dataArray = [];
+                    $scope.thisCompany = value.company;
+                    angular.forEach($scope.thisCompany.acquisition , function(value , key) {
+                        dataArray.push({
+                            'x_axis': new Date($scope.thisCompany.acquisition[key].date),
+                            'y_axis': new Date(2012, new Date($scope.thisCompany.acquisition[key].date).getMonth()),
+                            'radius': '10',
+                            'color': '#00FFC9'
+                        });
+                    })
+                    var foundedOn = new Date($scope.thisCompany.foundedOn);
+                    const selectGraph = d3.select('#acquisition-history-chart').append('svg')
+                        .attr('width' , '100%')
+                        .attr('height' , '100%');
+                    const xScale = d3.scaleTime()
+                        .domain([foundedOn , todaysDate])
+                        .range([0 , 700]);
+                    const yScale = d3.scaleTime()
+                        .domain([new Date(2012, 11, 31) , new Date(2012, 0, 1)])
+                        .range([240 , 0]);
+                    const xAxis = d3.axisBottom()
+                        .scale(xScale);
+                    const yAxis = d3.axisLeft()
+                        .scale(yScale)
+                        .tickFormat(d3.timeFormat("%b"));
+                    const circles = selectGraph.selectAll('circle')
+                        .data(dataArray);
+                    const drawCircles = circles.enter();
+                    drawCircles.append('circle')
+                        .attr('cx' , function(d) { return xScale(d.x_axis); })
+                        .attr('cy' , function(d) { return yScale(d.y_axis); })
+                        .attr('r' , function(d) { return d.radius; })
+                        .style('fill' , function(d) { return d.color; });
+                    selectGraph.append('g')
+                        .attr('transform', 'translate(50, 260)')
+                        .attr('class' , 'xAxis')
+                        .call(xAxis);
+                    selectGraph.append('g')
+                        .attr('transform', 'translate(20, 35)')
+                        .attr('class' , 'yAxis')
+                        .call(yAxis);
+                }
+            })
             //Initalizes an array for all acquisitions
             $scope.acquisitionData = [];
             //Iterates through the entire database
@@ -29,74 +68,37 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
                 });
             })
         });
-        const todaysDate = new Date();
-        var dataArray = [];
-        $scope.acquiGraph = function(company) {
-            angular.forEach(company.acquisition , function(value , key) {
-                dataArray.push({
-                    'x_axis': new Date(company.acquisition[key].date),
-                    'y_axis': new Date(company.acquisition[key].date).getMonth(),
-                    'radius': '20',
-                    'color': 'red'
-                });
-            })
-            var foundedOn = new Date(company.foundedOn);
-            const parseTime = d3.timeParse("%b");
-            const selectGraph = d3.select('#acquisition-history-chart').append('svg')
-                .attr('width' , '100%')
-                .attr('height' , '100%');
-            const xScale = d3.scaleTime()
-                .domain([foundedOn , todaysDate])
-                .range([0 , 700]);
-            const yScale = d3.scaleTime()
-                .domain([new Date(2012, 11, 31) , new Date(2012, 0, 1)])
-                .range([240 , 0]);
-            const xAxis = d3.axisBottom()
-                .scale(xScale);
-            const yAxis = d3.axisLeft()
-                .scale(yScale)
-                .tickFormat(d3.timeFormat("%b"));
-            const circles = selectGraph.selectAll('circle')
-                .data(dataArray)
-                    .enter()
-                    .append('circles');
-            const circleAttributes = circles
-                .attr('cx' , function(d) { return xScale(d.x_axis); })
-                .attr('cy' , function(d) { return d.y_axis; })
-                .attr('r' , function(d) { return d.radius; })
-                .style('fill' , function(d) { return d.color; });
-            selectGraph.append('g')
-                .attr('transform', 'translate(50, 260)')
-                .attr('class' , 'xAxis')
-                .call(xAxis);
-            selectGraph.append('g')
-                .attr('transform', 'translate(20, 35)')
-                .attr('class' , 'yAxis')
-                .call(yAxis);
-        }
         //Controls compare page search functionality
-        var _name;
+        $scope._name;
         $scope.getSearchArray;
         $scope.companySearch = {
             name: function(newName) {
                 if(arguments.length) {
-                    _name = newName;
+                    $scope._name = newName;
+                    console.log($scope._name);
                     var searchArray = [];
                     angular.forEach($scope.companys , function(value, key) {
-                        for(i = 0; i < _name.length; i++) {
-                            if(_name.toLowerCase().slice(0 , _name.length) === value.company.name.toLowerCase().slice(0 , _name.length)) {
+                        for(i = 0; i < $scope._name.length; i++) {
+                            if($scope._name.toLowerCase().slice(0 , $scope._name.length) === value.company.name.toLowerCase().slice(0 , $scope._name.length)) {
                                 searchArray.push(value.company);
                                 angular.extend($scope.getSearchArray = searchArray);
                                 break;
                             }
                         }
                     });
-                    if(_name.length === 0 && $scope.getSearchArray.length > 0) {
+                    if($scope._name.length === 0 && $scope.getSearchArray.length > 0) {
                         angular.extend($scope.getSearchArray = searchArray);
                     }
                 }
-                return _name;
+                return $scope._name;
             }
+        }
+        $scope.clearSearch = function() {
+            $scope._name = '';
+        }
+        $scope.linkCheck = function(index) {
+            var url = '/' + $scope.getSearchArray[index].name;
+            $window.location.href = url;
         }
         //Select a name and load it into the new print array
         var checkerValidate = true;
@@ -121,12 +123,16 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
         //Controls visibility of lightbox and search bar
         $scope.disableScroll = false;
         $scope.searchToggle = false;
+        $scope.mainSearchCheck = true;
         $scope.searchCheck = function() {
+            $scope.getSearchArray = null;
             $scope.searchToggle === false ? $scope.searchToggle = true : $scope.searchToggle = false;
             if($scope.searchToggle === true) {
                 $scope.disableScroll = true;
+                $scope.mainSearchCheck = false;
             } else {
                 $scope.disableScroll = false;
+                $scope.mainSearchCheck = true;
             }
         }
         //Calculates when the last time a company was updated
@@ -235,5 +241,41 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
                }
             }
             return $scope.filteredIndustries;
+        }
+        $scope.monthlyAcquisitions = function(companies) {
+            var monthCompare = {
+                thisMonth: {
+                    number: 0,
+                    value: 0
+                },
+                lastMonth: {
+                    number: 0,
+                    value: 0
+                },
+                difference: {
+                    number: 0,
+                    value: 0
+                }
+            }
+            angular.forEach(companies , function(value , key) {
+                angular.forEach(companies[key].company.acquisition , function(value , key) {
+                    var dateify = new Date(value.date), compare;
+                    todaysDate.getMonth() > 0 ? compare = todaysDate.getMonth() - 1 : compare = todaysDate.getMonth() + 12;
+                    if(dateify.getMonth() === todaysDate.getMonth()) {
+                        monthCompare.thisMonth['number'] += 1;
+                        if(value.acquisitionPrice > 0) {
+                            monthCompare.thisMonth['value'] += value.acquisitionPrice;
+                        }
+                    } if(dateify.getMonth() === compare) {
+                        monthCompare.lastMonth['number'] += 1;
+                        if(value.acquisitionPrice > 0) {
+                            monthCompare.lastMonth['value'] += value.acquisitionPrice;
+                        }
+                    }
+                })
+            })
+            monthCompare.difference['number'] = monthCompare.thisMonth.number - monthCompare.lastMonth.number;
+            monthCompare.difference['value'] = monthCompare.thisMonth.value - monthCompare.lastMonth.value;
+            return monthCompare.difference;
         }
 }]);

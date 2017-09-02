@@ -1,0 +1,30 @@
+<div ng-show="searchToggle" searchinput id="search-bar">
+	<form ng-submit="linkCheck(0)">
+		<input ng-model="companySearch.name" ng-model-options="{ getterSetter: true }" type="text" name="mainSearchBar" placeholder="search"></input>
+	</form>
+	<section class="container">
+			<div id="search-container">
+				<div ng-repeat="company in getSearchArray track by $index">
+					<div class="search-card">
+						<section>
+							<a id="search-company-link" href="/{{company.name}}"></a>
+							<div id="search-company-top">
+								<span></span>
+								<h3>{{company.stock.marketCap | wordifyValuation}} Valuation</h3>
+							</div>
+							<div id="search-company-info">
+								<h1>{{company.name}}</h1>
+								<h6><span>{{company.industry}} Company </span>founded in {{company.foundedOn | date:'yyyy'}}</h6>
+							</div>
+							<div id="search-company-bottom">
+								<h4>Updated {{dateBounds(company.acquisition) | date:'MMMM dd'}}</h4>
+								<h3><span>{{company.acquisition.length}} Acquisitions</span> in <span>{{dateRange(company.acquisition)}} Years</span></h3>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</section>
+	<div ng-click="!searchCheck(); clearSearch()" id="lightbox">
+	</div>
+</div>

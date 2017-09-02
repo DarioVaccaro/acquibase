@@ -1,5 +1,7 @@
 const express 				= require('express');
 const app 					= express();
+const path 					= require('path');
+const favicon 				= require('serve-favicon');
 const bodyParser 			= require('body-parser');
 const methodOverride 		= require('method-override');
 const mongoose 				= require('mongoose');
@@ -15,13 +17,15 @@ require('./config/passport.js')(passport);
 
 app.set('view engine' , 'jade');
 
+app.use(favicon(path.join(__dirname, 'public', 'img/favicon.png')));
+
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(bodyParser.urlencoded({ extended : true }));
 
 app.use(methodOverride('X-HTTP-Method-Override'));
 
-app.use(session({ secret: process.env.CONFIG_SR }));
+app.use(session({ secret: db.secret }));
 app.use(passport.initialize());
 app.use(passport.session());
 
