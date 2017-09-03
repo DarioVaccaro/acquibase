@@ -403,6 +403,22 @@ header .container #data-snapshot #snapshot-container #data-container #recent-gra
   font-weight: 900;
   margin: 0 0 5px 0;
 }
+header .container #data-snapshot #snapshot-container #data-container #recent-graph #graph-data #compared-data-chart {
+  border-radius: 3px;
+}
+header .container #data-snapshot #snapshot-container #data-container #recent-graph #graph-data #compared-data-chart .xAxis path,
+header .container #data-snapshot #snapshot-container #data-container #recent-graph #graph-data #compared-data-chart .yAxis path,
+header .container #data-snapshot #snapshot-container #data-container #recent-graph #graph-data #compared-data-chart .xAxis line,
+header .container #data-snapshot #snapshot-container #data-container #recent-graph #graph-data #compared-data-chart .yAxis line {
+  stroke: #FFF;
+}
+header .container #data-snapshot #snapshot-container #data-container #recent-graph #graph-data #compared-data-chart .xAxis text,
+header .container #data-snapshot #snapshot-container #data-container #recent-graph #graph-data #compared-data-chart .yAxis text {
+  fill: #000;
+}
+header .container #data-snapshot #snapshot-container #data-container #recent-graph #graph-data #compared-data-chart .xAxis g:nth-child(even) text {
+  display: none;
+}
 header .container #data-snapshot #snapshot-container #data-container #recent-graph #compared-data {
   width: 370px;
   height: 57px;
@@ -725,6 +741,19 @@ main#company .container #lower-data-container #company-stock-graph h6 {
 main#company .container #lower-data-container #company-stock-graph h4 {
   float: right;
   font-size: 11px;
+}
+main#company .container #lower-data-container #company-stock-graph #stock-history-chart .xAxis path,
+main#company .container #lower-data-container #company-stock-graph #stock-history-chart .yAxis path,
+main#company .container #lower-data-container #company-stock-graph #stock-history-chart .xAxis line,
+main#company .container #lower-data-container #company-stock-graph #stock-history-chart .yAxis line {
+  stroke: #1B1B1B;
+}
+main#company .container #lower-data-container #company-stock-graph #stock-history-chart .xAxis text,
+main#company .container #lower-data-container #company-stock-graph #stock-history-chart .yAxis text {
+  fill: white;
+}
+main#company .container #lower-data-container #company-stock-graph #stock-history-chart .xAxis g:nth-child(even) text {
+  stroke: #B9B9B9;
 }
 main#company .container #lower-data-container #company-recent-acqusitions {
   width: 44%;

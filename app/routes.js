@@ -1,5 +1,11 @@
 const path = require('path');
 const Company = require('./models/acquibase');
+const User = require('./models/users');
+const jwt = require('express-jwt');
+let auth = jwt({
+  secret: process.env.CONFIG_SR,
+  userProperty: 'payload'
+});
 
 module.exports = function(app , passport) {
 	app.get('/' , function(req , res) {
@@ -8,7 +14,7 @@ module.exports = function(app , passport) {
 	app.get('/login' , function(req , res) {
 		res.sendFile(path.join(__dirname , '../public' , 'login.html'));
 	});
-	app.post('/login' , passport.authenticate('local-login' , {
+	app.post('/login' , passport.authenticate('local' , {
 		successRedirect : '/profile',
         failureRedirect : '/login'
 	}));
@@ -19,7 +25,7 @@ module.exports = function(app , passport) {
 		successRedirect : '/profile',
         failureRedirect : '/register'
 	}));
-	app.get('/profile' , isLoggedIn,  function(req , res) {
+	app.get('/profile', isLoggedIn,  function(req , res) {
 		res.render('profile.jade' , {
 			user: req.user
 		});
@@ -65,10 +71,25 @@ module.exports = function(app , passport) {
 	    });
 	});
 	function isLoggedIn(req , res , next) {
+		// if(!req.payload._id) {
+		// 	res.status(401).json({
+		//       "message" : "UnauthorizedError: private profile"
+		//     });
+		// } else {
+		// 	User.findById(req.payload._id)
+  //     			.exec(function(err, user) {
+  //       			res.status(200).json(user);
+  //     			});
+  //     		if(req.isAuthenticated()) {
+		// 		return next();
+		// 	} else {
+		// 		res.redirect('/');
+		// 	}
+		// }
 		if(req.isAuthenticated()) {
-			return next();
-		} else {
-			res.redirect('/');
-		}
+				return next();
+			} else {
+				res.redirect('/');
+			}
 	}
 };

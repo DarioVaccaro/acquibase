@@ -12,10 +12,11 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
                         dataArray.push({
                             'x_axis': new Date($scope.thisCompany.acquisition[key].date),
                             'y_axis': new Date(2012, new Date($scope.thisCompany.acquisition[key].date).getMonth()),
-                            'radius': '10',
-                            'color': '#00FFC9'
+                            'radius': $scope.thisCompany.acquisition[key].acquisitionPrice,
+                            'color': $scope.thisCompany.acquisition[key].acquisitionPrice
                         });
                     })
+                    //Opacity and Size 
                     var foundedOn = new Date($scope.thisCompany.foundedOn);
                     const selectGraph = d3.select('#acquisition-history-chart').append('svg')
                         .attr('width' , '100%')
@@ -35,10 +36,20 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
                         .data(dataArray);
                     const drawCircles = circles.enter();
                     drawCircles.append('circle')
+                        .attr('transform', 'translate(50, 35)')
                         .attr('cx' , function(d) { return xScale(d.x_axis); })
                         .attr('cy' , function(d) { return yScale(d.y_axis); })
-                        .attr('r' , function(d) { return d.radius; })
-                        .style('fill' , function(d) { return d.color; });
+                        .attr('r' , function(d) { 
+                            if(d.radius <= 0) {
+                                return d.radius = 8;
+                            }
+                            d.radius = 19 / d.radius;
+                            return d.radius + 5; 
+                        })
+                        .style('fill' , function(d) { 
+                            d.color > -1 ? d.color = '#00FFC9' : d.color = '#F20278';
+                            return d.color; 
+                        });
                     selectGraph.append('g')
                         .attr('transform', 'translate(50, 260)')
                         .attr('class' , 'xAxis')
@@ -47,6 +58,60 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
                         .attr('transform', 'translate(20, 35)')
                         .attr('class' , 'yAxis')
                         .call(yAxis);
+
+                    var stockArray = [];
+                    angular.forEach($scope.thisCompany.stock.historicalPrice, function(value, key) {
+                        stockArray.push({
+                            x_axis: new Date(value.date),
+                            y_axis: value.close
+                        });
+                    })
+                    const stockGraph = d3.select('#stock-history-chart').append('svg')
+                        .attr('width' , '100%')
+                        .attr('height' , '100%');
+                    const xScaleStock = d3.scaleTime()
+                        .domain([d3.min(stockArray, function(d) { return d.x_axis; })  , d3.max(stockArray, function(d) { return d.x_axis; })])
+                        .range([0 , 350]);
+                    const yScaleStock = d3.scaleLinear()
+                        .domain([0 , d3.max(stockArray, function(d) { return d.y_axis; })])
+                        .range([130 , 0]);
+                    const xAxisStock = d3.axisBottom()
+                        .scale(xScaleStock)
+                        .tickFormat(d3.timeFormat("%Y"));
+                    const yAxisStock = d3.axisLeft()
+                        .scale(yScaleStock);
+                    const dots = stockGraph.selectAll('circle')
+                        .data(dataArray);
+                    const drawDots = dots.enter();
+                    drawDots.append('circle')
+                        .attr('transform', 'translate(45, 0)')
+                        .attr('cx' , function(d) { return xScale(d.x_axis); })
+                        .attr('cy' , 0)
+                        .attr('r' , 2)
+                        .style('fill' , function(d) { 
+                            d.color > -1 ? d.color = '#00FFC9' : d.color = '#F20278';
+                            return d.color; 
+                        });
+                    var line = d3.line()
+                        .x(function(d) { return xScaleStock(d.x_axis); })
+                        .y(function(d) { return yScaleStock(d.y_axis); })
+                        .curve(d3.curveMonotoneX);
+                    stockGraph.append('g')
+                        .attr('transform', 'translate(35, 0)')
+                        .attr('class' , 'yAxis')
+                        .call(yAxisStock);
+                    stockGraph.append('g')
+                        .attr('transform', 'translate(45, 130)')
+                        .attr('class' , 'xAxis')
+                        .call(xAxisStock);
+                    stockGraph.append('path')
+                        .datum(stockArray)
+                        .attr('transform', 'translate(45, 0)')
+                        .attr("class", "line")
+                        .attr('stroke', '#F20278')
+                        .attr('stroke-width', '2')
+                        .attr('fill', '#1B1B1B')
+                        .attr("d", line);
                 }
             })
             //Initalizes an array for all acquisitions
@@ -67,6 +132,50 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
                     $scope.acquisitionData.reverse();
                 });
             })
+            var historyArray = [];
+            for(i = 0; i <= 30; i++) {
+                historyArray[i] = {
+                    x_axis: new Date(todaysDate - ((24*60*60*1000) * i)),
+                    y_axis: 0
+                };
+            }
+            angular.forEach($scope.acquisitionData, function(value, key) {
+                for(i = 0; i <= 30; i++) {
+                    if(new Date(value.date).getFullYear() === new Date(todaysDate - ((24*60*60*1000) * i)).getFullYear() && new Date(value.date).getMonth() === new Date(todaysDate - ((24*60*60*1000) * i)).getMonth() && new Date(value.date).getDate() === new Date(todaysDate - ((24*60*60*1000) * i)).getDate()) {
+                        historyArray[i].y_axis += 1;;
+                    }
+                }
+            }) 
+            const historyGraph = d3.select('#compared-data-chart').append('svg')
+                .attr('width' , '100%')
+                .attr('height' , '100%');
+            const xScaleHist = d3.scaleTime()
+                .domain([new Date(todaysDate - (24*60*60*1000) * 30)  , todaysDate])
+                .range([0 , 375]);
+            const yScaleHist = d3.scaleLinear()
+                .domain([0 , d3.max(historyArray, function(d) { return d.y_axis; })])
+                .range([130 , 0]);
+            const xAxisHist = d3.axisBottom()
+                .scale(xScaleHist)
+                .tickFormat(d3.timeFormat("%b %d"));
+            const yAxisHist = d3.axisLeft()
+                .scale(yScaleHist);
+            var line = d3.line()
+                .x(function(d) { return xScaleHist(d.x_axis); })
+                .y(function(d) { return yScaleHist(d.y_axis); })
+                .curve(d3.curveMonotoneX);
+            historyGraph.append('g')
+                .attr('transform', 'translate(-5, 140)')
+                .attr('class' , 'xAxis')
+                .call(xAxisHist);
+            historyGraph.append('path')
+                .datum(historyArray)
+                .attr('transform', 'translate(-5, 0)')
+                .attr("class", "line")
+                .attr('stroke', '#F20278')
+                .attr('stroke-width', '2')
+                .attr('fill', '#F84B9B')
+                .attr("d", line);
         });
         //Controls compare page search functionality
         $scope._name;

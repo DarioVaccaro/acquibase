@@ -115,10 +115,11 @@
 							<div id="recent-graph">
 								<div id="graph-data">
 									<h2>Acquisitions This Month</h2>
+									<div style="width: 100%; height: 178px;" id="compared-data-chart"></div>
 								</div>
 								<div id="compared-data">
 									<h2>Compared to Last Month</h2>
-									<p><span>{{monthlyAcquisitions(companys).number}}{{monthlyAcquisitions(companys).number | absoluteCompare}}</span> companies have been acquired in the <span>last 30 days. </span><span>{{monthlyAcquisitions(companys).value | wordifyValuation }} {{monthlyAcquisitions(companys).value | absoluteCompare}} dollars</span> have been spent on M&amp;A among <span>disclosed deals.</span></p>
+									<p><!-- <span>{{monthlyAcquisitions(companys).number}}{{monthlyAcquisitions(companys).number | absoluteCompare}}</span> --> companies have been acquired in the <span>last 30 days. </span><span>{{monthlyAcquisitions(companys).value | wordifyValuation }} {{monthlyAcquisitions(companys).value | absoluteCompare}} dollars</span> have been spent on M&amp;A among <span>disclosed deals.</span></p>
 								</div>
 							</div>
 						</div>
@@ -163,6 +164,7 @@
 			</section>
 		</footer>
 		<script defer src="libs/angular/angular.js"></script>
+		<script defer src="libs/d3/d3.min.js"></script>
 		<script defer src="js/app.js"></script>
 		<script defer src="js/filters.js"></script>
 		<script defer src="js/directives/searchbar.js"></script>

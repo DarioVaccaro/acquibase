@@ -14,4 +14,15 @@ userSchema.methods.setPassword = function(password) {
 userSchema.methods.validatePassword = function(password) {
 	return bcrypt.compareSync(password, this.local.password);
 }
+userSchema.methods.generateJwt = function() {
+  var expire = new Date();
+  expire.setDate(expire.getDate() + 7);
+
+  return jwt.sign({
+    _id: this._id,
+    email: this.local.email,
+    name: this.local.name,
+    exp: parseInt(expire.getTime() / 1000),
+  }, process.env.CONFIG_SR);
+};
 module.exports = mongoose.model('User' , userSchema);

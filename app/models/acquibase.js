@@ -14,10 +14,12 @@ let companySchema = new mongoose.Schema({
 				quote: Number,
 				date: Date
 			},
-			historicalPrice: [{
-				date: Date,
-				price: Number
-			}]
+			historicalPrice: [
+				{
+					date: Date,
+					close: Number
+				}
+			]
 		},
 		acquisition: [{
 			name: String,

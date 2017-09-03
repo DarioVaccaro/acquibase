@@ -390,6 +390,20 @@ header {
 								font-weight: 900;
 								margin: 0 0 5px 0;
 							}
+							#compared-data-chart {
+								border-radius: 3px;
+								.xAxis , .yAxis{
+									path, line {
+										stroke: #FFF;
+									}
+									text {
+										fill: #000;
+									}
+								}
+								.xAxis g:nth-child(even) text{
+									display: none;
+								}
+							}
 						}
 						#compared-data {
 							width: 370px;
@@ -708,6 +722,19 @@ main#company {
 				h4 {
 					float: right;
 					font-size: 11px;
+				}
+				#stock-history-chart {
+					.xAxis , .yAxis{
+						path, line {
+							stroke: #1B1B1B;
+						}
+						text {
+							fill: white;
+						}
+					}
+					.xAxis g:nth-child(even) text {
+						stroke: #B9B9B9;
+					}
 				}
 			}
 			#company-recent-acqusitions {

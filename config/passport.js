@@ -35,7 +35,7 @@ module.exports = function(passport) {
 			});
 		});
 	}));
-	passport.use('local-login', new LocalStrategy({ usernameField: 'email', passwordField : 'password', passReqToCallback : true }, function(req, email, password, done) {
+	passport.use(new LocalStrategy({ usernameField: 'email', passwordField : 'password', passReqToCallback : true }, function(req, email, password, done) {
 		User.findOne({'local.email': email}, function(err, user) {
 			if(err) {
 				return done(err); 
