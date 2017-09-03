@@ -27,4 +27,8 @@ angular.module( 'acquibaseApp')
 			return ' less';
 		}
 	}
+}).filter('abs', function() {
+	return function(number) {
+		return Math.abs(number);
+	}
 });

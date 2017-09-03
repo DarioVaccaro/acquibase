@@ -119,7 +119,7 @@
 								</div>
 								<div id="compared-data">
 									<h2>Compared to Last Month</h2>
-									<p><!-- <span>{{monthlyAcquisitions(companys).number}}{{monthlyAcquisitions(companys).number | absoluteCompare}}</span> --> companies have been acquired in the <span>last 30 days. </span><span>{{monthlyAcquisitions(companys).value | wordifyValuation }} {{monthlyAcquisitions(companys).value | absoluteCompare}} dollars</span> have been spent on M&amp;A among <span>disclosed deals.</span></p>
+									<p><span>{{monthlyAcquisitions(companys).number | abs}}{{monthlyAcquisitions(companys).number | absoluteCompare}}</span> companies have been acquired in the <span>last 30 days. </span><span>{{monthlyAcquisitions(companys).value | wordifyValuation }} {{monthlyAcquisitions(companys).value | absoluteCompare}} dollars</span> have been spent on M&amp;A among <span>disclosed deals.</span></p>
 								</div>
 							</div>
 						</div>
@@ -130,7 +130,14 @@
 		<main>
 			<section class="container">
 				<div id="filter-bar">
-					
+					<h6>Filter By:</h6>
+					<ul>
+						<li>Valuation</li>
+						<li>Date</li>
+						<li>Name</li>
+						<li>Acquisition Amount</li>
+						<li>Recently Updated</li>
+					</ul>
 				</div>
 				<div id="card-container">
 					<div ng-repeat="company in companys">

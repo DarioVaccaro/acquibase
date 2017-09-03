@@ -370,15 +370,17 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
                 angular.forEach(companies[key].company.acquisition , function(value , key) {
                     var dateify = new Date(value.date), compare;
                     todaysDate.getMonth() > 0 ? compare = todaysDate.getMonth() - 1 : compare = todaysDate.getMonth() + 12;
-                    if(dateify.getMonth() === todaysDate.getMonth()) {
-                        monthCompare.thisMonth['number'] += 1;
-                        if(value.acquisitionPrice > 0) {
-                            monthCompare.thisMonth['value'] += value.acquisitionPrice;
-                        }
-                    } if(dateify.getMonth() === compare) {
-                        monthCompare.lastMonth['number'] += 1;
-                        if(value.acquisitionPrice > 0) {
-                            monthCompare.lastMonth['value'] += value.acquisitionPrice;
+                    if(dateify.getFullYear() === todaysDate.getFullYear()) {
+                        if(dateify.getMonth() === todaysDate.getMonth()) {
+                            monthCompare.thisMonth['number'] += 1;
+                            if(value.acquisitionPrice > 0) {
+                                monthCompare.thisMonth['value'] += value.acquisitionPrice;
+                            }
+                        } if(dateify.getMonth() === compare) {
+                            monthCompare.lastMonth['number'] += 1;
+                            if(value.acquisitionPrice > 0) {
+                                monthCompare.lastMonth['value'] += value.acquisitionPrice;
+                            }
                         }
                     }
                 })
