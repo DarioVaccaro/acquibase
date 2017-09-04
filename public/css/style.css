@@ -201,7 +201,8 @@ nav #nav-container #nav-accounts ul li a {
 nav #nav-container #nav-accounts #login {
   margin: 0 15px 0 0;
 }
-nav #nav-container #nav-accounts #register {
+nav #nav-container #nav-accounts #register,
+nav #nav-container #nav-accounts #profile-link {
   padding: 7px 25px 7px 25px;
   border-radius: 2px;
   background: #F20278;

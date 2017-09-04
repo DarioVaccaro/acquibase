@@ -4,53 +4,76 @@ const User = require('./models/users');
 const jwt = require('express-jwt');
 let auth = jwt({
   secret: process.env.CONFIG_SR,
-  userProperty: 'payload'
+  requestProperty: 'payload'
 });
 
 module.exports = function(app , passport) {
-	app.get('/' , function(req , res) {
-		res.sendFile(path.join(__dirname , '../public' , 'index.html'));
+	function profileCheck(req , res , next) {
+		if(!req.payload._id) {
+			res.status(401).json({
+		      "message" : "UnauthorizedError: private profile"
+		    });
+		} else {
+			User.findById(req.payload._id)
+      			.exec(function(err, user) {
+        			res.status(200).json(user);
+      			});
+		}
+	}
+	app.post('/api/login' , function(req, res) {
+		passport.authenticate('local' , function(err, user, info) {
+			if(err) {
+				return res.json({
+					'message': err
+				});
+			} if(user) {
+				token = user.generateJwt();
+			    res.status(200);
+			    res.json({
+			    	"token" : token
+			    });
+			} else {
+				return res.json({
+					'message': 'User not found'
+				});
+			}
+		})(req, res);
 	});
-	app.get('/login' , function(req , res) {
-		res.sendFile(path.join(__dirname , '../public' , 'login.html'));
-	});
-	app.post('/login' , passport.authenticate('local' , {
-		successRedirect : '/profile',
-        failureRedirect : '/login'
-	}));
-	app.get('/register' , function(req , res) {
-		res.sendFile(path.join(__dirname , '../public' , 'register.html'));
-	});
-	app.post('/register' , passport.authenticate('local-register' , {
-		successRedirect : '/profile',
-        failureRedirect : '/register'
-	}));
-	app.get('/profile', isLoggedIn,  function(req , res) {
-		res.render('profile.jade' , {
-			user: req.user
+	app.post('/api/register' , function(req, res) {
+		User.findOne({'local.email': req.body.email}, function(err, user) {
+			if(err) {
+				return res.json({
+					'message': err
+				});
+			}
+			if(user) {
+				return res.json({
+					'message': 'User already exists'
+				});
+			} else {
+				var newUser = new User();
+
+				newUser.local.email = req.body.email;
+				newUser.local.name = req.body.name;
+				newUser.local.password = newUser.setPassword(req.body.password);
+				newUser.save(function(err) {
+					// passport.authenticate('local',{ session: false }, function(req, res) {});
+					var token;
+					token = newUser.generateJwt();
+					res.status(200);
+					res.json({
+						'token': token
+					});
+				});
+			}
 		});
 	});
-	app.get('/logout' , function(req , res) {
-		req.logout();
-		res.redirect('/');
-	});
-	app.get('/compare' , function(req , res) {
-		res.sendFile(path.join(__dirname , '../public' , 'compare.html'));
-	});
-	app.get('/about' , function(req , res) {
-		res.sendFile(path.join(__dirname , '../public' , 'about.html'));
-	});
-	app.get('/contact' , function(req , res) {
-		res.sendFile(path.join(__dirname , '../public' , 'contact.html'));
-	});
+	app.get('/api/profile', auth, profileCheck);
 	app.get('/:name' , function(req , res) {
 		Company.findOne({'company.name' : req.params.name})
 			.then(function(company) {
 				if (company) {
 					res.render('company.jade');
-					return;
-				} else {
-					res.render('404.jade');
 					return;
 				}
 			})
@@ -70,26 +93,4 @@ module.exports = function(app , passport) {
 	    	}
 	    });
 	});
-	function isLoggedIn(req , res , next) {
-		// if(!req.payload._id) {
-		// 	res.status(401).json({
-		//       "message" : "UnauthorizedError: private profile"
-		//     });
-		// } else {
-		// 	User.findById(req.payload._id)
-  //     			.exec(function(err, user) {
-  //       			res.status(200).json(user);
-  //     			});
-  //     		if(req.isAuthenticated()) {
-		// 		return next();
-		// 	} else {
-		// 		res.redirect('/');
-		// 	}
-		// }
-		if(req.isAuthenticated()) {
-				return next();
-			} else {
-				res.redirect('/');
-			}
-	}
 };

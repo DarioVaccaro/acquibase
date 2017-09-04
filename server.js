@@ -9,6 +9,7 @@ const passport 				= require('passport');
 const session     			= require('express-session');
 
 const db = require('./config/db.js');
+const routes = require('./app/routes.js');
 
 let port = process.env.PORT || 3000;
 
@@ -32,6 +33,7 @@ app.use(passport.session());
 app.use(express.static( __dirname + '/public' ));
 
 require('./app/routes.js')(app , passport);
+app.use('/api', routes);
 
 app.listen(port);
 console.log('Magic happens on ' + port);

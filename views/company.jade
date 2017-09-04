@@ -40,7 +40,7 @@ html
 						li 
 							a(href='/about') About
 				div#nav-accounts
-					nav-accounts
+					nav-accounts(ng-controller='authController')
 		main#company
 			section.container
 				div#company-info
@@ -134,3 +134,5 @@ html
 		script(defer src='js/directives/navaccounts.js')
 		script(defer src='js/controllers/acquibaseController.js')
 		script(defer src='js/services/acquibaseFactory.js')
+		script(defer src="js/services/authFactory.js")
+		script(defer src="js/services/dataFactory.js")
