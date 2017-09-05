@@ -305,6 +305,9 @@ header .container #newsletter-signup #lead-container ul li {
   font-size: 13px;
   font-weight: 600;
 }
+header .container #newsletter-signup #lead-container #welcome-list {
+  margin: 10px 0 30px 0;
+}
 header .container #newsletter-signup #lead-container a {
   padding: 7px 25px 7px 25px;
   border-radius: 2px;
@@ -505,7 +508,7 @@ header .container #data-snapshot #snapshot-container #data-container #recent-gra
   background: #8a8a8a;
 }
 main .container #filter-bar {
-  width: 100%;
+  width: 1180px;
   background: #1B1B1B;
   border: 1px solid #383838;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);

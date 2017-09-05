@@ -69,11 +69,32 @@ module.exports = function(app , passport) {
 		});
 	});
 	app.get('/api/profile', auth, profileCheck);
+	app.get('/', function(req, res) {
+		res.sendFile(path.join(__dirname , '../public' , 'dashboard.html'));
+	});
+	app.get('/compare', function(req, res) {
+		res.sendFile(path.join(__dirname , '../public' , 'dashboard.html'));
+	});
+	app.get('/contact', function(req, res) {
+		res.sendFile(path.join(__dirname , '../public' , 'dashboard.html'));
+	});
+	app.get('/login', function(req, res) {
+		res.sendFile(path.join(__dirname , '../public' , 'dashboard.html'));
+	});
+	app.get('/register', function(req, res) {
+		res.sendFile(path.join(__dirname , '../public' , 'dashboard.html'));
+	});
+	app.get('/profile', function(req, res) {
+		res.sendFile(path.join(__dirname , '../public' , 'dashboard.html'));
+	});
 	app.get('/:name' , function(req , res) {
 		Company.findOne({'company.name' : req.params.name})
 			.then(function(company) {
 				if (company) {
 					res.render('company.jade');
+					return;
+				} else {
+					res.render('404.jade');
 					return;
 				}
 			})

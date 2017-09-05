@@ -3,7 +3,7 @@ var companyURL = '/api/companies';
 acquibaseApp.config(function($routeProvider , $locationProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl: './ui/home.html',
+			templateUrl: './ui/index.html',
 		}).when('/compare', {
 			templateUrl: './ui/compare.html',
 		}).when('/contact', {

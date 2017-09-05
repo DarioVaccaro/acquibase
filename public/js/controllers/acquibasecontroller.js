@@ -410,7 +410,8 @@ acquibaseApp.controller('authController', ['$scope', '$http', '$location', '$win
 			.error(function(err) {
 				console.log(err);
 			}).then(function() {
-				$location.path('/profile');
+				var url = '/profile';
+            	$window.location.href = url;
 			});
 	}
 	$scope.logSubmit = function() {
@@ -418,13 +419,18 @@ acquibaseApp.controller('authController', ['$scope', '$http', '$location', '$win
 			.error(function(err) {
 				console.log(err);
 			}).then(function() {
-				$location.path('/profile');
+				var url = '/profile';
+            $window.location.href = url;
 			});
 	}
 	$scope.logout = function() {
+		var url = '/';
 		authenticationService.logout()
-		$location.path('/');
+        $window.location.href = url;
 	}
 	$scope.isLoggedIn = authenticationService.isLoggedIn();
 	$scope.currentUser = authenticationService.currentUser();
 }]);
+acquibaseApp.controller('profileController', '$scope', function($scope) {
+	
+});
