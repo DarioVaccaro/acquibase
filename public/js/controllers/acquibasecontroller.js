@@ -5,7 +5,7 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
 			//Sets $scope to the array of documents in the database
 			$scope.companys = data;
 			angular.forEach(data, function(value , key) {
-				if(value.company.name === $location.path().replace('/' , '')) {
+				if(value.company.name === $location.path().replace('/company/' , '')) {
 					var dataArray = [];
 					$scope.thisCompany = value.company;
 					angular.forEach($scope.thisCompany.acquisition , function(value , key) {
@@ -184,7 +184,6 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
 			name: function(newName) {
 				if(arguments.length) {
 					$scope._name = newName;
-					console.log($scope._name);
 					var searchArray = [];
 					angular.forEach($scope.companys , function(value, key) {
 						for(i = 0; i < $scope._name.length; i++) {
@@ -206,7 +205,7 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
 			$scope._name = '';
 		}
 		$scope.linkCheck = function(index) {
-			var url = '/' + $scope.getSearchArray[index].name;
+			var url = '/company/' + $scope.getSearchArray[index].name;
 			$window.location.href = url;
 		}
 		//Select a name and load it into the new print array
@@ -404,7 +403,22 @@ acquibaseApp.controller('authController', ['$scope', '$http', '$location', '$win
 				console.log(e);
 			});
 	}
+	$scope.twitterTest = function() {
+		authenticationService.saveToken($location.path().replace('/login/twitter/',''));
+		var url = '/profile';
+        $window.location.href = url;
+	}
 	$scope.user = {};
+	$scope.formValidate = function() {
+		$scope.passwordNoMatch;
+		//Passwords must match
+		if($scope.credentials.password !== $scope.credentials.verifyPassword) {
+			$scope.passwordNoMatch = true;
+			return 'Passwords do not match'
+		} else {
+			$scope.passwordNoMatch = false;
+		}
+	}
 	$scope.regSubmit = function() {
 		authenticationService.register($scope.credentials)
 			.error(function(err) {

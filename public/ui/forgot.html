@@ -1,0 +1,12 @@
+<main ng-controller="authController" id="login">
+	<div id="login-header">
+		<h1>Forgot your Password</h1>
+		<h6>Enter your email below and you'll recieve an email with a password reset link.</h6>
+	</div>
+	<form action="/api/forgot" method="POST">
+        <div class="form-group">
+            <input ng-model="credentials.email" type="text" class="form-control" name="email" placeholder="Your Email">
+        </div>
+        <button type="submit">Send Password Reset Email</button>
+    </form>
+</main>

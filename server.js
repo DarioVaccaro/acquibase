@@ -30,7 +30,7 @@ app.use(session({ secret: db.secret }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static( __dirname + '/public' ));
+app.use(express.static('public'));
 
 require('./app/routes.js')(app , passport);
 app.use('/api', routes);

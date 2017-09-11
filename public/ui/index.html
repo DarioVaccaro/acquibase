@@ -26,7 +26,7 @@
 							<li>Track Companies on your Profile</li>
 							<li>Download CSV Data</li>
 							<li>Developer API and Tools</li>
-							<li>Updates Forever</li>
+							<li>Free Updates Forever</li>
 						</ul>
 						<a href="/register">Click here to Register</a>
 					</div>
@@ -109,7 +109,7 @@
 					<div ng-repeat="company in companys">
 						<div id="graph-card">
 							<section>
-								<a id="home-company-link" href="/{{company.company.name}}" target="_self"></a>
+								<a id="home-company-link" href="/company/{{company.company.name}}" target="_self"></a>
 								<div id="home-company-top">
 									<span></span>
 									<h3>{{company.company.stock.marketCap | wordifyValuation}} Valuation</h3>

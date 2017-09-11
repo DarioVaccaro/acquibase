@@ -1,14 +1,24 @@
-		<header ng-controller="authController" id="compare-header">
-			<form ng-submit="logSubmit()" method="post">
-		        <div class="form-group">
-		            <label>Email</label>
-		            <input ng-model="credentials.email" type="text" class="form-control" name="email">
-		        </div>
-		        <div class="form-group">
-		            <label>Password</label>
-		            <input ng-model="credentials.password" type="password" class="form-control" name="password">
-		        </div>
-
-		        <button type="submit" class="btn btn-warning btn-lg">Login</button>
-		    </form>
-		</header>
+<main ng-controller="authController" id="login">
+    <div id="login-messages">
+        <span ng-show="loginForm.password.$touched && loginForm.password.$pristine">Password is required</span>
+        <span ng-show="loginForm.email.$touched && loginForm.email.$pristine">Email is required</span>
+        <span ng-show="loginForm.email.$touched && loginForm.email.$invalid && !loginForm.email.$pristine">Email is invalid</span>
+    </div>
+	<div id="login-header">
+		<h1>Login to Acquibase</h1>
+		<h6>Don’t have an account? Register Here for Premium Access.</h6>
+	</div>
+	<form ng-submit="logSubmit()" method="post" name="loginForm">
+		<a href="/login/twitter" target="_self"><div id="login-twitter"></div></a>
+		<div id="login-google"></div>
+		<span id="login-separator">or</span>
+        <div class="form-group">
+            <input ng-model="credentials.email" type="email" class="form-control" name="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+            <input ng-model="credentials.password" type="password" class="form-control" name="password" placeholder="Your Password" required>
+        </div>
+        <h6>Forgot your Password? <a href="/login/forgot">Click Here</a></h6>
+        <button type="submit" ng-disabled="loginForm.$invalid">Login</button>
+    </form>
+</main>

@@ -9,6 +9,7 @@
   "author": "Dario Vaccaro",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.5.0",
     "bcrypt-nodejs": "latest",
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
@@ -19,8 +20,10 @@
     "jsonwebtoken": "^7.4.3",
     "method-override": "^2.3.9",
     "mongoose": "^4.11.9",
+    "nodemailer": "^4.1.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "passport-twitter": "^1.0.4",
     "serve-favicon": "^2.4.3"
   },
   "devDependencies": {}

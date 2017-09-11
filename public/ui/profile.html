@@ -1,5 +1,6 @@
 <div id="profile-section">
 	<form ng-controller="authController" ng-submit="logout()">
+	{{currentUser.displayName}}
 	{{currentUser.name}}
 	<button type="submit">Logout</button>
 	</form>

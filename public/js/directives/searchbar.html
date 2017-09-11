@@ -7,7 +7,7 @@
 				<div ng-repeat="company in getSearchArray track by $index">
 					<div class="search-card">
 						<section>
-							<a id="search-company-link" href="/{{company.name}}" target="_self"></a>
+							<a id="search-company-link" href="/company/{{company.name}}" target="_self"></a>
 							<div id="search-company-top">
 								<span></span>
 								<h3>{{company.stock.marketCap | wordifyValuation}} Valuation</h3>

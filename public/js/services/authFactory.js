@@ -1,12 +1,12 @@
 acquibaseApp.factory('authenticationService',['$http', '$window', '$timeout', '$q' , function($http, $window, $timeout, $q) {
 	var saveToken = function(token){
-		$window.localStorage['mean-token'] = token;
+		$window.localStorage['jwt'] = token;
 	}
 	var getToken = function(){
-		return $window.localStorage['mean-token'];
+		return $window.localStorage['jwt'];
 	}
 	var logout = function(){
-		$window.localStorage.removeItem('mean-token');
+		$window.localStorage.removeItem('jwt');
 	}
 	var isLoggedIn = function() {
 		var token = getToken();
@@ -28,10 +28,17 @@ acquibaseApp.factory('authenticationService',['$http', '$window', '$timeout', '$
 		    var payload = token.split('.')[1];
 		    payload = $window.atob(payload);
 		    payload = JSON.parse(payload);
-		    return {
-		      email : payload.email,
-		      name : payload.name
-		    };
+		    if(payload.name) {
+		    	return {
+			      email : payload.email,
+			      name : payload.name
+			    };
+		    } else if(payload.username) {
+		    	return {
+			      username : payload.username,
+			      displayName : payload.displayName
+			    };
+		    }
 		}
 	}
 	register = function(user) {

@@ -5,7 +5,30 @@ let userSchema = new mongoose.Schema({
 	local: {
 		email: String,
 		name: String,
-		password: String
+		password: String,
+    registerDate: Date
+	},
+	twitter: {
+		id: String,
+    token: String,
+    displayName: String,
+    username: String,
+    genToken: String,
+    registerDate: Date
+	},
+	google: {
+		id: String,
+    token: String,
+    displayName: String,
+    username: String,
+    registerDate: Date
+	},
+	facebook: {
+		id: String,
+    token: String,
+    displayName: String,
+    username: String,
+    registerDate: Date
 	}
 });
 userSchema.methods.setPassword = function(password) {
@@ -22,6 +45,17 @@ userSchema.methods.generateJwt = function() {
     _id: this._id,
     email: this.local.email,
     name: this.local.name,
+    exp: parseInt(expire.getTime() / 1000),
+  }, process.env.CONFIG_SR);
+};
+userSchema.methods.generateTwitterJwt = function() {
+  var expire = new Date();
+  expire.setDate(expire.getDate() + 7);
+
+  return jwt.sign({
+    _id: this._id,
+    displayName: this.twitter.displayName,
+    username: this.twitter.username,
     exp: parseInt(expire.getTime() / 1000),
   }, process.env.CONFIG_SR);
 };
