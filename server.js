@@ -7,6 +7,7 @@ const methodOverride 		= require('method-override');
 const mongoose 				= require('mongoose');
 const passport 				= require('passport');
 const session     			= require('express-session');
+const helmet				= require('helmet');
 
 const db = require('./config/db.js');
 const routes = require('./app/routes.js');
@@ -15,6 +16,15 @@ let port = process.env.PORT || 3000;
 
 mongoose.connect(db.url);
 require('./config/passport.js')(passport);
+
+app.use(helmet());
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
+// app.use(helmet.contentSecurityPolicy({
+//   directives: {
+//     defaultSrc: ["'self'"],
+//     styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com']
+//   }
+// }));
 
 app.set('view engine' , 'jade');
 

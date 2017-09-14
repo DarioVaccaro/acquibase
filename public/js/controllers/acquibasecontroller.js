@@ -8,6 +8,9 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
 				if(value.company.name === $location.path().replace('/company/' , '')) {
 					var dataArray = [];
 					$scope.thisCompany = value.company;
+					//Iterate through database and generate dataArray for each entry.
+					//Save dataArray as a Blob with a /:company.name URL
+					//Access Blob from homepage and render graphs
 					angular.forEach($scope.thisCompany.acquisition , function(value , key) {
 						dataArray.push({
 							'x_axis': new Date($scope.thisCompany.acquisition[key].date),
@@ -365,6 +368,9 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
 					value: 0
 				}
 			}
+			$scope.filterBar = function(filterReturn) {
+				$scope.filterBarSelect === filterReturn ? $scope.filterBarSelect = '-' + filterReturn : $scope.filterBarSelect = filterReturn;
+			}
 			angular.forEach(companies , function(value , key) {
 				angular.forEach(companies[key].company.acquisition , function(value , key) {
 					var dateify = new Date(value.date), compare;
@@ -389,7 +395,7 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
 			return monthCompare.difference;
 		}
 }]);
-acquibaseApp.controller('authController', ['$scope', '$http', '$location', '$window', 'authenticationService', 'restrictData', function($scope, $http, $location, $window, authenticationService, restrictData) {
+acquibaseApp.controller('authController', ['$scope', '$http', '$location', '$cookies' , '$window', 'authenticationService', 'restrictData', function($scope, $http, $location, $cookies, $window, authenticationService, restrictData) {
 	$scope.credentials = {
 		name : "",
 		email : "",
@@ -403,15 +409,16 @@ acquibaseApp.controller('authController', ['$scope', '$http', '$location', '$win
 				console.log(e);
 			});
 	}
-	$scope.twitterTest = function() {
-		authenticationService.saveToken($location.path().replace('/login/twitter/',''));
-		var url = '/profile';
-        $window.location.href = url;
-	}
 	$scope.user = {};
+	$scope.twitterTest = function() {
+		var jwtCookie = $cookies.get('jwt'), url = '/profile';
+		$window.localStorage['jwt'] === undefined ? authenticationService.saveToken(jwtCookie) : $cookies.remove('jwt');
+		if($window.localStorage['jwt'] !== undefined) {
+			$window.location.href = url;
+		}
+	}
 	$scope.formValidate = function() {
 		$scope.passwordNoMatch;
-		//Passwords must match
 		if($scope.credentials.password !== $scope.credentials.verifyPassword) {
 			$scope.passwordNoMatch = true;
 			return 'Passwords do not match'
@@ -439,7 +446,7 @@ acquibaseApp.controller('authController', ['$scope', '$http', '$location', '$win
 	}
 	$scope.logout = function() {
 		var url = '/';
-		authenticationService.logout()
+		authenticationService.logout();
         $window.location.href = url;
 	}
 	$scope.isLoggedIn = authenticationService.isLoggedIn();

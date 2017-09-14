@@ -1084,7 +1084,7 @@ main#contact .container #card-container .referal-card {
   padding: 0 15px 0 15px;
 }
 main#register {
-  background: #FCFCFC;
+  background: linear-gradient(180deg, #FCFCFC 41.4%, #1D1D1D 41.4%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1157,7 +1157,7 @@ main#register form button {
   color: #FFF;
 }
 main#login {
-  background: #FCFCFC;
+  background: linear-gradient(180deg, #FCFCFC 45%, #1D1D1D 45%);
   display: flex;
   justify-content: center;
   align-items: center;

@@ -80,6 +80,7 @@
 							</div>
 							<div id="recent-graph">
 								<div id="graph-data">
+								{{historyChart()}}
 									<h2>Acquisitions This Month</h2>
 									<div style="width: 100%; height: 178px;" id="compared-data-chart"></div>
 								</div>
@@ -98,15 +99,16 @@
 				<div id="filter-bar">
 					<h6>Filter By:</h6>
 					<ul>
-						<li>Valuation</li>
-						<li>Date</li>
-						<li>Name</li>
-						<li>Acquisition Amount</li>
-						<li>Recently Updated</li>
+						<li ng-click="filterBar('company.stock.marketCap')">Valuation</li>
+						<li ng-click="filterBar('company.foundedOn')">Founding Date</li>
+						<li ng-click="filterBar('company.name')">Name</li>
+						<li ng-click="filterBar('company.industry')">Industry</li>
+						<li ng-click="filterBar('company.acquisition.length')">Acquisition Amount</li>
+						<li ng-click="filterBar('reset')">Reset</li>
 					</ul>
 				</div>
 				<div id="card-container">
-					<div ng-repeat="company in companys">
+					<div ng-repeat="company in companys | orderBy:filterBarSelect">
 						<div id="graph-card">
 							<section>
 								<a id="home-company-link" href="/company/{{company.company.name}}" target="_self"></a>

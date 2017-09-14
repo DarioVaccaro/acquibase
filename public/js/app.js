@@ -1,4 +1,4 @@
-var acquibaseApp = angular.module('acquibaseApp' , ['ngRoute']);
+var acquibaseApp = angular.module('acquibaseApp' , ['ngRoute' , 'ngCookies']);
 var companyURL = '/api/companies';
 acquibaseApp.config(function($routeProvider , $locationProvider) {
 	$routeProvider

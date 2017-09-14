@@ -27,22 +27,18 @@ module.exports = function(app , passport) {
 	app.post('/api/login' , function(req, res) {
 		passport.authenticate('local' , function(err, user, info) {
 			if(err) {
-				return res.json({
+				res.json({
 					'message': err
 				});
 			} if(user) {
 				var token;
 				token = user.generateJwt();
-				if(token === undefined) {
-					res.status(500);
-					res.redirect('/login');
-				}
 			    res.status(200);
 			    res.json({
 			    	"token" : token
 			    });
 			} else {
-				return res.json({
+				res.json({
 					'message': 'User not found'
 				});
 			}
@@ -50,43 +46,19 @@ module.exports = function(app , passport) {
 	});
 	app.get('/login/twitter', passport.authenticate('twitter'));
 	app.get('/login/twitter/callback', function(req, res) {
-		passport.authenticate('twitter' , function(err, user, info) {
-			console.log(user);
+		passport.authenticate('twitter' , {session: false} , function(err, user, info) {
 			if(err) {
-				res.json({
-					'message': err
-				});
+				console.log(err);
 			}
 			var token;
 			token = user.generateTwitterJwt();
-			user.twitter.genToken = token;
-			user.save(function(err) {
-				if(err) {
-					res.json({
-						'message': err
-					});
-				}
-				res.redirect('/login/twitter/' + token);
-			});
+		    // res.status(200);
+		    // res.json({
+		    // 	"token" : token
+		    // });
+		    res.cookie('jwt' , token);
+		    res.render('login.jade');
 		})(req, res);
-	});
-	app.get('/login/twitter/:jwtToken', function(req, res) {
-		User.findOne({'twitter.genToken': req.params.jwtToken}, function(err, user) {
-			if(user.twitter.genToken === undefined) {
-				res.json({
-					'message': err
-				});
-			}
-			user.twitter.genToken = undefined;
-			user.save(function(err) {
-				if(err) {
-					res.json({
-						'message': err
-					});
-				}
-				res.render('login.jade');
-			});
-		});
 	});
 	app.post('/api/register' , function(req, res) {
 		User.findOne({'local.email': req.body.email}, function(err, user) {
@@ -165,12 +137,12 @@ module.exports = function(app , passport) {
 			},
 			function(resetToken, user, done) {
 				let smtpConfig = nodemailer.createTransport({
-					host: 'mail.privateemail.com',
-				    port: 587,
-				    secure: false,
+					host: 'server208.web-hosting.com',
+				    port: 465,
+				    secure: true,
 					auth: {
-						user: 'forgot@acquibase.com',
-						pass: '5CyKZJbGZgzehyLCv76p'
+						user: 'dvaccaro@rubycreative.io',
+						pass: 'Soran1337'
 					}
 				});
 				let mailOptions = {
@@ -180,15 +152,7 @@ module.exports = function(app , passport) {
 					text: 'Reset this shit'
 				};
 				smtpConfig.sendMail(mailOptions, function(err, info) {
-					if(err) {
-						res.json({
-							'message': err,
-							'info': info
-						});
-					}
-					res.json({
-						'message': 'Click the link in the email we just sent to reset your password'
-					});
+					done(err, 'done');
 				});
 			}
 		]);
@@ -260,5 +224,8 @@ module.exports = function(app , passport) {
 	        	res.json(companys);
 	    	}
 	    });
+	});
+	app.get('*' , function(req, res) {
+		res.render('404.jade');
 	});
 };

@@ -35,6 +35,7 @@ module.exports = function(passport) {
 					user.twitter.displayName = profile.displayName;
 
 					user.save(function(err) {
+						console.log(user);
 						if(err) {
 							res.json({
 								'message': err
@@ -54,6 +55,7 @@ module.exports = function(passport) {
             newUser.twitter.registerDate = Date.now();
 
             newUser.save(function(err) {
+            	console.log(user);
             	if(err) {
             		res.json({
             			'message': err

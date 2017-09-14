@@ -13,7 +13,6 @@ let userSchema = new mongoose.Schema({
     token: String,
     displayName: String,
     username: String,
-    genToken: String,
     registerDate: Date
 	},
 	google: {
@@ -34,7 +33,7 @@ let userSchema = new mongoose.Schema({
 userSchema.methods.setPassword = function(password) {
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
 }
-userSchema.methods.validatePassword = function(password) {
+userSchema.methods.validatePassword = function(password, err) {
 	return bcrypt.compareSync(password, this.local.password);
 }
 userSchema.methods.generateJwt = function() {

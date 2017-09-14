@@ -10,6 +10,7 @@ acquibaseApp.factory('authenticationService',['$http', '$window', '$timeout', '$
 	}
 	var isLoggedIn = function() {
 		var token = getToken();
+		console.log(token + " " + $window.location.href);
 		var payload;
 
 		if(token) {
