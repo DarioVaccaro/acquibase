@@ -9,10 +9,8 @@ acquibaseApp.factory('authenticationService',['$http', '$window', '$timeout', '$
 		$window.localStorage.removeItem('jwt');
 	}
 	var isLoggedIn = function() {
-		var token = getToken();
-		console.log(token + " " + $window.location.href);
+		var token = getToken(); 
 		var payload;
-
 		if(token) {
 			payload = token.split('.')[1];
 		    payload = $window.atob(payload);

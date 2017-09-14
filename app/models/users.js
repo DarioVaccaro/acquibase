@@ -17,16 +17,16 @@ let userSchema = new mongoose.Schema({
 	},
 	google: {
 		id: String,
-    token: String,
-    displayName: String,
-    username: String,
+    accessToken: String,
+    name: String,
+    email: String,
     registerDate: Date
 	},
 	facebook: {
 		id: String,
-    token: String,
-    displayName: String,
-    username: String,
+    accessToken: String,
+    name: String,
+    email: String,
     registerDate: Date
 	}
 });
@@ -44,7 +44,7 @@ userSchema.methods.generateJwt = function() {
     _id: this._id,
     email: this.local.email,
     name: this.local.name,
-    exp: parseInt(expire.getTime() / 1000),
+    exp: parseInt(expire.getTime() / 1000)
   }, process.env.CONFIG_SR);
 };
 userSchema.methods.generateTwitterJwt = function() {
@@ -55,7 +55,29 @@ userSchema.methods.generateTwitterJwt = function() {
     _id: this._id,
     displayName: this.twitter.displayName,
     username: this.twitter.username,
-    exp: parseInt(expire.getTime() / 1000),
+    exp: parseInt(expire.getTime() / 1000)
   }, process.env.CONFIG_SR);
 };
+userSchema.methods.generateGoogleJwt = function() {
+  var expire = new Date();
+  expire.setDate(expire.getDate() + 7);
+
+  return jwt.sign({
+    _id: this._id,
+    email: this.google.email,
+    name: this.google.name,
+    exp: parseInt(expire.getTime() / 1000)
+  }, process.env.CONFIG_SR);
+}
+userSchema.methods.generateFacebookJwt = function() {
+  var expire = new Date();
+  expire.setDate(expire.getDate() + 7);
+
+  return jwt.sign({
+    _id: this._id,
+    email: this.google.email,
+    name: this.google.name,
+    exp: parseInt(expire.getTime() / 1000)
+  }, process.env.CONFIG_SR);
+}
 module.exports = mongoose.model('User' , userSchema);

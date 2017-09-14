@@ -10,7 +10,8 @@
 	</div>
 	<form ng-submit="logSubmit()" method="post" name="loginForm">
 		<a href="/login/twitter" target="_self"><div id="login-twitter"></div></a>
-		<div id="login-google"></div>
+		<a href="/login/google" target="_self"><div id="login-google"></div></a>
+        <a href="/login/facebook" target="_self"><div id="login-facebook"></div></a>
 		<span id="login-separator">or</span>
         <div class="form-group">
             <input ng-model="credentials.email" type="email" class="form-control" name="email" placeholder="Your Email" required>

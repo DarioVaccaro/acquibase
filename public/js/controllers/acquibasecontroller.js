@@ -410,20 +410,11 @@ acquibaseApp.controller('authController', ['$scope', '$http', '$location', '$coo
 			});
 	}
 	$scope.user = {};
-	$scope.twitterTest = function() {
+	$scope.socialLogin = function() {
 		var jwtCookie = $cookies.get('jwt'), url = '/profile';
 		$window.localStorage['jwt'] === undefined ? authenticationService.saveToken(jwtCookie) : $cookies.remove('jwt');
 		if($window.localStorage['jwt'] !== undefined) {
 			$window.location.href = url;
-		}
-	}
-	$scope.formValidate = function() {
-		$scope.passwordNoMatch;
-		if($scope.credentials.password !== $scope.credentials.verifyPassword) {
-			$scope.passwordNoMatch = true;
-			return 'Passwords do not match'
-		} else {
-			$scope.passwordNoMatch = false;
 		}
 	}
 	$scope.regSubmit = function() {
@@ -451,6 +442,15 @@ acquibaseApp.controller('authController', ['$scope', '$http', '$location', '$coo
 	}
 	$scope.isLoggedIn = authenticationService.isLoggedIn();
 	$scope.currentUser = authenticationService.currentUser();
+	$scope.formValidate = function() {
+		$scope.passwordNoMatch;
+		if($scope.credentials.password !== $scope.credentials.verifyPassword) {
+			$scope.passwordNoMatch = true;
+			return 'Passwords do not match'
+		} else {
+			$scope.passwordNoMatch = false;
+		}
+	}
 }]);
 acquibaseApp.controller('profileController', '$scope', function($scope) {
 	

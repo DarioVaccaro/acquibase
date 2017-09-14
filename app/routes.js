@@ -46,18 +46,38 @@ module.exports = function(app , passport) {
 	});
 	app.get('/login/twitter', passport.authenticate('twitter'));
 	app.get('/login/twitter/callback', function(req, res) {
-		passport.authenticate('twitter' , {session: false} , function(err, user, info) {
+		passport.authenticate('twitter' , {session: false} , function(err, user) {
 			if(err) {
 				console.log(err);
 			}
 			var token;
 			token = user.generateTwitterJwt();
-		    // res.status(200);
-		    // res.json({
-		    // 	"token" : token
-		    // });
 		    res.cookie('jwt' , token);
-		    res.render('login.jade');
+		    res.render('social-login.jade');
+		})(req, res);
+	});
+	app.get('/login/google' , passport.authenticate('google' , { scope : ['profile', 'email'] }));
+	app.get('/login/google/callback' , function(req, res) {
+		passport.authenticate('google' , {session: false} ,function(err, user) {
+			if(err) {
+				console.log(err);
+			}
+			var token;
+			token = user.generateGoogleJwt();
+			res.cookie('jwt' , token);
+			res.render('social-login.jade');
+		})(req, res);
+	});
+	app.get('/login/facebook' , passport.authenticate('facebook' , { scope : 'email' }));
+	app.get('/login/facebook/callback' , function(req, res) {
+		passport.authenticate('facebook' , {session: false} ,function(err, user) {
+			if(err) {
+				console.log(err);
+			}
+			var token;
+			token = user.generateFacebookJwt();
+			res.cookie('jwt' , token);
+			res.render('social-login.jade');
 		})(req, res);
 	});
 	app.post('/api/register' , function(req, res) {

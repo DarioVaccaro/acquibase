@@ -1189,7 +1189,8 @@ main#login form {
   text-align: center;
 }
 main#login form #login-twitter,
-main#login form #login-google {
+main#login form #login-google,
+main#login form #login-facebook {
   padding: 23px 0 23px 15px;
   width: 250px;
   border-radius: 2px;
@@ -1199,6 +1200,9 @@ main#login form #login-google {
 main#login form #login-google {
   background: #dd4b39;
   margin: 0 auto 0 auto;
+}
+main#login form #login-facebook {
+  background: blue;
 }
 main#login form #login-separator {
   padding: 15px 0 15px 0;
