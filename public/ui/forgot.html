@@ -1,12 +1,14 @@
-<main ng-controller="authController" id="login">
-	<div id="login-header">
+<main ng-controller="authController" id="forgot">
+	<span ng-show="submitted">{{formError}}</span>
+	<span ng-show="forgotForm.email.$touched && forgotForm.email.$invalid && !forgotForm.email.$pristine">Email is invalid</span>
+	<div id="forgot-header">
 		<h1>Forgot your Password</h1>
 		<h6>Enter your email below and you'll recieve an email with a password reset link.</h6>
 	</div>
-	<form action="/api/forgot" method="POST">
+	<form ng-submit="forgotSubmit()" method="POST" name="forgotForm">
         <div class="form-group">
-            <input ng-model="credentials.email" type="text" class="form-control" name="email" placeholder="Your Email">
+            <input ng-model="credentials.email" type="email" class="form-control" name="email" placeholder="Your Email">
         </div>
-        <button type="submit">Send Password Reset Email</button>
+        <button type="submit" ng-disabled="forgotForm.$invalid" ng-click="submitted = true">Send Password Reset Email</button>
     </form>
 </main>

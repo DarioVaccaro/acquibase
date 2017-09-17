@@ -551,6 +551,7 @@ main {
 					display: inline-block;
 					margin: 0 0 0 0;
 					padding: 0 15px 0 15px;
+					position: relative;
 					section {
 						color: #FFF;
 						width: 100%;
@@ -613,6 +614,13 @@ main {
 								font-weight: 300;
 							}
 						}
+					}
+					#home-chart-background {
+						position: absolute;
+						top: 0;
+						bottom: 0;
+						left: 0;
+						right: 0;
 					}
 				}
 			}
@@ -1119,14 +1127,14 @@ main#register {
 		}
 	}
 }
-main#login {
+main#login , main#forgot , main#reset{
 	background: linear-gradient(180deg, #FCFCFC 45%, #1D1D1D 45%);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 	padding: 10.4% 0 10.4% 0;
-	#login-header {
+	#login-header , #reset-header , #forgot-header{
 		text-align: center;
 		margin: 0 0 19px 0;
 		h1 {

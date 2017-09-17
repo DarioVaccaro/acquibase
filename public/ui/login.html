@@ -1,5 +1,6 @@
 <main ng-controller="authController" id="login">
     <div id="login-messages">
+        <span ng-show="submitted">{{formError}}</span>
         <span ng-show="loginForm.password.$touched && loginForm.password.$pristine">Password is required</span>
         <span ng-show="loginForm.email.$touched && loginForm.email.$pristine">Email is required</span>
         <span ng-show="loginForm.email.$touched && loginForm.email.$invalid && !loginForm.email.$pristine">Email is invalid</span>
@@ -20,6 +21,6 @@
             <input ng-model="credentials.password" type="password" class="form-control" name="password" placeholder="Your Password" required>
         </div>
         <h6>Forgot your Password? <a href="/login/forgot">Click Here</a></h6>
-        <button type="submit" ng-disabled="loginForm.$invalid">Login</button>
+        <button type="submit" ng-disabled="loginForm.$invalid" ng-click="submitted = true">Login</button>
     </form>
 </main>

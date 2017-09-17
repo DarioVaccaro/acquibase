@@ -6,7 +6,15 @@ let userSchema = new mongoose.Schema({
 		email: String,
 		name: String,
 		password: String,
-    registerDate: Date
+    registerDate: Date,
+    passwordReset: {
+      resetPasswordToken: String,
+      resetPasswordExpires: Date
+    },
+    profile: {
+      savedCompanies: [],
+      downloadedCompanies: []
+    }
 	},
 	twitter: {
 		id: String,

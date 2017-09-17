@@ -570,6 +570,7 @@ main .container #card-container div #graph-card {
   display: inline-block;
   margin: 0 0 0 0;
   padding: 0 15px 0 15px;
+  position: relative;
 }
 main .container #card-container div #graph-card section {
   color: #FFF;
@@ -633,6 +634,13 @@ main .container #card-container div #graph-card section #home-company-bottom h4 
 main .container #card-container div #graph-card section #home-company-bottom h3 {
   font-size: 12px;
   font-weight: 300;
+}
+main .container #card-container div #graph-card #home-chart-background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 main .container #card-container .ng-scope {
   margin: 0 19px 19px 0;
@@ -1156,7 +1164,9 @@ main#register form button {
   font-weight: 700;
   color: #FFF;
 }
-main#login {
+main#login,
+main#forgot,
+main#reset {
   background: linear-gradient(180deg, #FCFCFC 45%, #1D1D1D 45%);
   display: flex;
   justify-content: center;
@@ -1164,22 +1174,48 @@ main#login {
   flex-direction: column;
   padding: 10.4% 0 10.4% 0;
 }
-main#login #login-header {
+main#login #login-header,
+main#forgot #login-header,
+main#reset #login-header,
+main#login #reset-header,
+main#forgot #reset-header,
+main#reset #reset-header,
+main#login #forgot-header,
+main#forgot #forgot-header,
+main#reset #forgot-header {
   text-align: center;
   margin: 0 0 19px 0;
 }
-main#login #login-header h1 {
+main#login #login-header h1,
+main#forgot #login-header h1,
+main#reset #login-header h1,
+main#login #reset-header h1,
+main#forgot #reset-header h1,
+main#reset #reset-header h1,
+main#login #forgot-header h1,
+main#forgot #forgot-header h1,
+main#reset #forgot-header h1 {
   font-weight: 800;
   font-size: 20px;
   letter-spacing: .8px;
   margin: 15px 0 0 0;
 }
-main#login #login-header h6 {
+main#login #login-header h6,
+main#forgot #login-header h6,
+main#reset #login-header h6,
+main#login #reset-header h6,
+main#forgot #reset-header h6,
+main#reset #reset-header h6,
+main#login #forgot-header h6,
+main#forgot #forgot-header h6,
+main#reset #forgot-header h6 {
   font-weight: 400;
   font-size: 12px;
   margin: 5px 0 0 0;
 }
-main#login form {
+main#login form,
+main#forgot form,
+main#reset form {
   background: #FFFFFF;
   border: 1px solid rgba(106, 106, 106, 0.5);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
@@ -1189,42 +1225,64 @@ main#login form {
   text-align: center;
 }
 main#login form #login-twitter,
+main#forgot form #login-twitter,
+main#reset form #login-twitter,
 main#login form #login-google,
-main#login form #login-facebook {
+main#forgot form #login-google,
+main#reset form #login-google,
+main#login form #login-facebook,
+main#forgot form #login-facebook,
+main#reset form #login-facebook {
   padding: 23px 0 23px 15px;
   width: 250px;
   border-radius: 2px;
   background: #1dcaff;
   margin: 0 auto 10px auto;
 }
-main#login form #login-google {
+main#login form #login-google,
+main#forgot form #login-google,
+main#reset form #login-google {
   background: #dd4b39;
   margin: 0 auto 0 auto;
 }
-main#login form #login-facebook {
+main#login form #login-facebook,
+main#forgot form #login-facebook,
+main#reset form #login-facebook {
   background: blue;
 }
-main#login form #login-separator {
+main#login form #login-separator,
+main#forgot form #login-separator,
+main#reset form #login-separator {
   padding: 15px 0 15px 0;
   display: block;
 }
-main#login form .form-group {
+main#login form .form-group,
+main#forgot form .form-group,
+main#reset form .form-group {
   position: relative;
 }
-main#login form .form-group input {
+main#login form .form-group input,
+main#forgot form .form-group input,
+main#reset form .form-group input {
   padding: 15px 0 15px 15px;
   width: 250px;
   border-radius: 2px;
   border: 1px solid #CCCCCC;
   margin: 0 0 10px 0;
 }
-main#login form h6 {
+main#login form h6,
+main#forgot form h6,
+main#reset form h6 {
   margin: 5px 0 15px 0;
 }
-main#login form h6 a {
+main#login form h6 a,
+main#forgot form h6 a,
+main#reset form h6 a {
   color: #000;
 }
-main#login form button {
+main#login form button,
+main#forgot form button,
+main#reset form button {
   width: 100%;
   border: 0;
   background: #00FFC9;

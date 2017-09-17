@@ -394,8 +394,18 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
 			monthCompare.difference['value'] = monthCompare.thisMonth.value - monthCompare.lastMonth.value;
 			return monthCompare.difference;
 		}
+		$scope.drawHomeGraph = function(company) {
+			angular.forEach(company.acquisition , function(value, key) {
+				homeData.push({
+					'x_axis': new Date(company.acquisition[key].date),
+					'y_axis': new Date(2012, new Date(company.acquisition[key].date).getMonth()),
+					'radius': company.acquisition[key].acquisitionPrice,
+					'color': company.acquisition[key].acquisitionPrice
+				});
+			});
+		}
 }]);
-acquibaseApp.controller('authController', ['$scope', '$http', '$location', '$cookies' , '$window', 'authenticationService', 'restrictData', function($scope, $http, $location, $cookies, $window, authenticationService, restrictData) {
+acquibaseApp.controller('authController', ['$scope', '$rootScope' , '$http', '$location', '$cookies' , '$window', 'authenticationService', 'restrictData', function($scope, $rootScope , $http, $location, $cookies, $window, authenticationService, restrictData) {
 	$scope.credentials = {
 		name : "",
 		email : "",
@@ -410,6 +420,7 @@ acquibaseApp.controller('authController', ['$scope', '$http', '$location', '$coo
 			});
 	}
 	$scope.user = {};
+	$scope.resetUrl = '/api/reset/' + $location.path().replace('/login/reset/' , '');
 	$scope.socialLogin = function() {
 		var jwtCookie = $cookies.get('jwt'), url = '/profile';
 		$window.localStorage['jwt'] === undefined ? authenticationService.saveToken(jwtCookie) : $cookies.remove('jwt');
@@ -418,21 +429,56 @@ acquibaseApp.controller('authController', ['$scope', '$http', '$location', '$coo
 		}
 	}
 	$scope.regSubmit = function() {
+		$rootScope.formError = undefined;
 		authenticationService.register($scope.credentials)
 			.error(function(err) {
 				console.log(err);
 			}).then(function() {
-				var url = '/profile';
-            	$window.location.href = url;
+				if($rootScope.formError) {
+					return $scope.formError;
+				} else {
+					var url = '/profile';
+            		$window.location.href = url;
+				}
 			});
 	}
 	$scope.logSubmit = function() {
+		$rootScope.formError = undefined;
 		authenticationService.login($scope.credentials)
 			.error(function(err) {
 				console.log(err);
 			}).then(function() {
-				var url = '/profile';
-            $window.location.href = url;
+				if($rootScope.formError) {
+					return $scope.formError;
+				} else {
+					var url = '/profile';
+            		$window.location.href = url;
+				}
+			});
+	}
+	$scope.forgotSubmit = function() {
+		$rootScope.formError = undefined;
+		authenticationService.forgot($scope.credentials)
+			.error(function(err) {
+				console.log(err);
+			})
+			.then(function() {
+				return $scope.formError;
+			});
+	}
+	$scope.resetSubmit = function() {
+		$rootScope.formError = undefined;
+		authenticationService.reset($scope.credentials)
+			.error(function(err) {
+				console.log(err);
+			})
+			.then(function() {
+				if($rootScope.formError) {
+					return $scope.formError;
+				} else {
+					var url = '/profile';
+            		$window.location.href = url;
+				}
 			});
 	}
 	$scope.logout = function() {
@@ -442,11 +488,13 @@ acquibaseApp.controller('authController', ['$scope', '$http', '$location', '$coo
 	}
 	$scope.isLoggedIn = authenticationService.isLoggedIn();
 	$scope.currentUser = authenticationService.currentUser();
-	$scope.formValidate = function() {
+	$scope.formValidate = function(form) {
 		$scope.passwordNoMatch;
 		if($scope.credentials.password !== $scope.credentials.verifyPassword) {
 			$scope.passwordNoMatch = true;
-			return 'Passwords do not match'
+			return 'Passwords do not match';
+		} else if($scope.credentials.password.length <= 5) {
+			return 'Passwords must be longer than 5 characters';
 		} else {
 			$scope.passwordNoMatch = false;
 		}

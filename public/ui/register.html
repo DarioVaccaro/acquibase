@@ -1,5 +1,6 @@
 <main ng-controller="authController" id="register">
     <div id="register-messages">
+        <span ng-show="submitted">{{formError}}</span>
         <span ng-show="registerForm.password.$touched">{{formValidate()}}</span>
         <span ng-show="registerForm.name.$touched && registerForm.name.$pristine">Name is required</span>
         <span ng-show="registerForm.email.$touched && registerForm.email.$pristine">Email is required</span>
@@ -25,6 +26,6 @@
         <div class="form-group">
             <input ng-model="credentials.verifyPassword" type="password" class="form-control" name="verifyPassword" placeholder="Retype Password" required>
         </div>
-        <button type="submit" ng-disabled="registerForm.$invalid || passwordNoMatch">Register</button>
+        <button type="submit" ng-disabled="registerForm.$invalid || passwordNoMatch" ng-click="submitted = true">Register</button>
     </form>
 </main>

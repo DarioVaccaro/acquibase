@@ -30,14 +30,19 @@ module.exports = function(app , passport) {
 				res.json({
 					'message': err
 				});
-			} if(user) {
+			} 
+			if(user) {
 				var token;
 				token = user.generateJwt();
 			    res.status(200);
 			    res.json({
 			    	"token" : token
 			    });
-			} else {
+			} else if(info.message === 'Incorrect Password') {
+				res.json({
+					'message': 'Incorrect Password'
+				});
+			} else if(info.message === 'User not Found') {
 				res.json({
 					'message': 'User not found'
 				});
@@ -99,7 +104,6 @@ module.exports = function(app , passport) {
 				newUser.local.password = newUser.setPassword(req.body.password);
 				newUser.local.registerDate = Date.now();
 				newUser.save(function(err) {
-					// passport.authenticate('local',{ session: false }, function(req, res) {});
 					var token;
 					token = newUser.generateJwt();
 					res.status(200);
@@ -133,85 +137,93 @@ module.exports = function(app , passport) {
 		res.sendFile(path.join(__dirname , '../public' , 'dashboard.html'));
 	});
 	app.post('/api/forgot', function(req, res, next) {
-		async.waterfall([
-			function(done) {
-				crypto.randomBytes(20, function(err, buf) {
-					resetToken = buf.toString('hex');
-					done(err, resetToken);
+		let resetToken;
+		crypto.randomBytes(20, function(err, buf) {
+			resetToken = buf.toString('hex');
+		});
+		console.log(req.body.email);
+		User.findOne({ 'local.email': req.body.email}, function(err, user) {
+			if(!user) {
+				return res.json({
+					'message': 'User not found'
 				});
-			},
-			function(resetToken, done) {
-				User.findOne({ 'local.email': req.body.email}, function(err, user) {
-					if(!user) {
-						return res.json({
-							'message': 'User not found'
-						});
-					}
-					user.resetPasswordToken = resetToken;
-					user.resetPasswordExpires = Date.now() + 3600000;
-
-					user.save(function(err) {
-						done(err, resetToken, user);
+			}
+			user.local.passwordReset.resetPasswordToken = resetToken;
+			user.local.passwordReset.resetPasswordExpires = Date.now() + 3600000;
+			user.save(function(err) {
+				console.log(user);
+				if(err) {
+					res.json({
+						'message': err
 					});
-				});
-			},
-			function(resetToken, user, done) {
+				}
 				let smtpConfig = nodemailer.createTransport({
-					host: 'server208.web-hosting.com',
+					host: 'mail.privateemail.com',
 				    port: 465,
 				    secure: true,
 					auth: {
-						user: 'dvaccaro@rubycreative.io',
-						pass: 'Soran1337'
+						user: 'forgot@acquibase.com',
+						pass: 'NewTest'
 					}
 				});
 				let mailOptions = {
-					to: user.email,
+					to: req.body.email,
 					from: 'forgot@acquibase.com',
 					subject: 'Password Reset For AcquiBase',
-					text: 'Reset this shit'
+					text: 'Visit the link below to reset your password. This link will expire in 1 hour. If you do not recognize this email, please ignore it and your password will not change.' + 'http://127.0.0.1:3000/login/reset/' + resetToken
 				};
 				smtpConfig.sendMail(mailOptions, function(err, info) {
-					done(err, 'done');
+					if (err) {
+			            return console.log(err);
+			        }
+			        console.log('Message sent: %s', info.messageId);
+			        res.json({
+			        	'message': 'Check your email for password reset link'
+			        });
 				});
-			}
-		]);
-	});
-	app.get('/login/forgot/:resetToken', function(req, res) {
-		User.findOne({resetPasswordToken: req.params.resetToken, resetPasswordExpires: { $gt: Date.now() }}, function(err, user) {
-			if(!user) {
-				return res.json({
-					'message': 'Password reset token is invalid or has expired.'
-				});
-			}
-		});
-	});
-	app.post('/login/forgot/:resetToken', function(req, res) {
-		User.findOne({resetPasswordToken: req.params.resetToken, resetPasswordExpires: { $gt: Date.now() }}, function(err, user) {
-			user.resetPasswordToken = undefined;
-			user.resetPasswordExpires = undefined;
-
-			user.save(function(err) {
-				passport.authenticate('local' , function(err, user, info) {
-					if(err) {
-						return res.json({
-							'message': err
-						});
-					} if(user) {
-						var token;
-						token = user.generateJwt();
-					    res.status(200);
-					    res.json({
-					    	"token" : token
-					    });
-					} else {
-						return res.json({
-							'message': 'User not found'
-						});
-					}
-				})(req, res);
 			});
 		});
+	});
+	app.get('/login/reset/:resetToken', function(req, res) {
+		User.findOne({'local.passwordReset.resetPasswordToken': req.params.resetToken, 'local.passwordReset.resetPasswordExpires': { $gt: Date.now() }}, function(err, user) {
+			if(!user) {
+				res.render('expired.jade');
+			} else {
+				res.sendFile(path.join(__dirname , '../public' , 'dashboard.html'));
+			}
+		});
+	});
+	app.post('/api/reset/:resetToken', function(req, res) {
+		passport.authenticate('local' , function(err, user, info) {
+			User.findOne({'local.passwordReset.resetPasswordToken': req.params.resetToken, 'local.passwordReset.resetPasswordExpires': { $gt: Date.now() }}, function(err, user) {
+				if(err) {
+					res.json({
+						'message': err
+					});
+				}
+				if(!user) {
+					res.json({
+						'message': 'Password reset token is invalid or has expired.'
+					});
+				}
+				user.local.passwordReset.resetPasswordToken = undefined;
+				user.local.passwordReset.resetPasswordExpires = undefined;
+				user.local.password = user.setPassword(req.body.password);
+				user.save(function(err) {
+					if(err) {
+						res.json({
+							'message': err
+						});
+					}
+					var token;
+					token = user.generateJwt();
+				    res.status(200);
+				    res.json({
+				    	"token" : token
+				    });
+				});
+			});
+		})(req, res);
 	});
 	app.get('/profile', function(req, res) {
 		res.sendFile(path.join(__dirname , '../public' , 'dashboard.html'));

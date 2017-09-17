@@ -14,8 +14,8 @@ acquibaseApp.config(function($routeProvider , $locationProvider) {
 			templateUrl: './ui/login.html',
 		}).when('/login/forgot', {
 			templateUrl: './ui/forgot.html',
-		}).when('/login/twitter/check', {
-			templateUrl: './ui/callback.html',
+		}).when('/login/reset/:resetToken?' , {
+			templateUrl: './ui/reset.html'
 		}).when('/register', {
 			templateUrl: './ui/register.html',
 		}).when('/profile', {
