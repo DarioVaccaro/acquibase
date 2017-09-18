@@ -16,13 +16,35 @@ module.exports = function(passport) {
 				return done(null, false, {
 					message: 'User not Found'
 				})
-			}
-			if(!user.validatePassword(password)) {
+			} else if(!user.validatePassword(password)) {
+				if(user.local.passwordAttempts === 5) {
+					user.local.accountLocked = true;
+					user.save(function(err) {
+						if(err) {
+							return done(err);
+						}
+						return done(null, false, {
+							message: 'Too Many Attempts'
+						})
+					});
+				} else {
+					!user.local.passwordAttempts ? user.local.passwordAttempts = 1 : user.local.passwordAttempts += 1;
+					user.save(function(err) {
+						if(err) {
+							return done(err);
+						}
+						return done(null, false, {
+							message: 'Incorrect Password'
+						})
+					});
+				}
+			} else if(user.local.accountLocked === true) {
 				return done(null, false, {
-					message: 'Incorrect Password'
+					message: 'Too Many Attempts'
 				})
+			} else {
+				return done(null, user);
 			}
-			return done(null, user);
 		});
 	}));
 	passport.use(new TwitterStrategy({consumerKey: auth.twitterAuth.consumerKey, consumerSecret: auth.twitterAuth.consumerSecret, callbackURL: auth.twitterAuth.callbackURL}, function(key, profile, done) {

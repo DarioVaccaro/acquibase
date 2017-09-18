@@ -7,6 +7,8 @@ let userSchema = new mongoose.Schema({
 		name: String,
 		password: String,
     registerDate: Date,
+    passwordAttempts: Number,
+    accountLocked: Boolean,
     passwordReset: {
       resetPasswordToken: String,
       resetPasswordExpires: Date
@@ -83,8 +85,8 @@ userSchema.methods.generateFacebookJwt = function() {
 
   return jwt.sign({
     _id: this._id,
-    email: this.google.email,
-    name: this.google.name,
+    email: this.facebook.email,
+    name: this.facebook.name,
     exp: parseInt(expire.getTime() / 1000)
   }, process.env.CONFIG_SR);
 }

@@ -3,6 +3,8 @@ const jwt = require('express-jwt');
 const nodemailer = require('nodemailer');
 const async = require('async');
 const crypto = require('crypto');
+const ExpressBrute = require('express-brute');
+
 const Company = require('./models/acquibase');
 const User = require('./models/users');
 
@@ -26,25 +28,34 @@ module.exports = function(app , passport) {
 	}
 	app.post('/api/login' , function(req, res) {
 		passport.authenticate('local' , function(err, user, info) {
+			let errorCases = {
+				'Too Many Attempts': 'You have incorrectly entered your password too many times. Please reset your password <a href="/login/forgot">here</a>',
+				'Incorrect Password': 'Incorrect Password',
+				'User not Found': 'User not found'
+			}
 			if(err) {
 				res.json({
 					'message': err
 				});
-			} 
+			}
 			if(user) {
-				var token;
-				token = user.generateJwt();
-			    res.status(200);
-			    res.json({
-			    	"token" : token
-			    });
-			} else if(info.message === 'Incorrect Password') {
-				res.json({
-					'message': 'Incorrect Password'
+				user.local.passwordAttempts = undefined;
+				user.save(function(err) {
+					if(err) {
+						res.json({
+							'message': err
+						});
+					}
+					var token;
+					token = user.generateJwt();
+				    res.status(200);
+				    res.json({
+				    	"token" : token
+				    });
 				});
-			} else if(info.message === 'User not Found') {
+			} else {
 				res.json({
-					'message': 'User not found'
+					'message': errorCases[info.message]
 				});
 			}
 		})(req, res);
@@ -53,7 +64,9 @@ module.exports = function(app , passport) {
 	app.get('/login/twitter/callback', function(req, res) {
 		passport.authenticate('twitter' , {session: false} , function(err, user) {
 			if(err) {
-				console.log(err);
+				res.json({
+					'message': err
+				});
 			}
 			var token;
 			token = user.generateTwitterJwt();
@@ -65,7 +78,9 @@ module.exports = function(app , passport) {
 	app.get('/login/google/callback' , function(req, res) {
 		passport.authenticate('google' , {session: false} ,function(err, user) {
 			if(err) {
-				console.log(err);
+				res.json({
+					'message': err
+				});
 			}
 			var token;
 			token = user.generateGoogleJwt();
@@ -77,7 +92,9 @@ module.exports = function(app , passport) {
 	app.get('/login/facebook/callback' , function(req, res) {
 		passport.authenticate('facebook' , {session: false} ,function(err, user) {
 			if(err) {
-				console.log(err);
+				res.json({
+					'message': err
+				});
 			}
 			var token;
 			token = user.generateFacebookJwt();
@@ -151,7 +168,6 @@ module.exports = function(app , passport) {
 			user.local.passwordReset.resetPasswordToken = resetToken;
 			user.local.passwordReset.resetPasswordExpires = Date.now() + 3600000;
 			user.save(function(err) {
-				console.log(user);
 				if(err) {
 					res.json({
 						'message': err
@@ -176,7 +192,7 @@ module.exports = function(app , passport) {
 					if (err) {
 			            return console.log(err);
 			        }
-			        console.log('Message sent: %s', info.messageId);
+			        // console.log('Message sent: %s', info.messageId);
 			        res.json({
 			        	'message': 'Check your email for password reset link'
 			        });
@@ -208,6 +224,8 @@ module.exports = function(app , passport) {
 				}
 				user.local.passwordReset.resetPasswordToken = undefined;
 				user.local.passwordReset.resetPasswordExpires = undefined;
+				user.local.accountLocked = undefined;
+				user.local.passwordAttempts = undefined;
 				user.local.password = user.setPassword(req.body.password);
 				user.save(function(err) {
 					if(err) {
