@@ -1,6 +1,6 @@
 <main ng-controller="authController" id="reset">
 	<span ng-show="submitted">{{formError}}</span>
-	<span ng-show="resetForm.password.$touched">{{formValidate()}}</span>
+	<span ng-show="resetForm.password.$touched">{{formValidate(credentials)}}</span>
 	<div id="reset-header">
 		<h1>Reset your Password</h1>
 		<h6>Type in your new password.</h6>

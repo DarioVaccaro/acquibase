@@ -52,7 +52,7 @@
 							</div>
 						</div>
 						<hr>
-						<h2 id="welcome-heading">Welcome <span>{{currentUser.name}}</span>, you can download a spreadsheet of the entire dataset below.</h1>
+						<h2 id="welcome-heading">Welcome <span>{{currentUser().name}}{{currentUser().displayName}}</span>, you can download a spreadsheet of the entire dataset below.</h1>
 						<ul id="welcome-list">
 							<li>The spreadsheet is updated once a month. For direct access to real time data, use the Acquibase API.</li>
 						</ul>
@@ -86,7 +86,7 @@
 								</div>
 								<div id="compared-data">
 									<h2>Compared to Last Month</h2>
-									<p><span>{{monthlyAcquisitions(companys).number | abs}}{{monthlyAcquisitions(companys).number | absoluteCompare}}</span> companies have been acquired in the <span>last 30 days. </span><span>{{monthlyAcquisitions(companys).value | wordifyValuation }} {{monthlyAcquisitions(companys).value | absoluteCompare}} dollars</span> have been spent on M&amp;A among <span>disclosed deals.</span></p>
+									<p><span>{{monthlyAcquisitions(companys).number | abs}}{{monthlyAcquisitions(companys).number | absoluteCompare}}</span> companies have been acquired in the <span>last month. </span><span>{{monthlyAcquisitions(companys).value | wordifyValuation }} {{monthlyAcquisitions(companys).value | absoluteCompare}} dollars</span> have been spent on M&amp;A among <span>disclosed deals.</span></p>
 								</div>
 							</div>
 						</div>

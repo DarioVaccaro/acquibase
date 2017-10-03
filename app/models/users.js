@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 let userSchema = new mongoose.Schema({
+  id: mongoose.Schema.Types.ObjectId,
 	local: {
 		email: String,
 		name: String,
@@ -13,10 +14,6 @@ let userSchema = new mongoose.Schema({
       resetPasswordToken: String,
       resetPasswordExpires: Date
     },
-    profile: {
-      savedCompanies: [],
-      downloadedCompanies: []
-    }
 	},
 	twitter: {
 		id: String,
@@ -63,6 +60,7 @@ userSchema.methods.generateTwitterJwt = function() {
 
   return jwt.sign({
     _id: this._id,
+    social: 'twitter',
     displayName: this.twitter.displayName,
     username: this.twitter.username,
     exp: parseInt(expire.getTime() / 1000)
@@ -74,6 +72,7 @@ userSchema.methods.generateGoogleJwt = function() {
 
   return jwt.sign({
     _id: this._id,
+    social: 'google',
     email: this.google.email,
     name: this.google.name,
     exp: parseInt(expire.getTime() / 1000)
@@ -85,6 +84,7 @@ userSchema.methods.generateFacebookJwt = function() {
 
   return jwt.sign({
     _id: this._id,
+    social: 'facebook',
     email: this.facebook.email,
     name: this.facebook.name,
     exp: parseInt(expire.getTime() / 1000)

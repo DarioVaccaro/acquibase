@@ -104,8 +104,6 @@ module.exports = function(passport) {
 				return done(null, user);
 			}
 			let newUser = new User();
-			//Storing access token bad?
-			//Always keep user logged in
 			newUser.google.id = profile.id;
 			newUser.google.accessToken = accessToken;
 			newUser.google.name = profile.displayName;

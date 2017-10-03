@@ -1,11 +1,80 @@
-<div id="profile-section">
-	<form ng-controller="authController" ng-submit="logout()">
-	{{currentUser.displayName}}
-	{{currentUser.name}}
-	<button type="submit">Logout</button>
-	</form>
-</div>
-<div id="tracked-companies-section"></div>
-<div id="email-subscription-section"></div>
-<div id="track-downloads-section"></div>
-<div id="developer-tools-section"></div>
+<main id="profile" ng-controller="profileController">
+	<section class="container">
+		<div id="profile-container">
+			<section>
+				<div ng-controller="authController" id="profile-section">
+					<form ng-submit="logout()">
+						<span>Welcome {{currentUser().displayName}}{{currentUser().name}}</span>
+						<span>{{profileSuccess}}</span>
+						<button type="submit">Logout</button>
+						<span id="profile-news">Acquibase was updated to version 1.0; Check out the feature log!</span>
+					</form>
+					<div id="profile-acquisition-graph">
+						<div id="acquisition-history-chart" style="width: 100%; height: 290px;"></div>
+					</div>
+					<div ng-hide="currentUser().social" id="profile-settings">
+						<h1>User Settings</h1>
+						<div id="profile-messages">
+							<span ng-show="submitted">{{formError}}</span>
+      						<span ng-show="changePassword.password.$touched">{{formValidate(profileSettings)}}</span>
+					        <span ng-show="updateEmail.updateEmail.$touched && updateEmail.updateEmail.$invalid && !updateEmail.updateEmail.$pristine">Email is invalid</span>
+					    </div>
+						<div class="form-group">
+							<h4>Change Email Address</h4>
+							<form ng-submit="updateSettings()" name="updateEmail" method="POST">
+								<input ng-model="profileSettings.email" type="email" name="updateEmail" placeholder="Enter New Email" required>
+								<button ng-disabled="updateEmail.$invalid" ng-click="selectData('email');submitted = true" type="submit">Submit</button>
+							</form>
+						</div>
+						<div class="form-group">
+							<h4>Change Name</h4>
+							<form ng-submit="updateSettings()" name="changeName" method="POST">
+								<input ng-model="profileSettings.name" type="text" name="changeName" placeholder="Enter New Name" required>
+								<button ng-click="selectData('name')" type="submit">Submit</button>
+							</form>
+						</div>
+						<div class="form-group">
+							<h4>Change Password</h4>
+							<form ng-submit="updateSettings()" name="changePassword" method="POST">
+								<input ng-model="profileSettings.password" type="password" name="password" placeholder="Enter New Password" required>
+								<input ng-model="profileSettings.verifyPassword" type="password" name="verifyPassword" placeholder="Enter New Password" required>
+								<button ng-disabled="registerForm.$invalid || passwordNoMatch" ng-click="selectData('password');submitted = true" type="submit">Submit</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div id="tracked-companies-section">
+					<div class="profile-section-header">
+						<h1>Tracked Companies</h1>
+						<h6>Click the plus button to track a any company on your profile.</h6>
+					</div>
+					<div id="profile-tracked-companies">
+						<div ng-repeat="companies in savedCompanies() track by $index" id="tracked-companies">
+							<div class="tracked-company">
+								{{companies.company.name}}
+							</div>
+						</div>
+<!-- 						<div ng-click="searchCheck(track); clearSearch()" class="tracked-company"></div> -->
+					</div>
+				</div>
+				<div id="downloaded-companies-section">
+					<div class="profile-section-header">
+						<h1>Downloaded Spreadsheets</h1>
+						<h6>Visit or track a company profile to download each M&amp;A dataset.</h6>
+					</div>
+					<div id="profile-downloaded-companies">
+						<div class="downloaded-company"></div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</section>
+	<section id="developer-tools-section">
+		<div class="container">
+			<div class="profile-section-header">
+				<h1>Developer Tools</h1>
+				<h6>Here's your API key to use the entire dataset in an application.</h6>
+			</div>
+		</div>
+	</section>
+</main>

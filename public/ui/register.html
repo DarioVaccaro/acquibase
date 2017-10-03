@@ -1,7 +1,7 @@
 <main ng-controller="authController" id="register">
     <div id="register-messages">
         <span ng-show="submitted">{{formError}}</span>
-        <span ng-show="registerForm.password.$touched">{{formValidate()}}</span>
+        <span ng-show="registerForm.password.$touched">{{formValidate(credentials)}}</span>
         <span ng-show="registerForm.name.$touched && registerForm.name.$pristine">Name is required</span>
         <span ng-show="registerForm.email.$touched && registerForm.email.$pristine">Email is required</span>
         <span ng-show="registerForm.email.$touched && registerForm.email.$invalid && !registerForm.email.$pristine">Email is invalid</span>
@@ -10,7 +10,7 @@
 		<h1>Register for Acquibase</h1>
 		<h6>Already have an account? Login Here.</h6>
 	</div>
-	<form ng-submit="regSubmit()" method="post" name="registerForm">
+	<form ng-submit="regSubmit()" method="POST" name="registerForm">
 		<a href="/login/twitter" target="_self"><div id="register-twitter"></div></a>
 		<div id="register-google"></div>
 		<span id="register-separator">or</span>

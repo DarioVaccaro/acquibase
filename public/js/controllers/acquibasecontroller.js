@@ -235,15 +235,23 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
 		$scope.disableScroll = false;
 		$scope.searchToggle = false;
 		$scope.mainSearchCheck = true;
-		$scope.searchCheck = function() {
+		$scope.trackCompany = false;
+		$scope.searchCheck = function(track) {
 			$scope.getSearchArray = null;
 			$scope.searchToggle === false ? $scope.searchToggle = true : $scope.searchToggle = false;
-			if($scope.searchToggle === true) {
+			if(track) {
+				$scope.trackCompany = true;
+				console.log($scope.trackCompany);
+			} else if($scope.searchToggle === true) {
 				$scope.disableScroll = true;
 				$scope.mainSearchCheck = false;
+				$scope.trackCompany = false;
+				console.log($scope.trackCompany);
 			} else {
 				$scope.disableScroll = false;
 				$scope.mainSearchCheck = true;
+				$scope.trackCompany = false;
+				console.log($scope.trackCompany);
 			}
 		}
 		//Calculates when the last time a company was updated
@@ -487,19 +495,105 @@ acquibaseApp.controller('authController', ['$scope', '$rootScope' , '$http', '$l
         $window.location.href = url;
 	}
 	$scope.isLoggedIn = authenticationService.isLoggedIn();
-	$scope.currentUser = authenticationService.currentUser();
+	$scope.currentUser = function() {
+		return authenticationService.currentUser();
+	}
 	$scope.formValidate = function(form) {
 		$scope.passwordNoMatch;
-		if($scope.credentials.password !== $scope.credentials.verifyPassword) {
+		if(form.password !== form.verifyPassword) {
 			$scope.passwordNoMatch = true;
 			return 'Passwords do not match';
-		} else if($scope.credentials.password.length <= 5) {
+		} else if(form.password.length <= 5) {
 			return 'Passwords must be longer than 5 characters';
 		} else {
 			$scope.passwordNoMatch = false;
 		}
 	}
 }]);
-acquibaseApp.controller('profileController', '$scope', function($scope) {
-	
-});
+acquibaseApp.controller('profileController', ['$scope', '$http', '$location' , 'acquibaseFactory' , 'authenticationService' , 'profileFactory' , function($scope , $http , $location , acquibaseFactory , authenticationService , profileFactory) {
+	$scope.userId = {
+		userId: authenticationService.currentUser()._id
+	};
+	profileFactory.get($scope.userId).success(function(data) {
+		$scope.profile = {
+			currentProfile: data,
+			savedCompanies: data.savedCompanies,
+			downloadedCompanies: data.downloadedCompanies
+		}
+	});
+	acquibaseFactory.get().success(function(data) {
+		$scope.companies = data;
+	});
+	$scope.profileSettings = {
+		userId: $scope.userId.userId,
+		email: '',
+		name: '',
+		password: '',
+		verifyPassword: ''
+	};
+	$scope.selectData = function(setting) {
+		$scope.sendSettings = {
+			userId: $scope.userId.userId,
+		}
+		$scope.sendSettings[setting] = $scope.profileSettings[setting];
+	}
+	$scope.profileSuccess;
+	$scope.updateSettings = function() {
+		$http.post('/api/profiles/updateSettings' , $scope.sendSettings)
+		.error(function(err) {
+			console.log(err);
+		}).success(function(data) {
+			if(data.token) {
+		  		authenticationService.saveToken(data.token);
+        		$scope.profileSuccess = 'You have successfully updated your profile settings';
+		  	}
+		});
+	}
+	// Update message when you click track this company
+	// Click to remove company
+	// Graph Tracked companies
+	$scope.track = true;
+	$scope.trackData = {
+		userId: $scope.userId.userId,
+		companyName: $location.path().replace('/company/' , '')
+	}
+	$scope.savedCompanies = function() {
+		$scope.tracked = [];
+		for(i = 0; i < $scope.profile.savedCompanies.length; i++) {
+			angular.forEach($scope.companies , function(value , key) {
+				if(value._id === $scope.profile.savedCompanies[i].companyID) {
+					$scope.tracked.push(value);
+				}
+			});
+		}
+		return $scope.tracked;
+	}
+	$scope.trackCompany = function() {
+		$http.post('/api/profiles/trackCompany' , $scope.trackData)
+		.error(function(err) {
+			console.log(err);
+		}).success(function(data) {
+			return;
+		});
+	}
+	if($location.path() !== '/profile') {
+		$scope.verifyTracked = function(data) {
+			$http.post('/api/profiles/isTracked' , $scope.trackData)
+			.error(function(err) {
+				console.log(err);
+			})
+			.success(function(data) {
+				$scope.trackedCheck = data;
+			});
+		}
+		$scope.verifyTracked();
+	}
+	$scope.trackSuccess = function(data) {
+		console.log(data);
+		if(data.isTracked) {
+			return 'Visit your profile to see tracked companies';
+		} else {
+			return 'Track this company on your profile';
+		}
+	}
+}]);

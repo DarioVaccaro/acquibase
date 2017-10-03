@@ -923,7 +923,8 @@ main#company .container #company-prediction #prediction-container #deal-containe
 main#company .container #company-prediction #prediction-container #deal-container h6 {
   margin: 5px 0 0 0;
 }
-main#company .container #company-prediction #prediction-container #subscription-options {
+main#company .container #company-prediction #prediction-container #subscription-options,
+main#company .container #company-prediction #prediction-container #track-company {
   margin: 19px 0 0 0;
   width: 359px;
   background: #FFFFFF;
@@ -932,7 +933,8 @@ main#company .container #company-prediction #prediction-container #subscription-
   border-radius: 3px;
   padding: 13px 13px 13px 13px;
 }
-main#company .container #company-prediction #prediction-container #subscription-options h2 {
+main#company .container #company-prediction #prediction-container #subscription-options h2,
+main#company .container #company-prediction #prediction-container #track-company h2 {
   font-size: 17px;
   font-weight: 800;
   margin: 0 0 0 0;
@@ -1090,6 +1092,105 @@ main#contact .container #card-container .referal-card {
   display: inline-block;
   margin: 0 0 0 0;
   padding: 0 15px 0 15px;
+}
+main#profile .container {
+  color: #FFF;
+}
+main#profile .container #profile-container {
+  margin: 19px 0 19px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+main#profile .container #profile-container section {
+  width: 100%;
+}
+main#profile .container #profile-container section #profile-section form #profile-news {
+  float: right;
+}
+main#profile .container #profile-container section #profile-section #profile-acquisition-graph {
+  width: 57%;
+  float: left;
+  color: #FFF;
+  background: #1B1B1B;
+  border: 1px solid #383838;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+}
+main#profile .container #profile-container section #profile-section #profile-settings {
+  width: 40%;
+  height: 290px;
+  float: right;
+  color: #FFF;
+  background: #1B1B1B;
+  border: 1px solid #383838;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+  padding: 13px 13px 13px 13px;
+}
+main#profile .container #profile-container section #profile-section #profile-settings h1 {
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: .8px;
+  margin: 0 0 0 0;
+}
+main#profile .container #profile-container section #profile-section #profile-settings .form-group h4 {
+  font-size: 14px;
+  font-weight: 800;
+  margin: 5px 0 0 0;
+}
+main#profile .container #profile-container section #profile-section #profile-settings .form-group form {
+  margin: 5px 0 0 0;
+}
+main#profile .container #profile-container section #profile-section #profile-settings .form-group form input {
+  padding: 10px 0 10px 10px;
+  width: 75%;
+  border-radius: 2px;
+  border: 1px solid #CCCCCC;
+  margin: 2.5px 0 10px 0;
+}
+main#profile .container #profile-container section #tracked-companies-section #profile-tracked-companies #tracked-companies {
+  display: inline-block;
+  width: 25%;
+}
+main#profile .container #profile-container section #tracked-companies-section #profile-tracked-companies #tracked-companies .tracked-company {
+  width: 100%;
+  height: 125px;
+  color: #FFF;
+  background: #1B1B1B;
+  border: 1px solid #383838;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+}
+main#profile .container #profile-container section #downloaded-companies-section #profile-downloaded-companies .downloaded-company {
+  width: 12.5%;
+  height: 100px;
+  color: #FFF;
+  background: #1B1B1B;
+  border: 1px solid #383838;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+}
+main#profile #developer-tools-section {
+  background: #FCFCFC;
+  width: 100%;
+  height: 400px;
+}
+main#profile #developer-tools-section .container {
+  color: #000;
+}
+main#profile .profile-section-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 0 0;
+  line-height: 30px;
+}
+main#profile .profile-section-header h6 {
+  font-size: 12px;
+  font-weight: 300;
+  margin: 10px 0 0 0;
 }
 main#register {
   background: linear-gradient(180deg, #FCFCFC 41.4%, #1D1D1D 41.4%);

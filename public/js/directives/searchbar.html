@@ -1,7 +1,10 @@
 <div ng-show="searchToggle" searchinput id="search-bar">
-	<form ng-submit="linkCheck(0)">
+	<form ng-submit="linkCheck(0)" ng-hide="trackCompany">
 		<input ng-model="companySearch.name" ng-model-options="{ getterSetter: true }" type="text" name="mainSearchBar" placeholder="search"></input>
 	</form>
+<!-- 	<form ng-submit="trackCompany()" ng-show="trackCompany">
+		<input ng-model="companySearch.name" ng-model-options="{ getterSetter: true }" type="text" name="mainSearchBar" placeholder="search"></input>
+	</form> -->
 	<section class="container">
 			<div id="search-container">
 				<div ng-repeat="company in getSearchArray track by $index">

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 let companySchema = new mongoose.Schema({
-	id: Number,
+	id: mongoose.Schema.Types.ObjectId,
 	company: {
 		name: String,
 		location: String,

@@ -887,7 +887,7 @@ main#company {
 						margin: 5px 0 0 0;
 					}
 				}
-				#subscription-options {
+				#subscription-options , #track-company{
 					margin: 19px 0 0 0;
 					width: 359px;
 					.white-card-style;
@@ -1055,6 +1055,111 @@ main#contact {
 				margin: 0 0 0 0;
 				padding: 0 15px 0 15px;
 			}
+		}
+	}
+}
+main#profile {
+	.container {
+		color: #FFF;
+		#profile-container {
+			margin: 19px 0 19px 0;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			width: 100%;
+			section {
+				width: 100%;
+				#profile-section {
+					form {
+						#profile-news {
+							float: right;
+						}
+					}
+					#profile-acquisition-graph {
+						width: 57%;
+						float: left;
+						color: #FFF;
+						.dark-graph-style;
+					}
+					#profile-settings {
+						width: 40%;
+						height: 290px;
+						float: right;
+						color: #FFF;
+						.dark-graph-style;
+						padding: 13px 13px 13px 13px;
+						h1 {
+							font-weight: 800;
+							font-size: 20px;
+							letter-spacing: .8px;
+							margin: 0 0 0 0;
+						}
+						.form-group {
+							h4 {
+								font-size: 14px;
+								font-weight: 800;
+								margin: 5px 0 0 0;
+							}
+							form {
+								margin: 5px 0 0 0;
+								input {
+									padding: 10px 0 10px 10px;
+									width: 75%;
+									border-radius: 2px;
+									border: 1px solid #CCCCCC;
+									margin: 2.5px 0 10px 0;
+								}
+							}
+						}
+					}
+				}
+				#tracked-companies-section {
+					#profile-tracked-companies {
+						#tracked-companies {
+							display: inline-block;
+							width: 25%;
+							.tracked-company {
+								width: 100%;
+								height: 125px;
+								color: #FFF;
+								.dark-graph-style;
+							}
+						}
+					}
+				}
+				#downloaded-companies-section {
+					#profile-downloaded-companies {
+						.downloaded-company {
+							width: 12.5%;
+							height: 100px;
+							color: #FFF;
+							.dark-graph-style;
+						}
+					}
+				}
+			}
+		}
+	}
+	#developer-tools-section {
+		background: #FCFCFC;
+		width: 100%;
+		height: 400px;
+		.container {
+			color: #000;
+		}
+	}
+	.profile-section-header {
+		h1 {
+			font-size: 28px;
+			font-weight: 800;
+			margin: 0 0 0 0;
+			line-height: 30px;
+		}
+		h6 {
+			font-size: 12px;
+			font-weight: 300;
+			margin: 10px 0 0 0;
 		}
 	}
 }

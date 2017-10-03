@@ -7,6 +7,7 @@ const ExpressBrute = require('express-brute');
 
 const Company = require('./models/acquibase');
 const User = require('./models/users');
+const Profile = require('./models/profiles');
 
 let auth = jwt({
   secret: process.env.CONFIG_SR,
@@ -25,6 +26,21 @@ module.exports = function(app , passport) {
         			res.status(200).json(user);
       			});
 		}
+	}
+	function setProfile(user) {
+		Profile.findOne({'userID': user._id} , function(err, profile) {
+			if(!profile) {
+				var newProfile = new Profile();
+				newProfile.userID = user._id;
+				newProfile.save(function(err) {
+					if(err) {
+						console.log(err);
+					}
+				});
+			} else if(err) {
+				console.log(err);
+			}
+		});
 	}
 	app.post('/api/login' , function(req, res) {
 		passport.authenticate('local' , function(err, user, info) {
@@ -68,6 +84,7 @@ module.exports = function(app , passport) {
 					'message': err
 				});
 			}
+			setProfile(user);
 			var token;
 			token = user.generateTwitterJwt();
 		    res.cookie('jwt' , token);
@@ -82,6 +99,7 @@ module.exports = function(app , passport) {
 					'message': err
 				});
 			}
+			setProfile(user);
 			var token;
 			token = user.generateGoogleJwt();
 			res.cookie('jwt' , token);
@@ -96,6 +114,7 @@ module.exports = function(app , passport) {
 					'message': err
 				});
 			}
+			setProfile(user);
 			var token;
 			token = user.generateFacebookJwt();
 			res.cookie('jwt' , token);
@@ -121,6 +140,7 @@ module.exports = function(app , passport) {
 				newUser.local.password = newUser.setPassword(req.body.password);
 				newUser.local.registerDate = Date.now();
 				newUser.save(function(err) {
+					setProfile(newUser);
 					var token;
 					token = newUser.generateJwt();
 					res.status(200);
@@ -158,7 +178,6 @@ module.exports = function(app , passport) {
 		crypto.randomBytes(20, function(err, buf) {
 			resetToken = buf.toString('hex');
 		});
-		console.log(req.body.email);
 		User.findOne({ 'local.email': req.body.email}, function(err, user) {
 			if(!user) {
 				return res.json({
@@ -266,7 +285,7 @@ module.exports = function(app , passport) {
 				}
 			});
 	});
-	app.get('/api/companies', function(req , res) {
+	app.post('/api/companies', function(req , res) {
         Company.find(function(err , companys) {
 	        if(err) {
 	            res.send(err);
@@ -274,6 +293,106 @@ module.exports = function(app , passport) {
 	        	res.json(companys);
 	    	}
 	    });
+	});
+	app.post('/api/profiles' , function(req , res) {
+		User.findOne({'_id': req.body.userId} , function(err, user) {
+			Profile.findOne({'userID': user._id} , function(err , profile) {
+				if(err) {
+					console.log(err);
+				} else {
+					res.json(profile);
+				}
+			});
+		});
+	});
+	app.post('/api/profiles/trackCompany' , function(req , res) {
+		Company.findOne({'company.name': req.body.companyName} , function(err, company) {
+			Profile.findOne({'userID': req.body.userId} , function(err , profile) {
+				//Protect against duplicates here
+				profile.savedCompanies.push({companyID: company._id});
+				profile.save(function(err) {
+					if(err) {
+						console.log(err);
+					}
+				});
+			});
+		});
+	});
+	app.post('/api/profiles/isTracked' , function(req , res) {
+		Profile.findOne({'userID': req.body.userId} , function(err , profile) {
+			if(err) {
+				console.log(err);
+			}
+			var companyFound = false;
+			Company.findOne({'company.name': req.body.companyName} , function(err , company) {
+				for(i = 0; i < profile.savedCompanies.length; i++) {
+					if(String(company._id) === profile.savedCompanies[i].companyID) {
+						companyFound = true;
+					}
+				}
+				if(companyFound) {
+					res.json({
+						'company': company.company.name,
+						'isTracked': true
+					});
+				} else {
+					res.json({
+						'isTracked': false
+					});
+				}
+			});
+		});
+	});
+	app.post('/api/profiles/saveDownload' , function(req , res) {
+		User.findOne({'_id': req.body.download} , function(err, user) {
+
+		});
+	});
+	app.post('/api/profiles/updateSettings' , function(req , res) {
+		User.findOne({'_id': req.body.userId} , function(err, user) {
+			if(req.body.email) {
+				user.local.email = req.body.email;
+				user.save(function(err) {
+					if(err) {
+						console.log(err);
+					}
+					var token;
+					token = user.generateJwt();
+				    res.status(200);
+				    res.json({
+				    	"token" : token
+				    });
+				});
+			} else if(req.body.name) {
+				user.local.name = req.body.name;
+				user.save(function(err) {
+					if(err) {
+						console.log(err);
+					}
+					var token;
+					token = user.generateJwt();
+				    res.status(200);
+				    res.json({
+				    	"token" : token
+				    });
+				});
+			} else if(req.body.password) {
+				user.local.password = user.setPassword(req.body.password);
+				user.save(function(err) {
+					if(err) {
+						console.log(err);
+					}
+					var token;
+					token = user.generateJwt();
+				    res.status(200);
+				    res.json({
+				    	"token" : token
+				    });
+				});
+			} else {
+				console.log(err);
+			}
+		});
 	});
 	app.get('*' , function(req, res) {
 		res.render('404.jade');

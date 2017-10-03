@@ -31,13 +31,17 @@ acquibaseApp.factory('authenticationService',['$http', '$rootScope' , '$location
 		    payload = JSON.parse(payload);
 		    if(payload.name) {
 		    	return {
+		    	  _id: payload._id,
 			      email : payload.email,
-			      name : payload.name
+			      name : payload.name,
+			      social: payload.social
 			    };
 		    } else if(payload.username) {
 		    	return {
+		    	  _id: payload._id,
 			      username : payload.username,
-			      displayName : payload.displayName
+			      displayName : payload.displayName,
+			      social: payload.social
 			    };
 		    }
 		}
