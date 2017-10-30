@@ -5,7 +5,7 @@ acquibaseApp.controller('dataAccessController' , ['$scope' , '$http' , '$locatio
 			//Sets $scope to the array of documents in the database
 			$scope.companys = data;
 			angular.forEach(data, function(value , key) {
-				if(value.company.name === $location.path().replace('/company/' , '')) {
+				if(value.company.name === $location.path().replace('/company/' , '').charAt(0).toUpperCase() + $location.path().replace('/company/' , '').slice(1)) {
 					var dataArray = [];
 					$scope.thisCompany = value.company;
 					//Iterate through database and generate dataArray for each entry.
@@ -510,7 +510,7 @@ acquibaseApp.controller('authController', ['$scope', '$rootScope' , '$http', '$l
 		}
 	}
 }]);
-acquibaseApp.controller('profileController', ['$scope', '$http', '$location' , 'acquibaseFactory' , 'authenticationService' , 'profileFactory' , function($scope , $http , $location , acquibaseFactory , authenticationService , profileFactory) {
+acquibaseApp.controller('profileController', ['$scope', '$http' , '$location' , 'acquibaseFactory' , 'authenticationService' , 'profileFactory' , function($scope , $http , $location , acquibaseFactory , authenticationService , profileFactory) {
 	$scope.userId = {
 		userId: authenticationService.currentUser()._id
 	};
@@ -520,10 +520,80 @@ acquibaseApp.controller('profileController', ['$scope', '$http', '$location' , '
 			savedCompanies: data.savedCompanies,
 			downloadedCompanies: data.downloadedCompanies
 		}
+		$scope.savedCompanies = function() {
+			$scope.tracked = [];
+			for(i = 0; i < $scope.profile.savedCompanies.length; i++) {
+				angular.forEach($scope.companies , function(value , key) {
+					if(value._id === $scope.profile.savedCompanies[i].companyID) {
+						$scope.tracked.push(value);
+					}
+				});
+			}
+		}
+		$scope.savedCompanies();
+	if($scope.tracked.length >= 1) {
+		var profileArray = [];
+		for(i = 0; i <= 30; i++) {
+			profileArray[i] = {
+				x_axis: new Date(todaysDate - ((24*60*60*1000) * i)),
+				y_axis: 0
+			};
+		}
+		console.log($scope.tracked);
+		$scope.profileAcquisitions = [];
+		for(i = 0; i < $scope.tracked.length; i++) {
+			for(j = 0; j < $scope.tracked[i].company.acquisition.length; j++) {
+				$scope.profileAcquisitions.push($scope.tracked[i].company.acquisition[j]);
+			}
+		}
+		angular.forEach($scope.profileAcquisitions, function(value, key) {
+			for(i = 0; i <= 30; i++) {
+				if(new Date(value.date).getFullYear() === new Date(todaysDate - ((24*60*60*1000) * i)).getFullYear() && new Date(value.date).getMonth() === new Date(todaysDate - ((24*60*60*1000) * i)).getMonth() && new Date(value.date).getDate() === new Date(todaysDate - ((24*60*60*1000) * i)).getDate()) {
+					profileArray[i].y_axis += 1;
+				}
+			}
+		}) 
+		console.log(profileArray);
+		const profileGraph = d3.select('#profile-history-chart').append('svg')
+			.attr('width' , '100%')
+			.attr('height' , '100%');
+		const xScaleProfile = d3.scaleTime()
+			.domain([new Date(todaysDate - (24*60*60*1000) * 30)  , todaysDate])
+			.range([0 , 700]);
+		const yScaleProfile = d3.scaleLinear()
+			.domain([0 , d3.max(profileArray, function(d) { return d.y_axis; })])
+			.range([240 , 0]);
+		const xAxisProfile = d3.axisBottom()
+			.scale(xScaleProfile)
+			.tickFormat(d3.timeFormat("%b %d"));
+		const yAxisProfile = d3.axisLeft()
+			.scale(yScaleProfile);
+		var line = d3.line()
+			.x(function(d) { return xScaleProfile(d.x_axis); })
+			.y(function(d) { return yScaleProfile(d.y_axis); })
+			.curve(d3.curveMonotoneX);
+		profileGraph.append('g')
+			.attr('transform', 'translate(50, 260)')
+			.attr('class' , 'xAxis')
+			.call(xAxisProfile);
+		profileGraph.append('g')
+			.attr('transform', 'translate(20, 35)')
+			.attr('class' , 'xAxis')
+			.call(yAxisProfile);
+		profileGraph.append('path')
+			.datum(profileArray)
+			.attr('transform', 'translate(-5, 0)')
+			.attr("class", "line")
+			.attr('stroke', '#F20278')
+			.attr('stroke-width', '2')
+			.attr('fill', '#F84B9B')
+			.attr("d", line);
+	}
 	});
 	acquibaseFactory.get().success(function(data) {
 		$scope.companies = data;
 	});
+
 	$scope.profileSettings = {
 		userId: $scope.userId.userId,
 		email: '',
@@ -549,51 +619,80 @@ acquibaseApp.controller('profileController', ['$scope', '$http', '$location' , '
 		  	}
 		});
 	}
-	// Update message when you click track this company
-	// Click to remove company
-	// Graph Tracked companies
+
+	$scope.trackResponse;
+	function trackedCheck(data) {
+		if(data.isTracked) { 
+			$scope.trackResponse = $scope.trackResponses.isTracked;
+		} else { 
+			$scope.trackResponse = $scope.trackResponses.isNotTracked;
+		}
+	}
 	$scope.track = true;
 	$scope.trackData = {
 		userId: $scope.userId.userId,
-		companyName: $location.path().replace('/company/' , '')
+		companyName: $location.path().replace('/company/' , '').charAt(0).toUpperCase() + $location.path().replace('/company/' , '').slice(1)
 	}
-	$scope.savedCompanies = function() {
-		$scope.tracked = [];
-		for(i = 0; i < $scope.profile.savedCompanies.length; i++) {
-			angular.forEach($scope.companies , function(value , key) {
-				if(value._id === $scope.profile.savedCompanies[i].companyID) {
-					$scope.tracked.push(value);
-				}
-			});
-		}
-		return $scope.tracked;
+	$scope.trackResponses = {
+		isNotTracked: 'Track this company on your profile',
+		isTracked: 'Remove this company from tracked list'
 	}
-	$scope.trackCompany = function() {
-		$http.post('/api/profiles/trackCompany' , $scope.trackData)
+	$scope.verifyTracked = function() {
+		$http.post('/api/profiles/isTracked' , $scope.trackData)
 		.error(function(err) {
 			console.log(err);
-		}).success(function(data) {
-			return;
+		})
+		.success(function(data) {
+			console.log(data);
+			$scope.trackedCheck = data;
+			trackedCheck(data);
 		});
 	}
 	if($location.path() !== '/profile') {
-		$scope.verifyTracked = function(data) {
-			$http.post('/api/profiles/isTracked' , $scope.trackData)
+		$scope.verifyTracked();
+	}
+	$scope.trackCompany = function(data , name) {
+		if(data.isTracked) {
+			if(name) {
+				$scope.trackData.companyName = name;
+			}
+			$http.post('/api/profiles/untrackCompany' , $scope.trackData)
+			.error(function(err) {
+				if(err) {
+					console.log(err);
+				}
+			})
+			.success(function(response) {
+				$scope.trackedCheck = response;
+				trackedCheck(response);
+			});
+		} else if(!data.isTracked) {
+			$http.post('/api/profiles/trackCompany' , $scope.trackData)
 			.error(function(err) {
 				console.log(err);
 			})
-			.success(function(data) {
-				$scope.trackedCheck = data;
+			.success(function(response) {
+				$scope.trackedCheck = response;
+				trackedCheck(response);
 			});
 		}
-		$scope.verifyTracked();
 	}
-	$scope.trackSuccess = function(data) {
-		console.log(data);
-		if(data.isTracked) {
-			return 'Visit your profile to see tracked companies';
-		} else {
-			return 'Track this company on your profile';
-		}
+
+	$scope.downloadCompany = function() {
+		$http.post('/api/profiles/download' , $scope.trackData)
+		.error(function(err) {
+			if(err) {
+				console.log(err);
+			}
+		}).success(function(data) {
+			$http.post('/api/profiles/saveDownload' , $scope.trackData)
+			.error(function(err) {
+				if(err) {
+					console.log(err);
+				}
+			}).then(function(response) {
+				return;
+			});
+		});
 	}
 }]);

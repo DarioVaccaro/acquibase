@@ -924,7 +924,8 @@ main#company .container #company-prediction #prediction-container #deal-containe
   margin: 5px 0 0 0;
 }
 main#company .container #company-prediction #prediction-container #subscription-options,
-main#company .container #company-prediction #prediction-container #track-company {
+main#company .container #company-prediction #prediction-container #track-company,
+main#company .container #company-prediction #prediction-container #download-company {
   margin: 19px 0 0 0;
   width: 359px;
   background: #FFFFFF;
@@ -934,9 +935,16 @@ main#company .container #company-prediction #prediction-container #track-company
   padding: 13px 13px 13px 13px;
 }
 main#company .container #company-prediction #prediction-container #subscription-options h2,
-main#company .container #company-prediction #prediction-container #track-company h2 {
+main#company .container #company-prediction #prediction-container #track-company h2,
+main#company .container #company-prediction #prediction-container #download-company h2 {
   font-size: 17px;
   font-weight: 800;
+  margin: 0 0 0 0;
+}
+main#company .container #company-prediction #prediction-container #subscription-options h5,
+main#company .container #company-prediction #prediction-container #track-company h5,
+main#company .container #company-prediction #prediction-container #download-company h5 {
+  font-weight: 600;
   margin: 0 0 0 0;
 }
 #full-acquisition-list {

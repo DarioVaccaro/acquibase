@@ -43,7 +43,7 @@ html
 					nav-accounts(ng-controller='authController')
 		main#company
 			section.container
-				div#company-info
+				div(ng-controller='authController')#company-info
 					div#company-numbers
 						div#company-facts
 							h1#company-name {{thisCompany.name}} {{thisCompany.incorporated | isInc}}
@@ -75,9 +75,9 @@ html
 									h6 {{thisCompany.acquisition[$index].date | date:'MMMM dd, yyyy'}}
 								div#acquisition-list-price
 									h3 {{thisCompany.acquisition[$index].acquisitionPrice | wordifyValuation}}
-				div(ng-controller='authController')#company-prediction
+				div(ng-controller='profileController')#company-prediction
 					h1 Data Analysis
-					div#prediction-container
+					div(ng-controller='authController')#prediction-container
 						div#predictions
 							h2 Average Time Between Acquisitions
 							span Likely to acquire 
@@ -104,10 +104,10 @@ html
 							h6 Check out M&amp;A News from around the web
 						div(ng-hide='isLoggedIn')#subscription-options
 							h2 Subscribe to get access to more data
-						div(ng-controller='profileController' , ng-show='isLoggedIn' ng-hide="trackedCheck.isTracked" , ng-click="trackCompany()")#track-company
-							h2 {{trackSuccess(trackedCheck)}}
-						div(ng-controller='profileController' , ng-show='isLoggedIn' ng-hide="!trackedCheck.isTracked")#track-company
-							h2 {{trackSuccess(trackedCheck)}}
+						div(ng-show='isLoggedIn' , ng-click='trackCompany(trackedCheck)')#track-company
+							h2 {{trackResponse}}
+						div(ng-show='isLoggedIn' , ng-click='downloadCompany()')#download-company
+							h5 Download {{thisCompany.name}}'s Dataset
 
 		section#full-acquisition-list
 			div.container

@@ -10,7 +10,7 @@
 						<span id="profile-news">Acquibase was updated to version 1.0; Check out the feature log!</span>
 					</form>
 					<div id="profile-acquisition-graph">
-						<div id="acquisition-history-chart" style="width: 100%; height: 290px;"></div>
+						<div id="profile-history-chart" style="width: 100%; height: 290px;"></div>
 					</div>
 					<div ng-hide="currentUser().social" id="profile-settings">
 						<h1>User Settings</h1>
@@ -49,10 +49,11 @@
 						<h6>Click the plus button to track a any company on your profile.</h6>
 					</div>
 					<div id="profile-tracked-companies">
-						<div ng-repeat="companies in savedCompanies() track by $index" id="tracked-companies">
+						<div ng-repeat="companies in tracked track by $index" id="tracked-companies">
 							<div class="tracked-company">
 								{{companies.company.name}}
 							</div>
+							<span ng-click="trackCompany(trackedCheck = {isTracked: true} , companies.company.name);tracked.splice($index , 1)">✕ Remove Company</span>
 						</div>
 <!-- 						<div ng-click="searchCheck(track); clearSearch()" class="tracked-company"></div> -->
 					</div>
@@ -63,7 +64,11 @@
 						<h6>Visit or track a company profile to download each M&amp;A dataset.</h6>
 					</div>
 					<div id="profile-downloaded-companies">
-						<div class="downloaded-company"></div>
+						<div ng-repeat="companies in downloaded track by $index" id="downloaded-companies">
+							<div class="downloaded-company">
+								{{companies.company.name}}
+							</div>
+						</div>
 					</div>
 				</div>
 			</section>

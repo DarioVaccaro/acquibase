@@ -4,6 +4,8 @@ const nodemailer = require('nodemailer');
 const async = require('async');
 const crypto = require('crypto');
 const ExpressBrute = require('express-brute');
+const json2csv = require('json2csv');
+const fs = require('fs');
 
 const Company = require('./models/acquibase');
 const User = require('./models/users');
@@ -266,11 +268,8 @@ module.exports = function(app , passport) {
 		res.sendFile(path.join(__dirname , '../public' , 'dashboard.html'));
 	});
 	app.get('/company/:name' , function(req , res) {
-		Company.findOne({'company.name' : req.params.name})
+		Company.findOne({'company.name' : req.params.name.charAt(0).toUpperCase() + req.params.name.slice(1)})
 			.then(function(company) {
-				// if(company === company.charAt(0).toUpperCase() + company.slice(1)) {
-				// 	company = company[0].toUpperCase() + company.slice(1);
-				// }
 				if (company) {
 					res.render('company.jade');
 					return;
@@ -308,13 +307,24 @@ module.exports = function(app , passport) {
 	app.post('/api/profiles/trackCompany' , function(req , res) {
 		Company.findOne({'company.name': req.body.companyName} , function(err, company) {
 			Profile.findOne({'userID': req.body.userId} , function(err , profile) {
-				//Protect against duplicates here
-				profile.savedCompanies.push({companyID: company._id});
-				profile.save(function(err) {
-					if(err) {
-						console.log(err);
+				var duplicates;
+				for(i = 0; i < profile.savedCompanies.length; i++) {
+					if(profile.savedCompanies[i].companyID === String(company._id)) {
+						duplicates = true;
 					}
-				});
+				}
+				if(duplicates !== true) {
+					profile.savedCompanies.push({companyID: company._id});
+					profile.save(function(err) {
+						if(err) {
+							console.log(err);
+						}
+						res.json({
+							'company': company.company.name,
+							'isTracked': true
+						});
+					});
+				}
 			});
 		});
 	});
@@ -343,9 +353,73 @@ module.exports = function(app , passport) {
 			});
 		});
 	});
-	app.post('/api/profiles/saveDownload' , function(req , res) {
+	app.post('/api/profiles/untrackCompany' , function(req , res) {
+		Company.findOne({'company.name': req.body.companyName} , function(err, company) {
+			Profile.findOne({'userID': req.body.userId} , function(err , profile) {
+				let removeCompany;
+				for(i = 0; i < profile.savedCompanies.length; i++) {
+					if(profile.savedCompanies[i].companyID === String(company._id)) {
+						removeCompany = i;
+					}
+				}
+				profile.savedCompanies.splice(removeCompany , 1);
+				profile.save(function(err) {
+					if(err) {
+						console.log(err);
+					}
+					res.json({
+						'isTracked': false
+					});
+				});
+			});
+		});
+	});
+	app.post('/api/profiles/download' , function(req , res) {
 		User.findOne({'_id': req.body.download} , function(err, user) {
+			if(err) {
+				console.log(err);
+			}
+			Company.findOne({'company.name': req.body.companyName} , function(err, company) {
+				if(err) {
+					console.log(err);
+				}
+				let fieldNames = ['Company Name' , 'Valuation' , 'Location'];
+				let fields = ['company.name' , 'company.stock.marketCap' , 'company.location'];
+				let companyArray = [company]
+				let csv = json2csv({data: companyArray , fields: fields , fieldNames: fieldNames});
+				let pathName = req.url + '/' + company.company.name + '.csv';
 
+				fs.writeFile(pathName , csv , function(err) {
+					if(err) {
+						console.log(err);
+					}
+					res.download(pathName);
+				});
+			});
+		});
+	});
+	app.post('api/profiles/saveDownload' , function(req , res) {
+		Company.findOne({'company.name': req.body.companyName} , function(err, company) {
+			Profile.findOne({'userID': req.body.userId} , function(err , profile) {
+				var duplicates;
+				for(i = 0; i < profile.downloadedCompanies.length; i++) {
+					if(profile.downloadedCompanies[i].companyID === String(company._id)) {
+						duplicates = true;
+					}
+				}
+				if(duplicates !== true) {
+					profile.downloadedCompanies.push({companyID: company._id});
+					profile.save(function(err) {
+						if(err) {
+							console.log(err);
+						}
+						res.json({
+							'company': company.company.name,
+							'isSaved': true
+						});
+					});
+				}
+			});
 		});
 	});
 	app.post('/api/profiles/updateSettings' , function(req , res) {
