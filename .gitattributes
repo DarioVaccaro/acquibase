@@ -1,2 +1,3 @@
 node_modules/* linguist-vendored
 public/libs/* linguist-vendored
+public/libs/angular/* linguist-vendored
